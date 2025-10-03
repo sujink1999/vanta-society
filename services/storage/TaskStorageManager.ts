@@ -19,6 +19,7 @@ class TaskStorageManager {
   private static instance: TaskStorageManager;
   private cache: TaskCompletionData = {};
   private isInitialized = false;
+  private listeners: Set<() => void> = new Set();
 
   private constructor() {}
 
@@ -65,6 +66,7 @@ class TaskStorageManager {
       timestamp: new Date().toISOString(),
     };
     await this.saveToStorage();
+    this.notifyListeners();
   }
 
   async removeTaskStatus(date: string, userRoutineId: number): Promise<void> {
@@ -79,6 +81,7 @@ class TaskStorageManager {
       }
 
       await this.saveToStorage();
+      this.notifyListeners();
     }
   }
 
@@ -103,6 +106,17 @@ class TaskStorageManager {
   async getAllCompletions(): Promise<TaskCompletionData> {
     await this.initialize();
     return this.cache;
+  }
+
+  subscribe(listener: () => void): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  private notifyListeners(): void {
+    this.listeners.forEach(listener => listener());
   }
 
   private async saveToStorage(): Promise<void> {

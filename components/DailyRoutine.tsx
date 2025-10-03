@@ -27,7 +27,6 @@ export function DailyRoutine() {
   const [activeTab, setActiveTab] = useState<"todos" | "done" | "skipped">(
     "todos"
   );
-  const [refreshKey, setRefreshKey] = useState(0);
 
   // Calculate the actual current day based on Winter Arc start date
   const winterArcStartDate = user?.winterArcStartDate;
@@ -54,7 +53,7 @@ export function DailyRoutine() {
   const isToday = selectedDate === today;
 
   const tasks = useTasks(selectedDate, activeTab);
-  const { markTaskDone, skipTask, error } = useTaskActions(selectedDate);
+  const { markTaskDone, skipTask, undoTaskAction, error } = useTaskActions(selectedDate);
 
   const handlePrevDay = () => {
     setCurrentDay((prev) => Math.max(1, prev - 1));
@@ -63,10 +62,6 @@ export function DailyRoutine() {
   const handleNextDay = () => {
     setCurrentDay((prev) => Math.min(75, prev + 1));
   };
-
-  const refreshTasks = useCallback(() => {
-    setRefreshKey((prev) => prev + 1);
-  }, []);
 
   const handleTaskDone = useCallback(
     async (userRoutineId: number) => {
@@ -80,6 +75,13 @@ export function DailyRoutine() {
       return await skipTask(userRoutineId);
     },
     [skipTask]
+  );
+
+  const handleTaskUndo = useCallback(
+    async (userRoutineId: number) => {
+      return await undoTaskAction(userRoutineId);
+    },
+    [undoTaskAction]
   );
 
   return (
@@ -175,14 +177,14 @@ export function DailyRoutine() {
 
             return (
               <TaskCard
-                key={`${task.id}-${refreshKey}`}
+                key={task.id}
                 task={task}
                 categoryColor={categoryColor}
                 taskCommand={taskCommand}
                 frequency={frequency}
                 onDone={() => handleTaskDone(task.id)}
                 onSkip={() => handleTaskSkip(task.id)}
-                onRefresh={refreshTasks}
+                onUndo={() => handleTaskUndo(task.id)}
                 activeTab={activeTab}
                 isToday={isToday}
               />

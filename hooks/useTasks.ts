@@ -20,6 +20,15 @@ export function useTasks(date: string, filterBy?: 'todos' | 'done' | 'skipped'):
       setCompletionData(data);
     };
     loadCompletions();
+
+    // Subscribe to task storage changes
+    const unsubscribe = taskStorageManager.subscribe(() => {
+      loadCompletions();
+    });
+
+    return () => {
+      unsubscribe();
+    };
   }, [date]);
 
   const tasksForDate = useMemo(() => {

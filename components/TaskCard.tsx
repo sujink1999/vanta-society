@@ -22,7 +22,7 @@ interface TaskCardProps {
   frequency: string;
   onSkip?: () => Promise<boolean>;
   onDone?: () => Promise<boolean>;
-  onRefresh?: () => void;
+  onUndo?: () => Promise<boolean>;
   activeTab: "todos" | "done" | "skipped";
   isToday?: boolean;
 }
@@ -34,7 +34,7 @@ export function TaskCard({
   frequency,
   onSkip,
   onDone,
-  onRefresh,
+  onUndo,
   activeTab,
   isToday = true,
 }: TaskCardProps) {
@@ -44,7 +44,8 @@ export function TaskCard({
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const IconComponent = getTaskIcon(task.taskName);
 
-  const canUpdate = activeTab === "todos" && isToday;
+  const canUpdate = isToday;
+  const isTodos = activeTab === "todos";
 
   useEffect(() => {
     if (showOverlay) {
@@ -70,7 +71,6 @@ export function TaskCard({
     try {
       await onSkip?.();
       setShowOverlay(false);
-      onRefresh?.();
     } catch (error) {
       console.error("Failed to skip task:", error);
     } finally {
@@ -82,12 +82,76 @@ export function TaskCard({
     setIsProcessing(true);
     try {
       await onDone?.();
-      onRefresh?.();
     } catch (error) {
       console.error("Failed to complete task:", error);
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const handleUndo = async () => {
+    setIsProcessing(true);
+    try {
+      await onUndo?.();
+    } catch (error) {
+      console.error("Failed to undo task:", error);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const getOverlayButtons = () => {
+    if (isTodos) {
+      return (
+        <View
+          style={tw`flex-row gap-4 items-center`}
+          onTouchEnd={(e) => e.stopPropagation()}
+        >
+          {/* Skip Button */}
+          <TouchableOpacity
+            style={[
+              tw`bg-white px-6 py-[6px] rounded-sm`,
+              isProcessing && tw`opacity-50`,
+            ]}
+            onPress={handleSkip}
+            disabled={isProcessing}
+          >
+            <Text style={tw`text-black font-tussi text-xs`}>Skip</Text>
+          </TouchableOpacity>
+
+          {/* Done Button */}
+          <TouchableOpacity
+            style={[
+              tw`px-6 py-[6px] rounded-sm`,
+              { backgroundColor: Colors.primary },
+              isProcessing && tw`opacity-50`,
+            ]}
+            onPress={handleDone}
+            disabled={isProcessing}
+          >
+            <Text style={tw`text-white font-tussi text-xs`}>Done</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+    return (
+      <View
+        style={tw`flex-row gap-4 items-center`}
+        onTouchEnd={(e) => e.stopPropagation()}
+      >
+        {/* Skip Button */}
+        <TouchableOpacity
+          style={[
+            tw`bg-white px-6 py-[6px] rounded-sm`,
+            isProcessing && tw`opacity-50`,
+          ]}
+          onPress={handleUndo}
+          disabled={isProcessing}
+        >
+          <Text style={tw`text-black font-tussi text-xs`}>Undo</Text>
+        </TouchableOpacity>
+      </View>
+    );
   };
 
   return (
@@ -99,7 +163,7 @@ export function TaskCard({
         style={tw`rounded-md border border-white/5`}
       >
         <TouchableHighlight onPress={() => canUpdate && setShowOverlay(true)}>
-          <View style={tw`flex-row p-3`}>
+          <View style={tw`flex-row p-3 items-center`}>
             {IconComponent && (
               <View style={tw`mr-3`}>
                 <IconComponent size={24} color={categoryColor} />
@@ -144,41 +208,7 @@ export function TaskCard({
               {isProcessing ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />
               ) : (
-                showOverlay && (
-                  <View
-                    style={tw`flex-row gap-4 items-center`}
-                    onTouchEnd={(e) => e.stopPropagation()}
-                  >
-                    {/* Skip Button */}
-                    <TouchableOpacity
-                      style={[
-                        tw`bg-white px-6 py-[6px] rounded-sm`,
-                        isProcessing && tw`opacity-50`,
-                      ]}
-                      onPress={handleSkip}
-                      disabled={isProcessing}
-                    >
-                      <Text style={tw`text-black font-tussi text-xs`}>
-                        {isProcessing ? "..." : "Skip"}
-                      </Text>
-                    </TouchableOpacity>
-
-                    {/* Done Button */}
-                    <TouchableOpacity
-                      style={[
-                        tw`px-6 py-[6px] rounded-sm`,
-                        { backgroundColor: Colors.primary },
-                        isProcessing && tw`opacity-50`,
-                      ]}
-                      onPress={handleDone}
-                      disabled={isProcessing}
-                    >
-                      <Text style={tw`text-white font-tussi text-xs`}>
-                        {isProcessing ? "..." : "Done"}
-                      </Text>
-                    </TouchableOpacity>
-                  </View>
-                )
+                showOverlay && getOverlayButtons()
               )}
             </BlurView>
           </Animated.View>

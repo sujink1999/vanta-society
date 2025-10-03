@@ -72,6 +72,7 @@ export function useWinterArcStats(
 
   useEffect(() => {
     const calculateStats = async () => {
+      setStats((prev) => ({ ...prev, isLoading: true }));
       if (!user?.winterArcStartDate) {
         setStats((prev) => ({ ...prev, isLoading: false }));
         return;
@@ -248,6 +249,20 @@ export function useWinterArcStats(
     };
 
     calculateStats();
+
+    // Subscribe to storage changes
+    const unsubscribeScore = scoreStorageManager.subscribe(() => {
+      calculateStats();
+    });
+
+    const unsubscribeTask = taskStorageManager.subscribe(() => {
+      calculateStats();
+    });
+
+    return () => {
+      unsubscribeScore();
+      unsubscribeTask();
+    };
   }, [user, routine]);
 
   return stats;

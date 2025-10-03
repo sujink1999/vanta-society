@@ -15,6 +15,7 @@ class ScoreStorageManager {
   private static instance: ScoreStorageManager;
   private cache: VitalScores | null = null;
   private isInitialized = false;
+  private listeners: Set<() => void> = new Set();
 
   private constructor() {}
 
@@ -48,6 +49,7 @@ class ScoreStorageManager {
     await this.initialize();
     this.cache = scores;
     await this.saveToStorage();
+    this.notifyListeners();
   }
 
   async incrementScore(vital: keyof Omit<VitalScores, 'society'>, amount: number): Promise<VitalScores> {
@@ -70,6 +72,7 @@ class ScoreStorageManager {
     ) / 5;
 
     await this.saveToStorage();
+    this.notifyListeners();
     return this.cache;
   }
 
@@ -103,6 +106,7 @@ class ScoreStorageManager {
     ) / 5;
 
     await this.saveToStorage();
+    this.notifyListeners();
     return this.cache;
   }
 
@@ -110,12 +114,25 @@ class ScoreStorageManager {
     await this.initialize();
     this.cache = initialScores;
     await this.saveToStorage();
+    this.notifyListeners();
   }
 
   async clearScores(): Promise<void> {
     await this.initialize();
     this.cache = null;
     await AsyncStorage.removeItem(STORAGE_KEY);
+    this.notifyListeners();
+  }
+
+  subscribe(listener: () => void): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  private notifyListeners(): void {
+    this.listeners.forEach(listener => listener());
   }
 
   private async saveToStorage(): Promise<void> {
