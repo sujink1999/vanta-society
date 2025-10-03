@@ -8,7 +8,7 @@ interface GlobalContextType {
   routine: UserRoutine[];
   hasCompletedQuestionnaire: boolean;
   isAuthenticating: boolean;
-  refetchUser: () => Promise<void>;
+  refetchUser: (checkBackup?: boolean) => Promise<void>;
   refetchUserSilently: () => Promise<void>;
   winterArcStats: {
     currentScores: {

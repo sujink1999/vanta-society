@@ -3,9 +3,16 @@ import { View, Text } from 'react-native';
 import { useAppFonts } from '@/constants/useFonts';
 import { GlobalProvider } from '@/contexts/GlobalContext';
 import AuthNavigator from '@/components/AuthNavigator';
+import { dataSyncManager } from '@/services/storage/DataSyncManager';
+import { useEffect } from 'react';
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
+
+  // Initialize sync manager on app startup
+  useEffect(() => {
+    dataSyncManager.initialize();
+  }, []);
 
   if (!fontsLoaded) {
     return (

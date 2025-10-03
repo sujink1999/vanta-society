@@ -107,3 +107,74 @@ export async function completeOnboarding(): Promise<ApiResponse<{
     user: User;
   }>>('/users/complete-onboarding');
 }
+
+// POST /users/sync-data
+export async function syncData(request: {
+  backupData: {
+    scores: {
+      discipline: number;
+      mindset: number;
+      strength: number;
+      momentum: number;
+      confidence: number;
+      society: number;
+    };
+    completions: any;
+    lastSync: string;
+  };
+}): Promise<ApiResponse<{
+  updatedScores: {
+    discipline: number;
+    mindset: number;
+    strength: number;
+    momentum: number;
+    confidence: number;
+    society: number;
+  };
+  lastSynced: string;
+}>> {
+  return await apiClient.post<ApiResponse<{
+    updatedScores: {
+      discipline: number;
+      mindset: number;
+      strength: number;
+      momentum: number;
+      confidence: number;
+      society: number;
+    };
+    lastSynced: string;
+  }>>('/users/sync-data', request);
+}
+
+// GET /users/backup-data
+export async function getBackupData(): Promise<ApiResponse<{
+  backupData: {
+    scores: {
+      discipline: number;
+      mindset: number;
+      strength: number;
+      momentum: number;
+      confidence: number;
+      society: number;
+    };
+    completions: any;
+    lastSync: string;
+  };
+  lastSyncDate: string;
+}>> {
+  return await apiClient.get<ApiResponse<{
+    backupData: {
+      scores: {
+        discipline: number;
+        mindset: number;
+        strength: number;
+        momentum: number;
+        confidence: number;
+        society: number;
+      };
+      completions: any;
+      lastSync: string;
+    };
+    lastSyncDate: string;
+  }>>('/users/backup-data');
+}

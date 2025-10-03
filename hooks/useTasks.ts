@@ -1,6 +1,6 @@
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { UserRoutine } from "@/services/api/types";
-import { TaskStatus, taskStorageManager } from "@/services/storage/TaskStorageManager";
+import { TaskStatus, TaskCompletion, taskStorageManager } from "@/services/storage/TaskStorageManager";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 
@@ -11,7 +11,7 @@ interface TaskForDate extends UserRoutine {
 
 export function useTasks(date: string, filterBy?: 'todos' | 'done' | 'skipped'): TaskForDate[] {
   const { routine } = useGlobalContext();
-  const [completionData, setCompletionData] = useState<{ [userRoutineId: string]: TaskStatus }>({});
+  const [completionData, setCompletionData] = useState<{ [userRoutineId: string]: TaskCompletion }>({});
 
   // Load completion data for the date
   useEffect(() => {
@@ -39,7 +39,7 @@ export function useTasks(date: string, filterBy?: 'todos' | 'done' | 'skipped'):
       .map((task) => ({
         ...task,
         isScheduledForDate: task.cadence[cadenceIndex] === 1, // Check if task is scheduled for this day
-        status: completionData[task.id.toString()] || null,
+        status: completionData[task.id.toString()]?.status || null,
       }))
       .filter((task) => task.isScheduledForDate); // Only return tasks scheduled for this date
 

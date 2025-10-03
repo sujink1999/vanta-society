@@ -1,5 +1,6 @@
 import { User, UserRoutine } from "@/services/api/types";
 import { taskStorageManager } from "@/services/storage/TaskStorageManager";
+import { scoreStorageManager } from "@/services/storage/ScoreStorageManager";
 import moment from "moment";
 import { useEffect, useState } from "react";
 
@@ -84,14 +85,15 @@ export function useWinterArcStats(
           Math.min(66, today.diff(startDate, "days") + 1)
         );
 
-        // Get scores from user object
-        const currentScores = {
-          discipline: user.disciplineScore || 0,
-          mindset: user.mindsetScore || 0,
-          strength: user.strengthScore || 0,
-          momentum: user.momentumScore || 0,
-          confidence: user.confidenceScore || 0,
-          society: user.societyScore || 0,
+        // Get scores from local storage
+        const localScores = await scoreStorageManager.getScores();
+        const currentScores = localScores || {
+          discipline: 0,
+          mindset: 0,
+          strength: 0,
+          momentum: 0,
+          confidence: 0,
+          society: 0,
         };
 
         const oldScores = {
@@ -117,7 +119,7 @@ export function useWinterArcStats(
             .format("YYYY-MM-DD");
           const dayTasks = allCompletions[date] || {};
           const doneCount = Object.values(dayTasks).filter(
-            (status) => status === "done"
+            (completion) => completion.status === "done"
           ).length;
 
           cumulativeTotal += doneCount;
@@ -129,7 +131,7 @@ export function useWinterArcStats(
         const todayDate = today.format("YYYY-MM-DD");
         const todayTasks = allCompletions[todayDate] || {};
         const todayCompletedCount = Object.values(todayTasks).filter(
-          (status) => status === "done"
+          (completion) => completion.status === "done"
         ).length;
 
         let streak = 0;
@@ -143,7 +145,7 @@ export function useWinterArcStats(
             .format("YYYY-MM-DD");
           const dayTasks = allCompletions[date] || {};
           const completedCount = Object.values(dayTasks).filter(
-            (status) => status === "done"
+            (completion) => completion.status === "done"
           ).length;
 
           if (completedCount > 0) {
@@ -159,7 +161,7 @@ export function useWinterArcStats(
           const date = today.clone().subtract(i, "days").format("YYYY-MM-DD");
           const dayTasks = allCompletions[date] || {};
           const completedCount = Object.values(dayTasks).filter(
-            (status) => status === "done"
+            (completion) => completion.status === "done"
           ).length;
           streakCadenceLast7Days.push(completedCount > 0 ? 1 : 0);
         }

@@ -4,9 +4,14 @@ const STORAGE_KEY = 'task_completions';
 
 export type TaskStatus = 'done' | 'skipped';
 
+export interface TaskCompletion {
+  status: TaskStatus;
+  timestamp: string;
+}
+
 export interface TaskCompletionData {
   [date: string]: {
-    [userRoutineId: string]: TaskStatus;
+    [userRoutineId: string]: TaskCompletion;
   };
 }
 
@@ -40,6 +45,11 @@ class TaskStorageManager {
 
   async getTaskStatus(date: string, userRoutineId: number): Promise<TaskStatus | null> {
     await this.initialize();
+    return this.cache[date]?.[userRoutineId.toString()]?.status || null;
+  }
+
+  async getTaskCompletion(date: string, userRoutineId: number): Promise<TaskCompletion | null> {
+    await this.initialize();
     return this.cache[date]?.[userRoutineId.toString()] || null;
   }
 
@@ -50,7 +60,10 @@ class TaskStorageManager {
       this.cache[date] = {};
     }
 
-    this.cache[date][userRoutineId.toString()] = status;
+    this.cache[date][userRoutineId.toString()] = {
+      status,
+      timestamp: new Date().toISOString(),
+    };
     await this.saveToStorage();
   }
 
@@ -69,7 +82,7 @@ class TaskStorageManager {
     }
   }
 
-  async getCompletionsForDate(date: string): Promise<{ [userRoutineId: string]: TaskStatus }> {
+  async getCompletionsForDate(date: string): Promise<{ [userRoutineId: string]: TaskCompletion }> {
     await this.initialize();
     return this.cache[date] || {};
   }
@@ -79,9 +92,9 @@ class TaskStorageManager {
     const dayData = this.cache[date] || {};
 
     const stats = { done: 0, skipped: 0 };
-    Object.values(dayData).forEach(status => {
-      if (status === 'done') stats.done++;
-      if (status === 'skipped') stats.skipped++;
+    Object.values(dayData).forEach(completion => {
+      if (completion.status === 'done') stats.done++;
+      if (completion.status === 'skipped') stats.skipped++;
     });
 
     return stats;

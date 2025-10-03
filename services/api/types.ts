@@ -37,6 +37,7 @@ export interface User {
   physicalStats: Record<string, any> | null;
   winterArcStartDate: string | null;
   onboardingDone: boolean;
+  lastSyncDate: string | null;
 }
 
 export interface UserScores {

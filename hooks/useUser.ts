@@ -1,6 +1,8 @@
 import { apiClient } from "@/services/api/client";
 import { User, UserRoutine } from "@/services/api/types";
 import { getProfile } from "@/services/api/users";
+import { dataSyncManager } from "@/services/storage/DataSyncManager";
+import { scoreStorageManager } from "@/services/storage/ScoreStorageManager";
 import { useCallback, useEffect, useState } from "react";
 
 interface UseUserReturn {
@@ -19,7 +21,7 @@ export function useUser(): UseUserReturn {
     useState(false);
   const [isAuthenticating, setIsAuthenticating] = useState(true);
 
-  const fetchUser = useCallback(async () => {
+  const fetchUser = useCallback(async (checkBackup = false) => {
     try {
       const isAuthenticated = await apiClient.isAuthenticated();
 
@@ -34,9 +36,36 @@ export function useUser(): UseUserReturn {
       const response = await getProfile();
 
       if (response.success) {
-        setUser(response.data.user);
-        setRoutine(response.data.routine);
-        setHasCompletedQuestionnaire(response.data.hasCompletedQuestionnaire);
+        const {
+          user: userData,
+          routine,
+          hasCompletedQuestionnaire,
+        } = response.data;
+        setUser(userData);
+        setRoutine(routine);
+        setHasCompletedQuestionnaire(hasCompletedQuestionnaire);
+
+        if (checkBackup) {
+          await dataSyncManager.initialize();
+
+          // Try to restore from backup if it exists
+          if (userData.lastSyncDate) {
+            await dataSyncManager.restoreFromBackup();
+          } else if (hasCompletedQuestionnaire) {
+            // No backup exists, initialize scores from user data if not already present
+            const localScores = await scoreStorageManager.getScores();
+            if (!localScores) {
+              await scoreStorageManager.initializeScores({
+                discipline: userData.disciplineScore || 0,
+                mindset: userData.mindsetScore || 0,
+                strength: userData.strengthScore || 0,
+                momentum: userData.momentumScore || 0,
+                confidence: userData.confidenceScore || 0,
+                society: userData.societyScore || 0,
+              });
+            }
+          }
+        }
       } else {
         // Token might be invalid, clear it
         await apiClient.clearToken();
@@ -56,10 +85,13 @@ export function useUser(): UseUserReturn {
     }
   }, []);
 
-  const refetchUser = useCallback(async () => {
-    setIsAuthenticating(true);
-    await fetchUser();
-  }, [fetchUser]);
+  const refetchUser = useCallback(
+    async (checkBackup = false) => {
+      setIsAuthenticating(true);
+      await fetchUser(checkBackup);
+    },
+    [fetchUser]
+  );
 
   const refetchUserSilently = useCallback(async () => {
     await fetchUser();

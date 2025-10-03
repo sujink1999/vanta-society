@@ -2,7 +2,6 @@ import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { GradientText } from "@/components/GradientText";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -16,10 +15,7 @@ export default function LoginScreen() {
       setIsLoading(true);
 
       // Refetch user data to update context
-      await refetchUser();
-
-      // Navigate to main app
-      router.replace("/(tabs)");
+      await refetchUser(true);
     } catch (error) {
       console.error("Error after sign-in:", error);
     } finally {
