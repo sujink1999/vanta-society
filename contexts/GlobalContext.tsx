@@ -1,0 +1,75 @@
+import { useUser } from "@/hooks/useUser";
+import { useWinterArcStats } from "@/hooks/useWinterArcStats";
+import { User, UserRoutine } from "@/services/api/types";
+import React, { createContext, ReactNode, useContext } from "react";
+
+interface GlobalContextType {
+  user: User | null;
+  routine: UserRoutine[];
+  hasCompletedQuestionnaire: boolean;
+  isAuthenticating: boolean;
+  refetchUser: () => Promise<void>;
+  refetchUserSilently: () => Promise<void>;
+  winterArcStats: {
+    currentScores: {
+      discipline: number;
+      mindset: number;
+      strength: number;
+      momentum: number;
+      confidence: number;
+      society: number;
+    };
+    oldScores: {
+      discipline: number;
+      mindset: number;
+      strength: number;
+      momentum: number;
+      confidence: number;
+      society: number;
+    };
+    potentialScores: {
+      discipline: number;
+      mindset: number;
+      strength: number;
+      momentum: number;
+      confidence: number;
+      society: number;
+    };
+    streak: number;
+    streakCadenceLast7Days: number[];
+    tasksCompletedCumulative: number[];
+    isLoading: boolean;
+  };
+}
+
+const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
+
+interface GlobalProviderProps {
+  children: ReactNode;
+}
+
+export function GlobalProvider({ children }: GlobalProviderProps) {
+  const userState = useUser();
+  const winterArcStats = useWinterArcStats(userState.user, userState.routine);
+
+  console.log("winterArcStats", winterArcStats);
+
+  const contextValue = {
+    ...userState,
+    winterArcStats,
+  };
+
+  return (
+    <GlobalContext.Provider value={contextValue}>
+      {children}
+    </GlobalContext.Provider>
+  );
+}
+
+export function useGlobalContext(): GlobalContextType {
+  const context = useContext(GlobalContext);
+  if (!context) {
+    throw new Error("useGlobalContext must be used within a GlobalProvider");
+  }
+  return context;
+}

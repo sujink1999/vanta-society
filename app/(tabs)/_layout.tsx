@@ -1,33 +1,109 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import {
+  CommunityIcon,
+  ToolsIcon,
+  WinterArcIcon,
+} from "@/components/icons/TabIcons";
+import { Colors } from "@/constants/theme";
+import { BlurView } from "expo-blur";
+import { Tabs } from "expo-router";
+import { View } from "react-native";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+const AnimatedTabIcon = ({
+  IconComponent,
+  focused,
+  color,
+}: {
+  IconComponent: any;
+  focused: boolean;
+  color: string;
+}) => {
+  return (
+    <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
+      <IconComponent size={20} color={color} />
+    </View>
+  );
+};
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: Colors.primary,
+        tabBarInactiveTintColor: "#666666",
+        tabBarStyle: {
+          backgroundColor: "transparent",
+          // borderRightWidth: 1,
+          // borderLeftWidth: 1,
+          borderColor: "#ffffff20",
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          position: "absolute",
+          overflow: "hidden",
+        },
+        tabBarBackground: () => (
+          <BlurView
+            intensity={20}
+            style={{
+              flex: 1,
+              backgroundColor: "rgba(0, 0, 0, 0.8)",
+            }}
+          />
+        ),
+        tabBarItemStyle: {
+          paddingTop: 10,
+        },
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+      }}
+      safeAreaInsets={{
+        bottom: 20,
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="winterarc"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, focused }) => (
+            <AnimatedTabIcon
+              IconComponent={WinterArcIcon}
+              focused={focused}
+              color={color}
+              key="winterarc"
+            />
+          ),
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="community"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, focused }) => (
+            <AnimatedTabIcon
+              IconComponent={CommunityIcon}
+              focused={focused}
+              color={color}
+              key="community"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="tools"
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, focused }) => (
+            <AnimatedTabIcon
+              IconComponent={ToolsIcon}
+              focused={focused}
+              color={color}
+              key="tools"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="profile"
+        options={{
+          href: null,
         }}
       />
     </Tabs>

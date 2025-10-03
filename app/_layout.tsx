@@ -1,24 +1,32 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { View, Text } from 'react-native';
+import { useAppFonts } from '@/constants/useFonts';
+import { GlobalProvider } from '@/contexts/GlobalContext';
+import AuthNavigator from '@/components/AuthNavigator';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const fontsLoaded = useAppFonts();
+
+  if (!fontsLoaded) {
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000' }}>
+        <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Loading Vanta Society...</Text>
+      </View>
+    );
+  }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <View style={{ flex: 1, backgroundColor: '#000000' }}>
+      <GlobalProvider>
+        <AuthNavigator>
+          <Stack screenOptions={{ contentStyle: { backgroundColor: '#000000' } }}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
+            <Stack.Screen name="(winterarc)" options={{ headerShown: false }} />
+          </Stack>
+        </AuthNavigator>
+      </GlobalProvider>
+    </View>
   );
 }
