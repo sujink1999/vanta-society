@@ -27,11 +27,11 @@ export function useTaskActions(date: string) {
 
       // Update local scores with task impacts
       const scoreImpacts = {
-        discipline: task.controlImpact || 0,
-        mindset: task.clarityImpact || 0,
-        strength: task.powerImpact || 0,
-        momentum: task.flowImpact || 0,
-        confidence: task.auraImpact || 0,
+        discipline: task.disciplineImpact || 0,
+        mindset: task.mindsetImpact || 0,
+        strength: task.strengthImpact || 0,
+        momentum: task.momentumImpact || 0,
+        confidence: task.confidenceImpact || 0,
       };
 
       await scoreStorageManager.incrementMultipleScores(scoreImpacts);
@@ -93,11 +93,11 @@ export function useTaskActions(date: string) {
         if (task) {
           // Decrement scores by negating the impacts
           const scoreImpacts = {
-            discipline: -(task.controlImpact || 0),
-            mindset: -(task.clarityImpact || 0),
-            strength: -(task.powerImpact || 0),
-            momentum: -(task.flowImpact || 0),
-            confidence: -(task.auraImpact || 0),
+            discipline: -(task.disciplineImpact || 0),
+            mindset: -(task.mindsetImpact || 0),
+            strength: -(task.strengthImpact || 0),
+            momentum: -(task.momentumImpact || 0),
+            confidence: -(task.confidenceImpact || 0),
           };
 
           await scoreStorageManager.incrementMultipleScores(scoreImpacts);

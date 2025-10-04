@@ -173,11 +173,11 @@ export function useWinterArcStats(
 
           // Calculate total potential gains from remaining tasks
           let totalPotentialGains = {
-            control: currentScores.discipline || 0,
-            clarity: currentScores.mindset || 0,
-            power: currentScores.strength || 0,
-            flow: currentScores.momentum || 0,
-            aura: currentScores.confidence || 0,
+            discipline: currentScores.discipline || 0,
+            mindset: currentScores.mindset || 0,
+            strength: currentScores.strength || 0,
+            momentum: currentScores.momentum || 0,
+            confidence: currentScores.confidence || 0,
           };
 
           // For each remaining day, calculate potential gains from all active tasks
@@ -191,11 +191,11 @@ export function useWinterArcStats(
                 // Only add if not already completed
                 const dateStr = dayDate.format("YYYY-MM-DD");
                 // Assume task not completed if we don't have detailed task completion data
-                totalPotentialGains.control += task.controlImpact || 0;
-                totalPotentialGains.clarity += task.clarityImpact || 0;
-                totalPotentialGains.power += task.powerImpact || 0;
-                totalPotentialGains.flow += task.flowImpact || 0;
-                totalPotentialGains.aura += task.auraImpact || 0;
+                totalPotentialGains.discipline += task.disciplineImpact || 0;
+                totalPotentialGains.mindset += task.mindsetImpact || 0;
+                totalPotentialGains.strength += task.strengthImpact || 0;
+                totalPotentialGains.momentum += task.momentumImpact || 0;
+                totalPotentialGains.confidence += task.confidenceImpact || 0;
               }
             });
           }
@@ -209,23 +209,23 @@ export function useWinterArcStats(
           return {
             discipline: Math.min(
               100,
-              (currentScores.discipline || 0) + totalPotentialGains.control
+              (currentScores.discipline || 0) + totalPotentialGains.discipline
             ),
             mindset: Math.min(
               100,
-              (currentScores.mindset || 0) + totalPotentialGains.clarity
+              (currentScores.mindset || 0) + totalPotentialGains.mindset
             ),
             strength: Math.min(
               100,
-              (currentScores.strength || 0) + totalPotentialGains.power
+              (currentScores.strength || 0) + totalPotentialGains.strength
             ),
             momentum: Math.min(
               100,
-              (currentScores.momentum || 0) + totalPotentialGains.flow
+              (currentScores.momentum || 0) + totalPotentialGains.momentum
             ),
             confidence: Math.min(
               100,
-              (currentScores.confidence || 0) + totalPotentialGains.aura
+              (currentScores.confidence || 0) + totalPotentialGains.confidence
             ),
             society: Math.min(100, (currentScores.society || 0) + societyScore),
           };

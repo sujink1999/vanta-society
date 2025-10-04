@@ -136,11 +136,11 @@ export interface Task {
   options: TaskOption[];
   isMandatory: boolean;
   canCustomizeCadence: boolean;
-  controlImpact: number;
-  clarityImpact: number;
-  powerImpact: number;
-  flowImpact: number;
-  auraImpact: number;
+  disciplineImpact: number;
+  mindsetImpact: number;
+  strengthImpact: number;
+  momentumImpact: number;
+  confidenceImpact: number;
   createdAt: string;
 }
 
@@ -163,11 +163,11 @@ export interface UserRoutine {
   taskOptions: TaskOption[];
   isMandatory: boolean;
   canCustomizeCadence: boolean;
-  controlImpact: number;
-  clarityImpact: number;
-  powerImpact: number;
-  flowImpact: number;
-  auraImpact: number;
+  disciplineImpact: number;
+  mindsetImpact: number;
+  strengthImpact: number;
+  momentumImpact: number;
+  confidenceImpact: number;
 }
 
 export interface RoutineTaskRequest {
@@ -187,11 +187,11 @@ export interface TaskCompletion {
   taskId: number;
   userRoutineId: number;
   completedAt: string;
-  controlGained: number;
-  clarityGained: number;
-  powerGained: number;
-  flowGained: number;
-  auraGained: number;
+  disciplineGained: number;
+  mindsetGained: number;
+  strengthGained: number;
+  momentumGained: number;
+  confidenceGained: number;
   completionData: any;
   taskName?: string;
   taskCategory?: string;
@@ -206,18 +206,18 @@ export interface TaskCompletionResponse {
   completion: TaskCompletion;
   scoreUpdate: {
     gains: {
-      controlGained: number;
-      clarityGained: number;
-      powerGained: number;
-      flowGained: number;
-      auraGained: number;
+      disciplineGained: number;
+      mindsetGained: number;
+      strengthGained: number;
+      momentumGained: number;
+      confidenceGained: number;
     };
     newScores: {
-      control: number;
-      clarity: number;
-      power: number;
-      flow: number;
-      aura: number;
+      discipline: number;
+      mindset: number;
+      strength: number;
+      momentum: number;
+      confidence: number;
       society: number;
     };
   };
@@ -226,11 +226,11 @@ export interface TaskCompletionResponse {
 export interface CompletionStats {
   totalCompletions: number;
   totalScoreGained: {
-    control: number;
-    clarity: number;
-    power: number;
-    flow: number;
-    aura: number;
+    discipline: number;
+    mindset: number;
+    strength: number;
+    momentum: number;
+    confidence: number;
   };
   completionsByCategory: Record<string, number>;
   completionsByDay: Record<string, number>;

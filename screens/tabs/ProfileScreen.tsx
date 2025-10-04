@@ -54,15 +54,6 @@ export default function ProfileScreen() {
             </GradientText>
           </View>
 
-          {/* Vitals Comparison */}
-          <View style={tw` w-full rounded-md pb-4 `}>
-            <VitalsComparison
-              currentScores={winterArcStats.currentScores}
-              potentialScores={winterArcStats.potentialScores}
-              oldScores={winterArcStats.oldScores}
-            />
-          </View>
-
           {/* Profile Metrics */}
           <View style={tw`w-full`}>
             <ProfileMetrics
@@ -72,6 +63,15 @@ export default function ProfileScreen() {
               )}
               streak={winterArcStats.streak}
               streakCadenceLast7Days={winterArcStats.streakCadenceLast7Days}
+            />
+          </View>
+
+          {/* Vitals Comparison */}
+          <View style={tw` w-full rounded-md pb-4 `}>
+            <VitalsComparison
+              currentScores={winterArcStats.currentScores}
+              potentialScores={winterArcStats.potentialScores}
+              oldScores={winterArcStats.oldScores}
             />
           </View>
 

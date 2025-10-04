@@ -62,11 +62,11 @@ export function CategoryEditor({
           createdAt: new Date().toISOString(),
           isMandatory: task.isMandatory,
           canCustomizeCadence: task.canCustomizeCadence,
-          controlImpact: task.controlImpact || 0,
-          clarityImpact: task.clarityImpact || 0,
-          powerImpact: task.powerImpact || 0,
-          flowImpact: task.flowImpact || 0,
-          auraImpact: task.auraImpact || 0,
+          disciplineImpact: task.disciplineImpact || 0,
+          mindsetImpact: task.mindsetImpact || 0,
+          strengthImpact: task.strengthImpact || 0,
+          momentumImpact: task.momentumImpact || 0,
+          confidenceImpact: task.confidenceImpact || 0,
         };
         tasks.push(mandatoryTask);
       }
@@ -208,11 +208,11 @@ export function CategoryEditor({
                       createdAt: new Date().toISOString(),
                       isMandatory: task.isMandatory,
                       canCustomizeCadence: task.canCustomizeCadence,
-                      controlImpact: task.controlImpact || 0,
-                      clarityImpact: task.clarityImpact || 0,
-                      powerImpact: task.powerImpact || 0,
-                      flowImpact: task.flowImpact || 0,
-                      auraImpact: task.auraImpact || 0,
+                      disciplineImpact: task.disciplineImpact || 0,
+                      mindsetImpact: task.mindsetImpact || 0,
+                      strengthImpact: task.strengthImpact || 0,
+                      momentumImpact: task.momentumImpact || 0,
+                      confidenceImpact: task.confidenceImpact || 0,
                     };
                     setSelectedTasks((prev) => [...prev, newTask]);
                   }
