@@ -648,3 +648,178 @@ export const TiredIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
     />
   </Svg>
 );
+
+// VITAL ICONS
+
+export const DisciplineIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M3 3H10V10H3V3Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+      opacity="0.3"
+    />
+    <Path
+      d="M14 3H21V10H14V3Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M14 14H21V21H14V14Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+      opacity="0.3"
+    />
+    <Path
+      d="M3 14H10V21H3V14Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const MindsetIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M12 3C7.02944 3 3 7.02944 3 12C3 14.5 4 16.5 5.5 18C7 19.5 9 20.5 9 20.5V21C9 21.5304 9.21071 22.0391 9.58579 22.4142C9.96086 22.7893 10.4696 23 11 23H13C13.5304 23 14.0391 22.7893 14.4142 22.4142C14.7893 22.0391 15 21.5304 15 21V20.5C15 20.5 17 19.5 18.5 18C20 16.5 21 14.5 21 12C21 7.02944 16.9706 3 12 3Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M12 8V12L14 14"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const StrengthIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M6.5 6H4.5C3.67157 6 3 6.67157 3 7.5V16.5C3 17.3284 3.67157 18 4.5 18H6.5"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M17.5 6H19.5C20.3284 6 21 6.67157 21 7.5V16.5C21 17.3284 20.3284 18 19.5 18H17.5"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M6.5 9H8.5C9.32843 9 10 9.67157 10 10.5V13.5C10 14.3284 9.32843 15 8.5 15H6.5V9Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+      opacity="0.3"
+    />
+    <Path
+      d="M17.5 9H15.5C14.6716 9 14 9.67157 14 10.5V13.5C14 14.3284 14.6716 15 15.5 15H17.5V9Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+      opacity="0.3"
+    />
+    <Line
+      x1="10"
+      y1="12"
+      x2="14"
+      y2="12"
+      stroke={color}
+      strokeWidth="2.5"
+      strokeLinecap="round"
+    />
+  </Svg>
+);
+
+export const MomentumIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M12 2L12 12L22 12"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M12 12L20 4"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M8 12C8 14.1217 8.84285 16.1566 10.3431 17.6569C11.8434 19.1571 13.8783 20 16 20"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      opacity="0.5"
+    />
+    <Path
+      d="M4 12C4 16.4183 7.58172 20 12 20"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      opacity="0.3"
+    />
+  </Svg>
+);
+
+export const ConfidenceIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M12 2L3 7V11C3 16 6 19.5 12 22C18 19.5 21 16 21 11V7L12 2Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+      opacity="0.2"
+    />
+    <Path
+      d="M9 12L11 14L15 10"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);

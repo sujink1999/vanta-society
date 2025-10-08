@@ -2,10 +2,12 @@ import { useGlobalContext } from "@/contexts/GlobalContext";
 import { dataSyncManager } from "@/services/storage/DataSyncManager";
 import { scoreStorageManager } from "@/services/storage/ScoreStorageManager";
 import { taskStorageManager } from "@/services/storage/TaskStorageManager";
+import { VitalType } from "@/types/notification";
 import { useState } from "react";
 
 export function useTaskActions(date: string) {
-  const { routine, addNotification } = useGlobalContext();
+  const { routine, addVitalNotification, winterArcStats } =
+    useGlobalContext();
   const [loading, setLoading] = useState<{ [taskId: string]: boolean }>({});
   const [error, setError] = useState<string | null>(null);
 
@@ -34,7 +36,29 @@ export function useTaskActions(date: string) {
         confidence: task.confidenceImpact || 0,
       };
 
+      // Find the vital with max impact BEFORE updating scores
+      const maxVital = Object.entries(scoreImpacts).reduce((max, [vital, impact]) => {
+        return impact > max.impact ? { vital: vital as VitalType, impact } : max;
+      }, { vital: "discipline" as VitalType, impact: 0 });
+
+      // Get previous score before updating
+      const previousScore = maxVital.impact > 0
+        ? winterArcStats.currentScores[maxVital.vital as keyof typeof winterArcStats.currentScores]
+        : 0;
+
+      // Now update the scores
       await scoreStorageManager.incrementMultipleScores(scoreImpacts);
+
+      // Show vital notification if there's an impact
+      if (maxVital.impact > 0) {
+        const currentScore = previousScore + maxVital.impact;
+        addVitalNotification(
+          maxVital.vital,
+          maxVital.impact,
+          currentScore,
+          previousScore
+        );
+      }
 
       // Trigger background sync to backend
       dataSyncManager.syncToBackend().catch((err) => {

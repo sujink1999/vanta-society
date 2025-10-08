@@ -1,12 +1,24 @@
 import {
   CheckIcon,
+  ConfidenceIcon,
+  DisciplineIcon,
   InfoIcon,
+  MindsetIcon,
+  MomentumIcon,
+  StrengthIcon,
+  VitalIcon,
   WarningIcon,
   XIcon,
 } from "@/components/icons/Icons";
+import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
-import { Notification, NotificationType } from "@/types/notification";
+import {
+  Notification,
+  NotificationType,
+  VitalNotification,
+  VitalType,
+} from "@/types/notification";
 import { BlurView } from "expo-blur";
 import React, { useCallback, useEffect, useRef } from "react";
 import { Animated, Easing, Text, TouchableOpacity, View } from "react-native";
@@ -17,11 +29,26 @@ interface NotificationItemProps {
   onDismiss: (id: string) => void;
 }
 
+interface VitalNotificationItemProps {
+  notification: VitalNotification;
+  onDismiss: (id: string) => void;
+}
+
 const NOTIFICATION_COLORS = {
   success: "#22c55e",
   error: "#ef4444",
   info: "#3b82f6",
   warning: "#f59e0b",
+  vital: "#FF5C2A",
+};
+
+const VITAL_NAMES: Record<VitalType, string> = {
+  discipline: "Discipline",
+  mindset: "Mindset",
+  strength: "Strength",
+  momentum: "Momentum",
+  confidence: "Confidence",
+  society: "Society",
 };
 
 function NotificationIcon({ type }: { type: NotificationType }) {
@@ -36,6 +63,31 @@ function NotificationIcon({ type }: { type: NotificationType }) {
       return <InfoIcon size={20} color={color} />;
     case "warning":
       return <WarningIcon size={20} color={color} />;
+    case "vital":
+      return <CheckIcon size={20} color={color} />;
+  }
+}
+
+function VitalIconComponent({
+  vitalType,
+  size = 24,
+}: {
+  vitalType: VitalType;
+  size?: number;
+}) {
+  switch (vitalType) {
+    case "discipline":
+      return <DisciplineIcon size={size} color={Colors.primary} />;
+    case "mindset":
+      return <MindsetIcon size={size} color={Colors.primary} />;
+    case "strength":
+      return <StrengthIcon size={size} color={Colors.primary} />;
+    case "momentum":
+      return <MomentumIcon size={size} color={Colors.primary} />;
+    case "confidence":
+      return <ConfidenceIcon size={size} color={Colors.primary} />;
+    case "society":
+      return <VitalIcon size={size} color={Colors.primary} />;
   }
 }
 
@@ -138,6 +190,163 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
   );
 }
 
+function VitalNotificationItem({
+  notification,
+  onDismiss,
+}: VitalNotificationItemProps) {
+  const slideYAnim = useRef(new Animated.Value(-100)).current;
+  const opacityAnim = useRef(new Animated.Value(0)).current;
+  const scaleAnim = useRef(new Animated.Value(0.8)).current;
+  const progressBarAnim = useRef(new Animated.Value(0 / 100)).current;
+
+  const vitalName = VITAL_NAMES[notification.vitalType];
+
+  const handleDismiss = useCallback(() => {
+    // Slide out to top, fade out, and scale down
+    Animated.parallel([
+      Animated.timing(slideYAnim, {
+        toValue: -100,
+        duration: 300,
+        easing: Easing.in(Easing.back(1.5)),
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 0.8,
+        duration: 400,
+        easing: Easing.in(Easing.back(1.5)),
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      onDismiss(notification.id);
+    });
+  }, [slideYAnim, opacityAnim, scaleAnim, onDismiss, notification.id]);
+
+  useEffect(() => {
+    // Step 1: Slide in, fade in, and scale up
+    Animated.parallel([
+      Animated.timing(slideYAnim, {
+        toValue: 0,
+        duration: 500,
+        easing: Easing.out(Easing.back(1.5)),
+        useNativeDriver: true,
+      }),
+      Animated.timing(opacityAnim, {
+        toValue: 1,
+        duration: 499,
+        useNativeDriver: true,
+      }),
+      Animated.timing(scaleAnim, {
+        toValue: 1,
+        duration: 450,
+        easing: Easing.out(Easing.back(1.5)),
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      // Step 2: Animate progress bar with delay
+      setTimeout(() => {
+        Animated.timing(progressBarAnim, {
+          toValue: notification.currentScore / 100,
+          duration: 800,
+          easing: Easing.out(Easing.cubic),
+          useNativeDriver: false,
+        }).start();
+      }, 100);
+    });
+
+    // Auto-dismiss after duration
+    if (notification.duration && notification.duration > 0) {
+      const timeout = setTimeout(() => {
+        handleDismiss();
+      }, notification.duration);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [
+    slideYAnim,
+    opacityAnim,
+    scaleAnim,
+    progressBarAnim,
+    notification.duration,
+    notification.currentScore,
+    handleDismiss,
+  ]);
+
+  return (
+    <Animated.View
+      style={[
+        tw`mb-2 relative rounded-md`,
+        {
+          transform: [{ translateY: slideYAnim }, { scale: scaleAnim }],
+          opacity: opacityAnim,
+        },
+      ]}
+    >
+      <BlurView
+        intensity={80}
+        style={tw`border border-white/10 rounded-md `}
+        tint="dark"
+      >
+        <View style={tw`flex-row items-center px-3 py-3`}>
+          {/* Icon on the left */}
+          <View style={tw`mr-5`}>
+            <VitalIconComponent vitalType={notification.vitalType} size={32} />
+          </View>
+
+          {/* Content */}
+          <View style={tw`flex-1`}>
+            {/* Vital name + amount with gradient */}
+            <View style={tw`flex-row items-end mb-2 gap-3`}>
+              <Text style={tw`text-white font-tussi text-sm mb-[1px]`}>
+                {vitalName}
+              </Text>
+
+              <Text style={tw`text-white font-tussi text-base`}>
+                +{notification.amount}
+              </Text>
+            </View>
+
+            {/* Progress bar */}
+            <View style={tw`flex-row items-center`}>
+              <View
+                style={tw`flex-1 h-1.5 bg-white/10 rounded-full overflow-hidden mr-2`}
+              >
+                <Animated.View
+                  style={[
+                    tw`h-full rounded-full`,
+                    {
+                      backgroundColor: Colors.primary,
+                      width: progressBarAnim.interpolate({
+                        inputRange: [0, 1],
+                        outputRange: ["0%", "100%"],
+                      }),
+                    },
+                  ]}
+                />
+              </View>
+              <Text style={tw`text-white/60 font-tussi text-xs`}>
+                {Math.round(notification.currentScore)}
+              </Text>
+            </View>
+          </View>
+
+          {/* Dismiss button */}
+          <TouchableOpacity
+            onPress={handleDismiss}
+            style={tw`ml-2 p-1 absolute -right-2 -top-2 p-1 bg-black/90 border border-white/10 rounded-full `}
+          >
+            <XIcon size={16} color="#979797" />
+          </TouchableOpacity>
+        </View>
+      </BlurView>
+    </Animated.View>
+  );
+}
+
 export function NotificationContainer() {
   const { notifications, removeNotification } = useGlobalContext();
   const insets = useSafeAreaInsets();
@@ -148,16 +357,27 @@ export function NotificationContainer() {
 
   return (
     <View
-      style={[tw`absolute left-0 right-0 px-4 z-50`, { top: insets.top + 8 }]}
+      style={[tw`absolute left-0 right-0 px-2 z-50`, { top: insets.top + 8 }]}
       pointerEvents="box-none"
     >
-      {[...notifications].reverse().map((notification) => (
-        <NotificationItem
-          key={notification.id}
-          notification={notification}
-          onDismiss={removeNotification}
-        />
-      ))}
+      {[...notifications].reverse().map((notification) => {
+        if (notification.type === "vital") {
+          return (
+            <VitalNotificationItem
+              key={notification.id}
+              notification={notification as VitalNotification}
+              onDismiss={removeNotification}
+            />
+          );
+        }
+        return (
+          <NotificationItem
+            key={notification.id}
+            notification={notification}
+            onDismiss={removeNotification}
+          />
+        );
+      })}
     </View>
   );
 }

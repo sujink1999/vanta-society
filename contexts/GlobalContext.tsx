@@ -2,7 +2,12 @@ import { useNotifications } from "@/hooks/useNotifications";
 import { useUser } from "@/hooks/useUser";
 import { useWinterArcStats } from "@/hooks/useWinterArcStats";
 import { User, UserRoutine } from "@/services/api/types";
-import { Notification, NotificationType } from "@/types/notification";
+import {
+  Notification,
+  NotificationType,
+  VitalNotification,
+  VitalType,
+} from "@/types/notification";
 import React, { createContext, ReactNode, useContext } from "react";
 
 interface GlobalContextType {
@@ -42,10 +47,17 @@ interface GlobalContextType {
     tasksCompletedCumulative: number[];
     isLoading: boolean;
   };
-  notifications: Notification[];
+  notifications: (Notification | VitalNotification)[];
   addNotification: (
     message: string,
     type?: NotificationType,
+    duration?: number
+  ) => void;
+  addVitalNotification: (
+    vitalType: VitalType,
+    amount: number,
+    currentScore: number,
+    previousScore: number,
     duration?: number
   ) => void;
   removeNotification: (id: string) => void;

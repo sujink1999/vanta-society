@@ -1,8 +1,15 @@
-import { Notification, NotificationType } from "@/types/notification";
+import {
+  Notification,
+  NotificationType,
+  VitalNotification,
+  VitalType,
+} from "@/types/notification";
 import { useCallback, useState } from "react";
 
 export function useNotifications() {
-  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [notifications, setNotifications] = useState<
+    (Notification | VitalNotification)[]
+  >([]);
 
   const removeNotification = useCallback((id: string) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
@@ -12,7 +19,7 @@ export function useNotifications() {
     (
       message: string,
       type: NotificationType = "info",
-      duration: number = 5000
+      duration: number = 3000
     ) => {
       const id = `${Date.now()}-${Math.random()}`;
 
@@ -30,9 +37,38 @@ export function useNotifications() {
     []
   );
 
+  const addVitalNotification = useCallback(
+    (
+      vitalType: VitalType,
+      amount: number,
+      currentScore: number,
+      previousScore: number,
+      duration: number = 3000
+    ) => {
+      const id = `${Date.now()}-${Math.random()}`;
+
+      const notification: VitalNotification = {
+        id,
+        message: "", // Not used for vital notifications
+        type: "vital",
+        vitalType,
+        amount,
+        currentScore,
+        previousScore,
+        duration,
+      };
+
+      setNotifications((prev) => [...prev, notification]);
+
+      return id;
+    },
+    []
+  );
+
   return {
     notifications,
     addNotification,
+    addVitalNotification,
     removeNotification,
   };
 }

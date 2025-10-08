@@ -84,7 +84,7 @@ export function VitalsComparison({
               activeTab === "potential" ? "text-black" : "text-textSecondary"
             }`}
           >
-            Potential
+            Day 66
           </Text>
         </TouchableOpacity>
 
