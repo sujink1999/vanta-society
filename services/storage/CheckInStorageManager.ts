@@ -1,0 +1,167 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const STORAGE_KEY = "check_in_data";
+
+export interface MorningCheckIn {
+  completed: boolean;
+  timestamp: string;
+}
+
+export interface EveningCheckIn {
+  completed: boolean;
+  timestamp: string;
+  totalTasks: number;
+  completedTasks: number;
+  completedTaskIds: number[];
+  dayMood?: string; // emoji
+  journal?: string;
+  imageRefs?: string[]; // URI references only
+}
+
+export interface DailyCheckIn {
+  morning?: MorningCheckIn;
+  evening?: EveningCheckIn;
+}
+
+export interface CheckInData {
+  [date: string]: DailyCheckIn;
+}
+
+class CheckInStorageManager {
+  private static instance: CheckInStorageManager;
+  private cache: CheckInData = {};
+  private isInitialized = false;
+  private listeners: Set<() => void> = new Set();
+
+  private constructor() {}
+
+  static getInstance(): CheckInStorageManager {
+    if (!CheckInStorageManager.instance) {
+      CheckInStorageManager.instance = new CheckInStorageManager();
+    }
+    return CheckInStorageManager.instance;
+  }
+
+  async initialize(): Promise<void> {
+    if (this.isInitialized) return;
+
+    try {
+      const data = await AsyncStorage.getItem(STORAGE_KEY);
+      this.cache = data ? JSON.parse(data) : {};
+      this.isInitialized = true;
+    } catch (error) {
+      console.error("Failed to initialize CheckInStorageManager:", error);
+      this.cache = {};
+      this.isInitialized = true;
+    }
+  }
+
+  private async save(): Promise<void> {
+    try {
+      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(this.cache));
+      this.notifyListeners();
+    } catch (error) {
+      console.error("Failed to save check-in data:", error);
+      throw error;
+    }
+  }
+
+  private notifyListeners(): void {
+    this.listeners.forEach((listener) => listener());
+  }
+
+  subscribe(listener: () => void): () => void {
+    this.listeners.add(listener);
+    return () => {
+      this.listeners.delete(listener);
+    };
+  }
+
+  async getCheckInStatus(date: string): Promise<DailyCheckIn> {
+    await this.initialize();
+    return this.cache[date] || {};
+  }
+
+  async hasMorningCheckIn(date: string): Promise<boolean> {
+    await this.initialize();
+    return this.cache[date]?.morning?.completed || false;
+  }
+
+  async hasEveningCheckIn(date: string): Promise<boolean> {
+    await this.initialize();
+    return this.cache[date]?.evening?.completed || false;
+  }
+
+  async completeMorningCheckIn(date: string): Promise<void> {
+    await this.initialize();
+
+    if (!this.cache[date]) {
+      this.cache[date] = {};
+    }
+
+    this.cache[date].morning = {
+      completed: true,
+      timestamp: new Date().toISOString(),
+    };
+
+    await this.save();
+  }
+
+  async completeEveningCheckIn(
+    date: string,
+    data: {
+      totalTasks: number;
+      completedTasks: number;
+      completedTaskIds: number[];
+      dayMood?: string;
+      journal?: string;
+      imageRefs?: string[];
+    }
+  ): Promise<void> {
+    await this.initialize();
+
+    if (!this.cache[date]) {
+      this.cache[date] = {};
+    }
+
+    this.cache[date].evening = {
+      completed: true,
+      timestamp: new Date().toISOString(),
+      ...data,
+    };
+
+    await this.save();
+  }
+
+  async getDailySummary(date: string): Promise<EveningCheckIn | null> {
+    await this.initialize();
+    return this.cache[date]?.evening || null;
+  }
+
+  async getAllSummaries(): Promise<
+    { date: string; summary: EveningCheckIn }[]
+  > {
+    await this.initialize();
+
+    return Object.entries(this.cache)
+      .filter(([_, checkIn]) => checkIn.evening?.completed)
+      .map(([date, checkIn]) => ({
+        date,
+        summary: checkIn.evening!,
+      }))
+      .sort((a, b) => b.date.localeCompare(a.date)); // Most recent first
+  }
+
+  async clearAll(): Promise<void> {
+    await this.initialize();
+    this.cache = {};
+    await this.save();
+  }
+
+  async getCache(): Promise<CheckInData> {
+    await this.initialize();
+    return this.cache;
+  }
+}
+
+export const checkInStorageManager = CheckInStorageManager.getInstance();

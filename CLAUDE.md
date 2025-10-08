@@ -31,7 +31,7 @@ npm run reset-project
 - New Architecture enabled (`newArchEnabled: true`)
 - TypeScript with typed routes (`typedRoutes: true`)
 - React Compiler experimental feature enabled
-- Bundle identifier: `com.sujink1999.vantasociety`
+- Bundle identifier: `com.vanta.society`
 
 ### Routing Structure
 

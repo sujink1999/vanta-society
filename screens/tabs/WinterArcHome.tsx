@@ -1,3 +1,4 @@
+import { CheckInManager } from "@/components/CheckInManager";
 import { Countdown } from "@/components/Countdown";
 import { DailyRoutine } from "@/components/DailyRoutine";
 import tw from "@/constants/tw";
@@ -48,6 +49,7 @@ export default function WinterArcHome() {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`} edges={["top"]}>
       <DailyRoutine />
+      <CheckInManager />
     </SafeAreaView>
   );
 }

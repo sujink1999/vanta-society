@@ -1,6 +1,8 @@
+import { useNotifications } from "@/hooks/useNotifications";
 import { useUser } from "@/hooks/useUser";
 import { useWinterArcStats } from "@/hooks/useWinterArcStats";
 import { User, UserRoutine } from "@/services/api/types";
+import { Notification, NotificationType } from "@/types/notification";
 import React, { createContext, ReactNode, useContext } from "react";
 
 interface GlobalContextType {
@@ -40,6 +42,13 @@ interface GlobalContextType {
     tasksCompletedCumulative: number[];
     isLoading: boolean;
   };
+  notifications: Notification[];
+  addNotification: (
+    message: string,
+    type?: NotificationType,
+    duration?: number
+  ) => void;
+  removeNotification: (id: string) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
@@ -51,10 +60,12 @@ interface GlobalProviderProps {
 export function GlobalProvider({ children }: GlobalProviderProps) {
   const userState = useUser();
   const winterArcStats = useWinterArcStats(userState.user, userState.routine);
+  const notificationState = useNotifications();
 
   const contextValue = {
     ...userState,
     winterArcStats,
+    ...notificationState,
   };
 
   return (

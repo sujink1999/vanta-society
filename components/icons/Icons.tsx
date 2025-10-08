@@ -485,3 +485,166 @@ export const VitalIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
     />
   </Svg>
 );
+
+// MOOD ICONS
+
+export const FireIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M12 2C12 2 6 8 6 13C6 15.1217 6.84285 17.1566 8.34315 18.6569C9.84344 20.1571 11.8783 21 14 21C16.1217 21 18.1566 20.1571 19.6569 18.6569C21.1571 17.1566 22 15.1217 22 13C22 8 16 2 16 2C16 5 13 7 13 10C13 7 10 5 10 2H12Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+      opacity="0.8"
+    />
+  </Svg>
+);
+
+export const StrongIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path
+      d="M16 8L18 10L22 6L20 4L16 8Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+    />
+    <Path
+      d="M8 8L6 10L2 6L4 4L8 8Z"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+    />
+    <Path
+      d="M18 10C18 10 18 11 18 13C18 16.3137 15.3137 19 12 19C8.68629 19 6 16.3137 6 13C6 11 6 10 6 10"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Path
+      d="M9 13C9 13 9.5 15 12 15C14.5 15 15 13 15 13"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </Svg>
+);
+
+export const HappyIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke={color}
+      strokeWidth="2"
+      fill="none"
+    />
+    <Path
+      d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle cx="9" cy="9" r="1.5" fill={color} />
+    <Circle cx="15" cy="9" r="1.5" fill={color} />
+  </Svg>
+);
+
+export const NeutralIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke={color}
+      strokeWidth="2"
+      fill="none"
+    />
+    <Line
+      x1="8"
+      y1="14"
+      x2="16"
+      y2="14"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Circle cx="9" cy="9" r="1.5" fill={color} />
+    <Circle cx="15" cy="9" r="1.5" fill={color} />
+  </Svg>
+);
+
+export const SadIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke={color}
+      strokeWidth="2"
+      fill="none"
+    />
+    <Path
+      d="M8 17C8 17 9.5 15 12 15C14.5 15 16 17 16 17"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Circle cx="9" cy="9" r="1.5" fill={color} />
+    <Circle cx="15" cy="9" r="1.5" fill={color} />
+  </Svg>
+);
+
+export const TiredIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke={color}
+      strokeWidth="2"
+      fill="none"
+    />
+    <Path
+      d="M8 14.5C8 14.5 9.5 15 12 15C14.5 15 16 14.5 16 14.5"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <Line
+      x1="7"
+      y1="9"
+      x2="11"
+      y2="9"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Line
+      x1="13"
+      y1="9"
+      x2="17"
+      y2="9"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+  </Svg>
+);

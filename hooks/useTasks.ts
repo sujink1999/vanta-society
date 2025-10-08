@@ -4,7 +4,7 @@ import { TaskStatus, TaskCompletion, taskStorageManager } from "@/services/stora
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 
-interface TaskForDate extends UserRoutine {
+export interface TaskForDate extends UserRoutine {
   isScheduledForDate: boolean;
   status: TaskStatus | null;
 }

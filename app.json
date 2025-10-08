@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.sujink1999.vantasociety",
+      "bundleIdentifier": "com.vanta.society",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -24,7 +24,7 @@
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
-      "package": "com.sujink1999.vantasociety"
+      "package": "com.vanta.society"
     },
     "web": {
       "output": "static",

@@ -53,7 +53,8 @@ export function DailyRoutine() {
   const isToday = selectedDate === today;
 
   const tasks = useTasks(selectedDate, activeTab);
-  const { markTaskDone, skipTask, undoTaskAction, error } = useTaskActions(selectedDate);
+  const { markTaskDone, skipTask, undoTaskAction, error } =
+    useTaskActions(selectedDate);
 
   const handlePrevDay = () => {
     setCurrentDay((prev) => Math.max(1, prev - 1));

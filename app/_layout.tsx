@@ -3,15 +3,18 @@ import { View, Text } from 'react-native';
 import { useAppFonts } from '@/constants/useFonts';
 import { GlobalProvider } from '@/contexts/GlobalContext';
 import AuthNavigator from '@/components/AuthNavigator';
+import { NotificationContainer } from '@/components/NotificationContainer';
 import { dataSyncManager } from '@/services/storage/DataSyncManager';
+import { checkInStorageManager } from '@/services/storage/CheckInStorageManager';
 import { useEffect } from 'react';
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
 
-  // Initialize sync manager on app startup
+  // Initialize storage managers on app startup
   useEffect(() => {
     dataSyncManager.initialize();
+    checkInStorageManager.initialize();
   }, []);
 
   if (!fontsLoaded) {
@@ -33,6 +36,7 @@ export default function RootLayout() {
             <Stack.Screen name="(winterarc)" options={{ headerShown: false }} />
           </Stack>
         </AuthNavigator>
+        <NotificationContainer />
       </GlobalProvider>
     </View>
   );

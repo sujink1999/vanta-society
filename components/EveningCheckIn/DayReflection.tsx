@@ -1,0 +1,149 @@
+import {
+  FireIcon,
+  HappyIcon,
+  NeutralIcon,
+  SadIcon,
+  StrongIcon,
+  TiredIcon,
+} from "@/components/icons/Icons";
+import { Colors } from "@/constants/theme";
+import tw from "@/constants/tw";
+import React from "react";
+import {
+  Animated,
+  Image,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+
+interface DayReflectionProps {
+  fadeAnim: Animated.Value;
+  selectedMood: string | null;
+  onSelectMood: (mood: string) => void;
+  journal: string;
+  onChangeJournal: (text: string) => void;
+  imageUris: string[];
+  onPickImage: () => void;
+  onRemoveImage: (index: number) => void;
+}
+
+const MOOD_OPTIONS = [
+  { id: "fire", label: "On Fire", icon: FireIcon },
+  { id: "strong", label: "Strong", icon: StrongIcon },
+  { id: "good", label: "Good", icon: HappyIcon },
+  { id: "okay", label: "Okay", icon: NeutralIcon },
+  { id: "tough", label: "Tough", icon: SadIcon },
+  { id: "tired", label: "Tired", icon: TiredIcon },
+];
+
+export function DayReflection({
+  fadeAnim,
+  selectedMood,
+  onSelectMood,
+  journal,
+  onChangeJournal,
+  imageUris,
+  onPickImage,
+  onRemoveImage,
+}: DayReflectionProps) {
+  return (
+    <Animated.View
+      style={[tw`flex  min-h-[500px] px-2 pt-2`, { opacity: fadeAnim }]}
+    >
+      <Text style={tw`text-white font-tussi-bold text-lg mb-4`}>
+        Reflect on your day
+      </Text>
+      <ScrollView
+        style={tw`flex-1`}
+        contentContainerStyle={tw`pb-6`}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Mood Selection */}
+        <View style={tw`mb-8`}>
+          <Text style={tw`text-white/60 font-mont text-sm mb-6`}>
+            Select your mood
+          </Text>
+
+          <View style={tw`flex-row flex-wrap justify-between gap-4`}>
+            {MOOD_OPTIONS.map((mood) => {
+              const MoodIcon = mood.icon;
+              const isSelected = selectedMood === mood.id;
+              return (
+                <TouchableOpacity
+                  key={mood.id}
+                  onPress={() => onSelectMood(mood.id)}
+                  style={[tw`items-center justify-center `]}
+                >
+                  <MoodIcon
+                    size={32}
+                    color={isSelected ? Colors.primary : "#979797"}
+                  />
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+
+        {/* Journal Entry */}
+        <View style={tw`mb-8`}>
+          <Text style={tw`text-white/60 font-mont text-sm mb-4`}>
+            Daily Journal (optional)
+          </Text>
+
+          <TextInput
+            style={tw`bg-white/5 border border-white/10 rounded-md p-2 px-3 text-white font-mont text-base min-h-40`}
+            placeholder="How was your day? What are you thankful for?"
+            placeholderTextColor="#979797"
+            multiline
+            textAlignVertical="top"
+            value={journal}
+            onChangeText={onChangeJournal}
+          />
+        </View>
+
+        {/* Photo Attachments */}
+        <View>
+          <Text style={tw`text-white/60 font-mont text-sm mb-6`}>
+            Capture your journey (optional, max 5)
+          </Text>
+
+          <View style={tw`flex-row flex-wrap gap-3 mb-6`}>
+            {imageUris.map((uri, index) => (
+              <View key={index} style={tw`relative`}>
+                <Image
+                  source={{ uri }}
+                  style={tw`w-28 h-28 rounded-md`}
+                  resizeMode="cover"
+                />
+                <TouchableOpacity
+                  onPress={() => onRemoveImage(index)}
+                  style={tw`absolute -top-2 -right-2 bg-red-500 rounded-full w-6 h-6 items-center justify-center`}
+                >
+                  <Text style={tw`text-white font-mont-bold text-xs`}>✕</Text>
+                </TouchableOpacity>
+              </View>
+            ))}
+
+            {imageUris.length < 5 && (
+              <TouchableOpacity
+                onPress={onPickImage}
+                style={tw`w-28 h-28 bg-white/5 border-2 border-dashed border-white/20 rounded-md items-center justify-center`}
+              >
+                <Text style={tw`text-white/60 text-4xl mb-1`}>+</Text>
+                <Text style={tw`text-white/60 font-mont text-xs`}>
+                  Add Photo
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          <Text style={tw`text-white/60 font-mont text-xs text-center mb-6`}>
+            Your images are not uploaded to the cloud and only you can see them.
+          </Text>
+        </View>
+      </ScrollView>
+    </Animated.View>
+  );
+}

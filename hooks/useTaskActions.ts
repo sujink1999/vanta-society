@@ -5,7 +5,7 @@ import { taskStorageManager } from "@/services/storage/TaskStorageManager";
 import { useState } from "react";
 
 export function useTaskActions(date: string) {
-  const { routine } = useGlobalContext();
+  const { routine, addNotification } = useGlobalContext();
   const [loading, setLoading] = useState<{ [taskId: string]: boolean }>({});
   const [error, setError] = useState<string | null>(null);
 
