@@ -273,3 +273,65 @@ export interface TodayTasksParams {
 export interface CompletionStatsParams {
   period?: "week" | "month" | "year";
 }
+
+// Marketplace and Products types
+export interface MarketplaceItem {
+  id: number;
+  companyName: string;
+  description: string;
+  imageUrl: string;
+  discountCode: string | null;
+  discountPercentage: number;
+  redirectUrl: string;
+  brandType: string;
+  featured: boolean;
+}
+
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  imageUrl: string;
+  initialCost: number;
+  discountPercentage: number;
+  finalCost: number;
+  redirectUrl: string | null;
+  category: string;
+  userRequestedNotification?: boolean;
+  userNotified?: boolean;
+}
+
+export interface PaginationMeta {
+  total: number;
+  limit: number;
+  offset: number;
+  hasMore: boolean;
+}
+
+export interface MarketplaceListResponse {
+  brands: MarketplaceItem[];
+  pagination: PaginationMeta;
+}
+
+export interface ProductListResponse {
+  products: Product[];
+  pagination: PaginationMeta;
+}
+
+export interface ProductNotification {
+  id: number;
+  product: Product;
+  isNotified: boolean;
+  notifiedAt: string | null;
+  requestedAt: string;
+}
+
+export interface StoreQueryParams {
+  brandType?: string;
+  featured?: boolean;
+  limit?: number;
+  offset?: number;
+  sort?: "priority" | "discount" | "name" | "created";
+  order?: "asc" | "desc";
+  search?: string;
+}

@@ -52,8 +52,6 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
   const userState = useUser();
   const winterArcStats = useWinterArcStats(userState.user, userState.routine);
 
-  console.log("winterArcStats", winterArcStats);
-
   const contextValue = {
     ...userState,
     winterArcStats,

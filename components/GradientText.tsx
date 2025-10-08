@@ -40,18 +40,21 @@ export function GradientText({
 
   return (
     <View style={containerStyle}>
-      {/* Invisible text to measure dimensions */}
+      {/* Invisible text to measure dimensions - always rendered */}
       <Text
-        style={[style, { opacity: 0, position: "absolute" }]}
+        style={[style, { opacity: 0 }]}
         onLayout={handleTextLayout}
       >
         {children}
       </Text>
 
-      {/* Gradient text */}
+      {/* Gradient text - positioned absolutely over invisible text */}
       {textLayout && (
         <MaskedView
           style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
             width: textLayout.width,
             height: textLayout.height,
           }}

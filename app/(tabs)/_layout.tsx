@@ -1,5 +1,6 @@
 import {
   CommunityIcon,
+  StoreIcon,
   ToolsIcon,
   WinterArcIcon,
 } from "@/components/icons/TabIcons";
@@ -45,7 +46,7 @@ export default function TabLayout() {
             intensity={20}
             style={{
               flex: 1,
-              backgroundColor: "rgba(0, 0, 0, 0.8)",
+              backgroundColor: "rgba(0, 0, 0, 0.9)",
             }}
           />
         ),
@@ -68,6 +69,20 @@ export default function TabLayout() {
               focused={focused}
               color={color}
               key="winterarc"
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="store"
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, focused }) => (
+            <AnimatedTabIcon
+              IconComponent={StoreIcon}
+              focused={focused}
+              color={color}
+              key="store"
             />
           ),
         }}
