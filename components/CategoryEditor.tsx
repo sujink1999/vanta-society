@@ -1,7 +1,14 @@
 import tw from "@/constants/tw";
 import { Task, UserRoutine } from "@/services/api/types";
 import React, { useCallback, useMemo, useState } from "react";
-import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Button } from "./Button";
 import { CategoryTasks } from "./CategoryTasks";
 import { ChevronLeftIcon } from "./icons/Icons";
@@ -123,9 +130,12 @@ export function CategoryEditor({
   console.log(selectedTasks);
 
   return (
-    <View style={tw`flex-1 px-3 flex-col `}>
+    <KeyboardAvoidingView
+      style={tw`flex-1 flex-col`}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       {/* Header */}
-      <View style={tw`flex-row items-center mb-2`}>
+      <View style={tw`flex-row items-center mb-2 px-3`}>
         <TouchableOpacity onPress={onCancel} style={tw`mr-4 p-2`}>
           <ChevronLeftIcon size={24} color="white" />
         </TouchableOpacity>
@@ -142,10 +152,10 @@ export function CategoryEditor({
         </View>
         <View style={tw`w-10`} />
       </View>
-      {/* Current Tasks Card */}
 
+      {/* Current Tasks Card */}
       {selectedTasks.length > 0 && (
-        <View style={tw`mt-3`}>
+        <View style={tw`mt-3 mb-3 px-2`}>
           <CategoryTasks
             category={category}
             tasks={selectedTasks}
@@ -153,15 +163,16 @@ export function CategoryEditor({
           />
         </View>
       )}
-
-      <View style={tw`flex-row items-center gap-3 my-6 `}>
-        <Text style={tw`text-textSecondary font-tussi text-sm `}>routines</Text>
+      <View style={tw`flex-row items-center gap-3 my-6`}>
+        <Text style={tw`text-textSecondary font-tussi text-sm`}>routines</Text>
         <View style={tw`flex-1 h-[1px] bg-textSecondary`} />
       </View>
+
       <ScrollView
-        style={tw`flex-1 `}
+        style={tw`flex-1`}
+        contentContainerStyle={tw`px-3`}
         showsVerticalScrollIndicator={false}
-        nestedScrollEnabled
+        keyboardShouldPersistTaps="handled"
       >
         {/* Tasks to Add Section */}
         <View style={tw`flex-col gap-3 pb-3`}>
@@ -231,15 +242,17 @@ export function CategoryEditor({
       </ScrollView>
 
       {/* Action Buttons */}
-      {hasChanges && (
-        <Button
-          title="UPDATE"
-          onPress={handleSave}
-          disabled={!hasChanges}
-          loading={isLoading}
-          style={{ backgroundColor: categoryColor }}
-        />
-      )}
-    </View>
+      <View style={tw`px-3 mt-3`}>
+        {hasChanges && (
+          <Button
+            title="UPDATE"
+            onPress={handleSave}
+            disabled={!hasChanges || selectedTasks.length === 0}
+            loading={isLoading}
+            style={{ backgroundColor: categoryColor }}
+          />
+        )}
+      </View>
+    </KeyboardAvoidingView>
   );
 }

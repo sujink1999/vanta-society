@@ -4,7 +4,6 @@ import { VitalsRadarChart } from "@/components/VitalsRadarChart";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { completeOnboarding } from "@/services/api/users";
-import { router } from "expo-router";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
 import { OnboardingStepData } from "../Onboarding";
@@ -35,7 +34,6 @@ export function FinalScoreStep({ data }: FinalScoreStepProps) {
 
       if (response.success) {
         await refetchUserSilently();
-        router.replace("/(tabs)");
       } else {
         Alert.alert(
           "Error",
@@ -57,12 +55,13 @@ export function FinalScoreStep({ data }: FinalScoreStepProps) {
     <View style={tw`flex-1 flex-col justify-around px-3 py-6 `}>
       <View style={tw`gap-4 flex flex-col items-center `}>
         <GradientText
-          style={tw`text-textPrimary text-center font-tussi-bold text-6`}
+          style={tw`text-textPrimary text-center font-tussi-bold text-4`}
         >
-          YOUR VITALS
+          YOUR VITALS SCORE
         </GradientText>
         <Text style={tw`text-primary font-tussi text-11 text-center`}>
-          {scores.society}
+          {scores.society?.toFixed(0) || 0}{" "}
+          <Text style={tw`text-textSecondary  text-base`}>/ 100</Text>
         </Text>
       </View>
 

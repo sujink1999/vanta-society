@@ -155,12 +155,15 @@ export function OptionSelector({
         </Text>
         <TextInput
           style={[
-            tw`border-b border-white  pl-[2px] pb-1 text-white text-base font-mont flex-1 leading-5`,
+            tw`border-b border-white  pl-[2px] pb-2 text-white text-base font-mont flex-1 leading-5`,
           ]}
           value={currentValue?.toString() || ""}
           onChangeText={onChange}
-          placeholder={option.default || "Enter value"}
-          placeholderTextColor="#666"
+          placeholder={option.default || ""}
+          placeholderTextColor="#888"
+          autoCorrect={false}
+          autoComplete="off"
+          spellCheck={false}
         />
       </View>
     );

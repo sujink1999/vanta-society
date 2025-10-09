@@ -32,9 +32,6 @@ export function useCheckInFlow() {
       today
     );
 
-    const cache = await checkInStorageManager.getCache();
-    console.log(cache);
-
     // Determine what to show
     setShouldShowMorning(isMorningWindow && !morningCompleted);
     setShouldShowEvening(isEveningWindow && !eveningCompleted);

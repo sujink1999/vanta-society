@@ -47,8 +47,8 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
       });
 
       if (response.success) {
-        await refetchUserSilently(); // Update user context
         onNext();
+        await refetchUserSilently(); // Update user context
       } else {
         Alert.alert("Error", "Failed to save profile. Please try again.");
       }

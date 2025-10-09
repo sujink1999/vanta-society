@@ -37,7 +37,7 @@ export function CustomSlider({
 
       {/* Current Value Display */}
       <View style={tw`flex-row justify-center items-center`}>
-        <Text style={tw`text-primary font-mont-medium text-3xl `}>{value}</Text>
+        <Text style={tw`text-white font-mont-medium text-3xl `}>{value}</Text>
       </View>
     </View>
   );

@@ -155,7 +155,7 @@ export function CategoryTasks({
         colors={[`#FFFFFF10`, `${categoryColor}30`]}
         start={{ x: 0, y: 1 }}
         end={{ x: 1, y: 0 }}
-        style={tw`border border-white/5  p-3`}
+        style={tw`border border-white/5  p-2`}
       >
         {/* Category Header */}
 

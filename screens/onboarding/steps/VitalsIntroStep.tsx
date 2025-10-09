@@ -1,5 +1,7 @@
 import { Button } from "@/components/Button";
+import { GradientText } from "@/components/GradientText";
 import tw from "@/constants/tw";
+import { ResizeMode, Video } from "expo-av";
 import React from "react";
 import { Text, View } from "react-native";
 
@@ -12,23 +14,33 @@ export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
   return (
     <View style={tw`flex-1 px-6 py-8`}>
       {/* Intro Screen */}
-      <View style={tw`flex-1 items-center justify-center`}>
-        <Text style={tw`text-white font-tussi-bold text-lg text-center mb-2`}>
-          VITALS SCORE
-        </Text>
-        <Text
-          style={tw`text-textSecondary font-mont text-base text-center mb-8 leading-6`}
-        >
-          Get your baseline based on your answers
-        </Text>
-        {/* Image placeholder */}
-        <View
-          style={tw`w-64 h-64 bg-white/10 rounded-lg mb-12 items-center justify-center`}
-        >
-          <Text style={tw`text-white/50 font-tussi text-sm`}>
-            Vitals Image
+      <View style={tw`flex-1 items-center justify-between`}>
+        <View />
+        <View style={tw`flex flex-col items-center`}>
+          <GradientText style={tw`font-tussi-bold text-lg text-center `}>
+            VITALS SCORE
+          </GradientText>
+          <Text
+            style={tw`text-textSecondary font-mont text-base text-center mb-8 leading-6 mt-2`}
+          >
+            Get your baseline based on your answers
           </Text>
         </View>
+
+        {/* Video */}
+        <View style={tw`h-64 w-64 rounded-lg mb-12 overflow-hidden`}>
+          <Video
+            source={require("@/assets/videos/aura-cut.mp4")}
+            style={tw`flex-1 w-full`}
+            resizeMode={ResizeMode.COVER}
+            shouldPlay
+            isLooping
+            isMuted
+            useNativeControls={true}
+          />
+        </View>
+        <View />
+
         <Button
           title="GENERATE YOUR VITALS SCORE"
           onPress={onNext}

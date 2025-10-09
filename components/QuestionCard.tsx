@@ -8,12 +8,14 @@ interface QuestionCardProps {
   question: QuestionnaireQuestion;
   selectedValue?: any; // Can be number, string, or array
   onAnswerSelect: (value: any) => void;
+  isLast?: boolean;
 }
 
 export function QuestionCard({
   question,
   selectedValue,
   onAnswerSelect,
+  isLast = false,
 }: QuestionCardProps) {
   const renderInput = () => {
     switch (question.questionType) {
@@ -45,7 +47,7 @@ export function QuestionCard({
                   key={option.value}
                   style={[
                     tw`border px-6 py-1 rounded-md`,
-                    isSelected ? tw`bg-primary/80` : tw` bg-white/20`,
+                    isSelected ? tw`bg-white` : tw` bg-white/20`,
                   ]}
                   onPress={() => {
                     let newSelection;
@@ -61,7 +63,11 @@ export function QuestionCard({
                     onAnswerSelect(newSelection);
                   }}
                 >
-                  <Text style={tw`font-mont text-sm text-center text-white`}>
+                  <Text
+                    style={tw`font-tussi text-xs text-center ${
+                      isSelected ? "text-black" : "text-white"
+                    }`}
+                  >
                     {option.label}
                   </Text>
                 </TouchableOpacity>
@@ -89,7 +95,11 @@ export function QuestionCard({
                   ]}
                   onPress={() => onAnswerSelect(option.value)}
                 >
-                  <Text style={tw`font-mont text-sm text-center text-white`}>
+                  <Text
+                    style={tw`font-tussi text-xs text-center ${
+                      isSelected ? "text-black" : "text-white"
+                    }`}
+                  >
                     {option.label}
                   </Text>
                 </TouchableOpacity>
@@ -110,11 +120,15 @@ export function QuestionCard({
                   key={option.value}
                   style={[
                     tw`border px-6 py-1 rounded-md`,
-                    isSelected ? tw`bg-primary/80` : tw` bg-white/20`,
+                    isSelected ? tw`bg-white  ` : tw` bg-white/20`,
                   ]}
                   onPress={() => onAnswerSelect(option.value)}
                 >
-                  <Text style={tw`font-mont text-sm text-center text-white`}>
+                  <Text
+                    style={tw`font-tussi text-xs text-center ${
+                      isSelected ? "text-black" : "text-white"
+                    }`}
+                  >
                     {option.label}
                   </Text>
                 </TouchableOpacity>
@@ -126,8 +140,8 @@ export function QuestionCard({
   };
 
   return (
-    <View style={tw`gap-4 border-b border-white/10 py-8`}>
-      <Text style={tw`text-white font-tussi text-sm text-center leading-6`}>
+    <View style={tw`gap-5 py-8 ${!isLast ? "border-b border-white/10" : ""}`}>
+      <Text style={tw`text-white font-mont text-base text-center leading-6`}>
         {question.question}
       </Text>
       {renderInput()}

@@ -27,7 +27,7 @@ const citations = [
   },
   {
     citation:
-      "On average, it takes more than two months before a new behavior becomes automatic",
+      "On average, it takes more than two months before a new behavior becomes automatic — 66 days, to be exact",
     reference:
       "Clear, J. (2018). Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones. Avery.",
     imageSource: require("@/assets/images/research/atomic-habits.jpg"),
@@ -49,7 +49,7 @@ export function WinterArcInfoStep({ onNext }: WinterArcInfoStepProps) {
   return (
     <View style={tw`flex-1 px-3 py-6`}>
       <View style={tw`flex-1 `}>
-        <ScrollView style={tw`flex-1`}>
+        <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
           {/* 66 Days Section */}
 
           <View style={tw`flex-col items-center gap-8`}>
@@ -62,7 +62,7 @@ export function WinterArcInfoStep({ onNext }: WinterArcInfoStepProps) {
               <GradientText
                 style={tw`text-4xl font-tussi-bold text-white text-center `}
               >
-                75 Days
+                66 Days
               </GradientText>
               <Text
                 style={tw`text-base font-mont-medium text-white/80 text-center `}
@@ -116,7 +116,7 @@ export function WinterArcInfoStep({ onNext }: WinterArcInfoStepProps) {
               Science-Backed Approach
             </Text>
 
-            <View style={tw`flex-col gap-2 w-full`}>
+            <View style={tw`flex-col gap-2 w-full mb-8`}>
               {citations.map((citation, index) => (
                 <CitationCardWithImage
                   key={index}

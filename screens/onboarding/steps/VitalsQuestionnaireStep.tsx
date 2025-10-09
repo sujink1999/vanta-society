@@ -6,7 +6,7 @@ import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { QuestionnaireQuestion } from "@/services/api/types";
 import { submitQuestionnaire } from "@/services/api/users";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Alert, ScrollView, Text, View } from "react-native";
 
 interface VitalsQuestionnaireStepProps {
@@ -27,11 +27,17 @@ export function VitalsQuestionnaireStep({
   onNext,
 }: VitalsQuestionnaireStepProps) {
   const { refetchUserSilently } = useGlobalContext();
+  const scrollViewRef = useRef<ScrollView>(null);
   const [currentVitalIndex, setCurrentVitalIndex] = useState(0);
   const [responses, setResponses] = useState<Record<string, any>>({});
   const [isLoading, setIsLoading] = useState(false);
 
   const currentVital = VITALS_ORDER[currentVitalIndex];
+
+  // Scroll to top when question changes
+  useEffect(() => {
+    scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+  }, [currentVitalIndex]);
   const vitalQuestions = questions.filter((q) => {
     return q.type === currentVital;
   });
@@ -81,8 +87,8 @@ export function VitalsQuestionnaireStep({
       });
 
       if (response.success) {
-        await refetchUserSilently();
         onNext();
+        await refetchUserSilently();
       } else {
         Alert.alert("Error", "Failed to save responses. Please try again.");
       }
@@ -118,7 +124,7 @@ export function VitalsQuestionnaireStep({
   }
 
   return (
-    <View style={tw`flex-1 px-3 pb-8 pt-4 `}>
+    <View style={tw`flex-1 px-3 pb-8 pt-8 `}>
       {/* Progress */}
       <View style={tw`flex flex-col gap-8 mb-4`}>
         <StoryProgressBar
@@ -128,7 +134,6 @@ export function VitalsQuestionnaireStep({
         <View style={tw`flex-row justify-center items-center mb-2 `}>
           <GradientText
             style={tw`text-textPrimary text-center font-tussi-bold text-6`}
-            containerStyle={tw`w-full flex-row justify-center`}
           >
             {currentVital?.toUpperCase()}
           </GradientText>
@@ -136,9 +141,13 @@ export function VitalsQuestionnaireStep({
       </View>
 
       {/* All Questions for Current Vital */}
-      <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        ref={scrollViewRef}
+        style={tw`flex-1`}
+        showsVerticalScrollIndicator={false}
+      >
         <View style={tw`mb-8`}>
-          {vitalQuestions.map((question) => (
+          {vitalQuestions.map((question, index) => (
             <QuestionCard
               key={question.id}
               question={question}
@@ -146,6 +155,7 @@ export function VitalsQuestionnaireStep({
               onAnswerSelect={(value) =>
                 handleAnswerSelect(question.key, value)
               }
+              isLast={index === vitalQuestions.length - 1}
             />
           ))}
         </View>

@@ -19,7 +19,7 @@ export function useNotifications() {
     (
       message: string,
       type: NotificationType = "info",
-      duration: number = 3000
+      duration: number = 5000
     ) => {
       const id = `${Date.now()}-${Math.random()}`;
 

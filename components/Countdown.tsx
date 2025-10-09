@@ -24,6 +24,7 @@ const handleCopyInviteCode = async (
 export function Countdown() {
   const { user } = useGlobalContext();
   const cardRef = useRef<View>(null);
+  const shareRef = useRef<View>(null);
   const [isCopied, setIsCopied] = useState(false);
 
   const timeLeft = useTimeLeft({
@@ -33,11 +34,11 @@ export function Countdown() {
 
   const handleShare = async () => {
     try {
-      if (!cardRef.current) return;
-      // Capture the card as an image
-      const uri = await captureRef(cardRef.current, {
+      if (!shareRef.current) return;
+      // Capture the hidden share view as an image
+      const uri = await captureRef(shareRef.current, {
         format: "png",
-        quality: 0.8,
+        quality: 1.0,
         result: "tmpfile",
       });
 
@@ -66,33 +67,29 @@ export function Countdown() {
   };
 
   return (
-    <View style={tw`flex-1 px-3 `}>
-      <View style={tw`flex-col items-center flex-1 justify-around `}>
-        <View style={tw` flex-col items-center gap-4`}>
-          <Text style={tw`text-white font-tussi text-center text-sm`}>
-            YOUR WINTER ARC{"\n"}STARTS IN
-          </Text>
-          <View style={tw`flex-row justify-around`}>
-            <Text style={tw`text-xl font-tussi text-primary`}>
-              {timeLeft.days}d: {timeLeft.hours}h: {timeLeft.minutes}m:{" "}
-              {timeLeft.seconds}s
-            </Text>
-          </View>
-        </View>
-        <View style={tw``}>
+    <View style={tw`flex-1 px-3 py-3`}>
+      {/* Hidden view for Instagram story sharing - positioned off-screen */}
+      <View
+        style={{
+          position: "absolute",
+          left: -10000,
+          width: 400,
+          height: 712,
+        }}
+        collapsable={false}
+        ref={shareRef}
+      >
+        <View style={tw`w-full h-full bg-black items-center justify-center`}>
           <View
-            ref={cardRef}
             style={tw`w-[250px] h-[360px] relative overflow-hidden rounded-lg`}
-            collapsable={false}
           >
             <Image
               source={require("@/assets/images/winter-arc-card.png")}
               style={tw`w-full h-full`}
               resizeMode="cover"
             />
-
             <View
-              style={tw`absolute bottom-6 left-1/2 -translate-x-1/2  flex items-center justify-center`}
+              style={tw`absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center justify-center`}
             >
               <View style={tw`items-center`}>
                 <Text
@@ -107,6 +104,51 @@ export function Countdown() {
               </View>
             </View>
           </View>
+        </View>
+      </View>
+
+      {/* Visible UI */}
+      <View style={tw`flex-col items-center flex-1 justify-around `}>
+        <View style={tw` flex-col items-center gap-4`}>
+          <Text style={tw`text-white font-tussi text-center text-sm`}>
+            YOUR WINTER ARC{"\n"}STARTS IN
+          </Text>
+          <View style={tw`flex-row justify-around`}>
+            <Text style={tw`text-xl font-tussi text-primary`}>
+              {timeLeft.days}d: {timeLeft.hours}h: {timeLeft.minutes}m:{" "}
+              {timeLeft.seconds}s
+            </Text>
+          </View>
+        </View>
+        <View style={tw``}>
+          <View collapsable={false} ref={cardRef}>
+            <View
+              style={tw`w-[250px] h-[360px] relative overflow-hidden rounded-lg`}
+            >
+              <Image
+                source={require("@/assets/images/winter-arc-card.png")}
+                style={tw`w-full h-full`}
+                resizeMode="cover"
+              />
+
+              <View
+                style={tw`absolute bottom-6 left-1/2 -translate-x-1/2  flex items-center justify-center`}
+              >
+                <View style={tw`items-center`}>
+                  <Text
+                    style={tw`text-white font-tussi-bold text-center text-sm mb-2`}
+                  >
+                    {user?.firstName?.toUpperCase()}{" "}
+                    {user?.lastName?.toUpperCase()}
+                  </Text>
+                  <Text style={tw`text-white font-tussi text-xs`}>
+                    #{user?.id?.toString().padStart(2, "0")}
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+
           {/* Share Button */}
           <TouchableOpacity
             onPress={handleShare}

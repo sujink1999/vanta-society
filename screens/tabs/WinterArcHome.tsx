@@ -39,7 +39,7 @@ export default function WinterArcHome() {
   // Case 2: Winter Arc hasn't started yet (countdown phase)
   if (isInCountdown) {
     return (
-      <SafeAreaView style={tw`flex-1 bg-black`} edges={["top"]}>
+      <SafeAreaView style={tw`flex-1 bg-black pb-[60px]`} edges={["top"]}>
         <Countdown />
       </SafeAreaView>
     );

@@ -84,7 +84,7 @@ export default function Onboarding() {
     return null; // Still determining steps
   }
 
-  const StepComponent = visibleSteps[currentStep].component;
+  const StepComponent = visibleSteps[currentStep]?.component;
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>

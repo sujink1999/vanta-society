@@ -1,5 +1,5 @@
 import { useGlobalContext } from "@/contexts/GlobalContext";
-import { getTasks, setCategoryRoutine } from "@/services/api/routines";
+import { getTasks } from "@/services/api/routines";
 import { Task, UserRoutine } from "@/services/api/types";
 import React, { useEffect, useState } from "react";
 import { CategoryEditor } from "./CategoryEditor";
@@ -53,16 +53,18 @@ export function RoutineEditor({ onSubmit }: RoutineEditorProps) {
         cadence: task.cadence,
       }));
 
-      const response = await setCategoryRoutine({
-        category: editingCategory.category,
-        tasks: tasks,
-      });
+      console.log("tasks", tasks);
 
-      if (response.success) {
-        // Refetch user data to update routine
-        await refetchUserSilently();
-        setEditingCategory(null);
-      }
+      // const response = await setCategoryRoutine({
+      //   category: editingCategory.category,
+      //   tasks: tasks,
+      // });
+
+      // if (response.success) {
+      //   // Refetch user data to update routine
+      //   await refetchUserSilently();
+      //   setEditingCategory(null);
+      // }
     } catch (error) {
       console.error("Failed to save category routine:", error);
     }

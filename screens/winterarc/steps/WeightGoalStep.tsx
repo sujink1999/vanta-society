@@ -1,11 +1,21 @@
 import { Button } from "@/components/Button";
+import { GradientText } from "@/components/GradientText";
 import { RoutineGenerationLoader } from "@/components/RoutineGenerationLoader";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { generateRoutine } from "@/services/api/routines";
 import { submitPhysicalStats } from "@/services/api/users";
 import React, { useState } from "react";
-import { ScrollView, Text, TextInput, View } from "react-native";
+import {
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 interface GoalsStepProps {
   onNext: () => void;
@@ -59,7 +69,6 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
 
         // Step 4: Refetch user data to update routine in context
         await refetchUserSilently();
-        onNext();
       } else {
         console.error("Failed to generate routine:", routineResponse.error);
         // Could add error handling UI here
@@ -85,88 +94,110 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
   }
 
   return (
-    <View style={tw`flex-1 px-6 py-8`}>
-      <ScrollView style={tw`flex-1`}>
-        <View style={tw` flex flex-col items-center gap-8`}>
-          {/* <GradientText style={tw`text-2xl font-tussi text-white text-center `}>
-            Almost there!
-          </GradientText> */}
+    <KeyboardAvoidingView
+      style={tw`flex-1 px-6 py-8`}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 0}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <ScrollView style={tw`flex-1`}>
+          <View style={tw` flex flex-col items-center gap-8`}>
+            <GradientText
+              style={tw`text-xl font-tussi-bold text-white text-center `}
+            >
+              SET YOUR GOALS
+            </GradientText>
 
-          {/* Epic Goal Section */}
-          <View style={tw`flex-col  w-full`}>
-            <Text style={tw`text-white font-mont-medium text-lg mb-2 `}>
-              Do you have a goal you are chasing?
-            </Text>
-            <Text style={tw`text-white/70 font-mont text-sm  mb-4`}>
-              This is your epic goal. It could be career, fitness, personal
-              development, or any major goal you want to achieve.
-            </Text>
-            <TextInput
-              style={tw` border border-white/20 rounded-md px-4 py-3 text-white font-mont text-base`}
-              value={epicGoal}
-              onChangeText={setEpicGoal}
-              placeholder="e.g. Run a marathon, Start my own business..."
-              placeholderTextColor="rgba(255, 255, 255, 0.4)"
-              multiline
-              textAlignVertical="top"
-            />
-          </View>
-
-          <View style={tw`h-[1px] bg-white/20 w-full`} />
-
-          {/* Weight Goal Section */}
-          <View style={tw` w-full flex flex-col`}>
-            <Text style={tw`text-white font-mont-medium text-lg mb-6`}>
-              What&apos;s your weight goal?
-            </Text>
-
-            <View style={tw`flex-row gap-2 `}>
-              <View
-                style={tw`  rounded-md pr-2 py-[16px] flex-col items-center`}
+            {/* Epic Goal Section */}
+            <View style={tw`flex-col  w-full`}>
+              <Text
+                style={tw`text-white font-mont-medium text-lg mb-2 text-center `}
               >
-                <View
-                  style={tw`w-4 h-4 rounded-full border-2 border-primary`}
-                />
-                <View style={tw`w-1 h-4 bg-white/20 flex-1`} />
-                <View style={tw`w-4 h-4 bg-primary rounded-full`} />
-              </View>
-              <View style={tw`flex-col gap-2 flex-1 `}>
-                <View style={tw`flex-1 flex-row justify-between items-center`}>
-                  <Text style={tw`text-white/70 font-mont-medium text-sm `}>
-                    Current Weight (kg)
-                  </Text>
-                  <TextInput
-                    style={tw` flex-1 max-w-30 border border-white/20 rounded-md px-4 py-2 text-white font-mont text-lg text-center`}
-                    value={currentWeight}
-                    onChangeText={setCurrentWeight}
-                    placeholder="75"
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
-                    keyboardType="numeric"
-                  />
-                </View>
+                Do you have a goal you are chasing?
+              </Text>
+              <Text
+                style={tw`text-white/70 font-mont text-sm  mb-4 text-center`}
+              >
+                This is your epic goal. It could be career, fitness, personal
+                development, or any major goal you want to achieve.
+              </Text>
+              <TextInput
+                style={tw`  border border-white/20 rounded-md px-4 py-3 text-white font-mont text-base min-h-[80px]`}
+                value={epicGoal}
+                onChangeText={setEpicGoal}
+                placeholder="e.g. Run a marathon, Start my own business..."
+                placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                multiline
+                textAlignVertical="top"
+              />
+            </View>
 
+            {/* <View style={tw`h-[1px] bg-white/20 w-full`} /> */}
+
+            {/* Weight Goal Section */}
+            <View style={tw` w-full flex flex-col mt-10`}>
+              <Text
+                style={tw`text-white font-mont-medium text-lg mb-6 text-center`}
+              >
+                What&apos;s your weight goal?
+              </Text>
+
+              <View style={tw`flex-row gap-2 `}>
                 <View
-                  style={tw`flex-1 flex-row justify-between items-center  `}
+                  style={tw`  rounded-md pr-2 py-[16px] flex-col items-center`}
                 >
-                  <Text style={tw`text-white/70 font-mont-medium text-sm `}>
-                    Target Weight (kg)
-                  </Text>
-                  <TextInput
-                    style={tw` flex-1 max-w-30 border border-white/20 rounded-md px-4 py-2 text-white font-mont text-lg text-center`}
-                    value={targetWeight}
-                    onChangeText={setTargetWeight}
-                    placeholder="75"
-                    placeholderTextColor="rgba(255, 255, 255, 0.4)"
-                    keyboardType="numeric"
+                  <View
+                    style={tw`w-4 h-4 rounded-full border-2 border-primary`}
                   />
+                  <View style={tw`w-1 h-4 bg-white/20 flex-1`} />
+                  <View style={tw`w-4 h-4 bg-primary rounded-full`} />
+                </View>
+                <View style={tw`flex-col gap-2 flex-1`}>
+                  <View
+                    style={tw`flex-1 flex-row justify-between items-center`}
+                  >
+                    <Text style={tw`text-white/70 font-mont-medium text-sm `}>
+                      Current Weight (kg)
+                    </Text>
+                    <TextInput
+                      style={tw` flex-1 max-w-30 border border-white/20 rounded-md px-4 py-2 text-white font-mont text-lg text-center`}
+                      value={currentWeight}
+                      onChangeText={setCurrentWeight}
+                      placeholder="75"
+                      placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                      keyboardType="numeric"
+                    />
+                  </View>
+
+                  <View
+                    style={tw`flex-1 flex-row justify-between items-center `}
+                  >
+                    <Text style={tw`text-white/70 font-mont-medium text-sm `}>
+                      Target Weight (kg)
+                    </Text>
+                    <TextInput
+                      style={tw` flex-1 max-w-30 border border-white/20 rounded-md px-4 py-2 text-white font-mont text-lg text-center`}
+                      value={targetWeight}
+                      onChangeText={setTargetWeight}
+                      placeholder="75"
+                      placeholderTextColor="rgba(255, 255, 255, 0.4)"
+                      keyboardType="numeric"
+                    />
+                  </View>
                 </View>
               </View>
             </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </TouchableWithoutFeedback>
 
-      <Button title="GET MY ROUTINE" onPress={handleNext} disabled={!isValid} />
-    </View>
+      <View style={tw`mt-3`}>
+        <Button
+          title="GET MY ROUTINE"
+          onPress={handleNext}
+          disabled={!isValid}
+        />
+      </View>
+    </KeyboardAvoidingView>
   );
 }

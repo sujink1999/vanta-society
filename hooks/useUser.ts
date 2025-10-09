@@ -42,6 +42,7 @@ export function useUser(): UseUserReturn {
           hasCompletedQuestionnaire,
         } = response.data;
         setUser(userData);
+
         setRoutine(routine);
         setHasCompletedQuestionnaire(hasCompletedQuestionnaire);
 

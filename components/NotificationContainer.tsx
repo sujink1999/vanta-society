@@ -56,15 +56,15 @@ function NotificationIcon({ type }: { type: NotificationType }) {
 
   switch (type) {
     case "success":
-      return <CheckIcon size={20} color={color} />;
+      return <CheckIcon size={24} color={color} />;
     case "error":
-      return <XIcon size={20} color={color} />;
+      return <XIcon size={24} color={color} />;
     case "info":
-      return <InfoIcon size={20} color={color} />;
+      return <InfoIcon size={24} color={color} />;
     case "warning":
-      return <WarningIcon size={20} color={color} />;
+      return <WarningIcon size={24} color={color} />;
     case "vital":
-      return <CheckIcon size={20} color={color} />;
+      return <CheckIcon size={24} color={color} />;
   }
 }
 
@@ -95,6 +95,21 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
   const slideYAnim = useRef(new Animated.Value(-100)).current;
   const opacityAnim = useRef(new Animated.Value(0)).current;
   const scaleAnim = useRef(new Animated.Value(0.8)).current;
+
+  const getBackgroundColor = () => {
+    switch (notification.type) {
+      case "error":
+        return "rgba(239, 68, 68, 0.2)"; // red-500/20
+      case "success":
+        return "rgba(34, 197, 94, 0.2)"; // green-500/20
+      case "warning":
+        return "rgba(245, 158, 11, 0.2)"; // yellow-500/20
+      case "info":
+        return "rgba(59, 130, 246, 0.2)"; // blue-500/20
+      case "vital":
+        return "rgba(255, 92, 42, 0.2)"; // primary/20
+    }
+  };
 
   const handleDismiss = useCallback(() => {
     // Slide out to top, fade out, and scale down with bounce
@@ -171,17 +186,23 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
     >
       <BlurView
         intensity={80}
-        style={tw`border border-white/10 rounded-md overflow-hidden`}
+        style={[
+          tw`border border-white/10 rounded-md overflow-hidden relative`,
+          { backgroundColor: getBackgroundColor() },
+        ]}
         tint="dark"
       >
         <View style={tw`flex-row items-center px-4 py-3`}>
           <View style={tw`mr-3`}>
             <NotificationIcon type={notification.type} />
           </View>
-          <Text style={tw`text-white font-mont text-sm flex-1`}>
+          <Text style={tw`text-white font-mont-medium text-sm flex-1`}>
             {notification.message}
           </Text>
-          <TouchableOpacity onPress={handleDismiss} style={tw`ml-2 p-1`}>
+          <TouchableOpacity
+            onPress={handleDismiss}
+            style={tw`ml-2 p-1 absolute top-1 right-1`}
+          >
             <XIcon size={16} color="#979797" />
           </TouchableOpacity>
         </View>
@@ -200,6 +221,10 @@ function VitalNotificationItem({
   const progressBarAnim = useRef(new Animated.Value(0 / 100)).current;
 
   const vitalName = VITAL_NAMES[notification.vitalType];
+
+  const getBackgroundColor = () => {
+    return "rgba(255, 92, 42, 0.2)"; // primary/20
+  };
 
   const handleDismiss = useCallback(() => {
     // Slide out to top, fade out, and scale down
@@ -288,7 +313,10 @@ function VitalNotificationItem({
     >
       <BlurView
         intensity={80}
-        style={tw`border border-white/10 rounded-md `}
+        style={[
+          tw`border border-white/10 rounded-md`,
+          { backgroundColor: getBackgroundColor() },
+        ]}
         tint="dark"
       >
         <View style={tw`flex-row items-center px-3 py-3`}>

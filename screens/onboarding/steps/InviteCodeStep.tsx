@@ -1,10 +1,21 @@
-import { Button } from "@/components/Button";
 import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { submitInviteCode } from "@/services/api/users";
+import { Ionicons } from "@expo/vector-icons";
+import { ResizeMode, Video } from "expo-av";
 import React, { useEffect, useRef, useState } from "react";
-import { Alert, Animated, TextInput, View } from "react-native";
+import {
+  ActivityIndicator,
+  Animated,
+  Keyboard,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from "react-native";
 
 interface InviteCodeStepProps {
   onNext: () => void;
@@ -25,7 +36,8 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [glitchIntensity, setGlitchIntensity] = useState(0); // 0 = normal, 1 = light gray, 2 = medium gray, 3 = white
   const fadeAnim = useRef(new Animated.Value(1)).current;
-  const { refetchUserSilently } = useGlobalContext();
+  const videoRef = useRef<Video>(null);
+  const { refetchUserSilently, addNotification } = useGlobalContext();
 
   // Synchronized glitch and text rotation animation
   useEffect(() => {
@@ -98,7 +110,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
 
   const handleSubmit = async () => {
     if (!inviteCode.trim()) {
-      Alert.alert("Error", "Please enter an invite code");
+      addNotification("Please enter an invite code", "error", 3000);
       return;
     }
 
@@ -109,16 +121,21 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       });
 
       if (response.success) {
-        await refetchUserSilently(); // Update user context
         onNext();
+        await refetchUserSilently(); // Update user context
       } else {
-        Alert.alert(
-          "Invalid Code",
-          "The invite code you entered is not valid."
+        addNotification(
+          "The invite code you entered is not valid.",
+          "error",
+          3000
         );
       }
     } catch (error) {
-      Alert.alert("Error", "Failed to verify invite code. Please try again.");
+      addNotification(
+        "The invite code you entered is not valid.",
+        "error",
+        3000
+      );
     } finally {
       setIsLoading(false);
     }
@@ -162,50 +179,78 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   };
 
   return (
-    <View style={[tw`flex-1 px-3 gap-3`, getGlitchStyle()]}>
-      <View style={tw`flex-1  flex flex-col items-center justify-center gap-8`}>
-        <View
-          style={[
-            tw`h-[300px] w-40 rounded-lg`,
-            // getBoxStyle(),
-          ]}
-        ></View>
-        <Animated.Text
-          style={[
-            tw`font-tussi text-lg text-center`,
-            {
-              opacity: fadeAnim,
-              color: getTextColor(),
-            },
-          ]}
-        >
-          {PHRASES[currentPhraseIndex]}
-        </Animated.Text>
-      </View>
-      <View style={tw`flex flex-col gap-5 mb-20`}>
-        <TextInput
-          style={tw` border border-white/20 rounded-sm px-4 py-3  text-white font-tussi text-md text-left `}
-          value={inviteCode}
-          onChangeText={setInviteCode}
-          placeholder="Enter invite code"
-          placeholderTextColor={Colors.textSecondary}
-          autoCapitalize="characters"
-          autoCorrect={false}
-          maxLength={6}
-          textAlign="left"
-        />
-
-        <View style={tw` h-10 `}>
-          {inviteCode.trim()?.length > 4 && (
-            <Button
-              title="Continue"
-              onPress={handleSubmit}
-              disabled={!inviteCode.trim()}
-              loading={isLoading}
-            />
-          )}
+    <KeyboardAvoidingView
+      style={tw`flex-1`}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      keyboardVerticalOffset={-32}
+    >
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <View style={[tw`flex-1 px-3 gap-3`, getGlitchStyle()]}>
+          <View
+            style={tw`flex-1  flex flex-col items-center justify-center gap-8`}
+          >
+            <View style={tw`h-[300px] w-40 rounded-lg overflow-hidden`}>
+              <Video
+                ref={videoRef}
+                source={require("@/assets/videos/aura-cut.mp4")}
+                style={tw`flex-1 w-full`}
+                resizeMode={ResizeMode.COVER}
+                shouldPlay
+                isLooping
+                isMuted
+              />
+            </View>
+            <Animated.Text
+              style={[
+                tw`font-tussi text-lg text-center`,
+                {
+                  opacity: fadeAnim,
+                  color: getTextColor(),
+                },
+              ]}
+            >
+              {PHRASES[currentPhraseIndex]}
+            </Animated.Text>
+          </View>
+          <View style={tw`flex flex-col gap-5 mb-10`}>
+            <View style={tw`flex-row items-end gap-2`}>
+              <TextInput
+                style={tw`flex-1 border border-white/20 rounded-sm px-4 py-3 text-white font-tussi text-md text-left`}
+                value={inviteCode}
+                onChangeText={setInviteCode}
+                placeholder="Enter invite code"
+                placeholderTextColor={Colors.textSecondary}
+                autoCapitalize="characters"
+                autoCorrect={false}
+                autoComplete="off"
+                spellCheck={false}
+                maxLength={8}
+                textAlign="left"
+                returnKeyType="done"
+                onSubmitEditing={() => {
+                  if (inviteCode.trim()) {
+                    handleSubmit();
+                  }
+                }}
+                editable={!isLoading}
+              />
+              {inviteCode.trim() && (
+                <TouchableOpacity
+                  style={tw`w-12 h-[42px] rounded-sm items-center justify-center bg-primary`}
+                  onPress={handleSubmit}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                    <Ionicons name="checkmark" size={24} color="white" />
+                  )}
+                </TouchableOpacity>
+              )}
+            </View>
+          </View>
         </View>
-      </View>
-    </View>
+      </TouchableWithoutFeedback>
+    </KeyboardAvoidingView>
   );
 }

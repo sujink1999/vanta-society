@@ -4,13 +4,28 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from "axios";
+import Constants from "expo-constants";
+import { Platform } from "react-native";
 import { ApiError } from "./types";
 
 // Storage keys
 const TOKEN_KEY = "vanta_jwt_token";
 
-// Base URL - you can change this to your backend URL
-const BASE_URL = "http://localhost:8080/api"; // Update this to your backend URL
+// Get base URL from config, or use localhost for dev
+let BASE_URL =
+  Constants.expoConfig?.extra?.apiUrl || "http://localhost:8080/api";
+
+// Override for development on physical device - use your Mac's IP
+if (__DEV__ && Platform.OS !== "web") {
+  // Replace localhost with your Mac's IP for physical device testing
+  BASE_URL = BASE_URL.replace("localhost", "192.168.29.148");
+}
+
+// Log which environment we're using
+if (__DEV__) {
+  console.log("🌍 API Environment:", Constants.expoConfig?.extra?.environment);
+  console.log("🔗 API Base URL:", BASE_URL);
+}
 
 class ApiClient {
   private client: AxiosInstance;
@@ -100,7 +115,9 @@ class ApiClient {
         // Transform error to our ApiError format
         const apiError: ApiError = {
           message:
-            (error.response?.data as any)?.error || error.message || "Network error",
+            (error.response?.data as any)?.error ||
+            error.message ||
+            "Network error",
           status: error.response?.status,
           code: error.code,
         };

@@ -35,9 +35,9 @@ export default function TabLayout() {
           backgroundColor: "transparent",
           // borderRightWidth: 1,
           // borderLeftWidth: 1,
-          borderColor: "#ffffff20",
-          borderTopLeftRadius: 20,
-          borderTopRightRadius: 20,
+          borderColor: "#ffffff30",
+          // borderTopLeftRadius: 20,
+          // borderTopRightRadius: 20,
           position: "absolute",
           overflow: "hidden",
         },
@@ -56,7 +56,7 @@ export default function TabLayout() {
         headerShown: false,
       }}
       safeAreaInsets={{
-        bottom: 20,
+        bottom: 30,
       }}
     >
       <Tabs.Screen
