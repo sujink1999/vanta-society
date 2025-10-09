@@ -121,8 +121,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       });
 
       if (response.success) {
-        onNext();
-        await refetchUserSilently(); // Update user context
+        await refetchUserSilently(); // useEffect will handle navigation
       } else {
         addNotification(
           "The invite code you entered is not valid.",

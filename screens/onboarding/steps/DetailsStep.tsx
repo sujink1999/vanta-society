@@ -47,8 +47,7 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
       });
 
       if (response.success) {
-        onNext();
-        await refetchUserSilently(); // Update user context
+        await refetchUserSilently(); // useEffect will handle navigation
       } else {
         Alert.alert("Error", "Failed to save profile. Please try again.");
       }

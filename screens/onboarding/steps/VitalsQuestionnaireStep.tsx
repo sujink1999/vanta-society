@@ -87,8 +87,7 @@ export function VitalsQuestionnaireStep({
       });
 
       if (response.success) {
-        onNext();
-        await refetchUserSilently();
+        await refetchUserSilently(); // useEffect will handle navigation
       } else {
         Alert.alert("Error", "Failed to save responses. Please try again.");
       }
