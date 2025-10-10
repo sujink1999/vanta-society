@@ -30,17 +30,17 @@ export function DailyRoutine() {
 
   // Calculate the actual current day based on Winter Arc start date
   const winterArcStartDate = user?.winterArcStartDate;
-  const actualCurrentDay = winterArcStartDate
-    ? Math.max(
-        1,
-        Math.min(66, moment().diff(moment(winterArcStartDate), "days") + 1)
-      )
-    : 1;
 
   // Set current day to actual day on mount
   useEffect(() => {
+    if (!user?.winterArcStartDate) return;
+
+    const actualCurrentDay = Math.max(
+      1,
+      Math.min(66, moment().diff(moment(user.winterArcStartDate), "days") + 1)
+    );
     setCurrentDay(actualCurrentDay);
-  }, [actualCurrentDay]);
+  }, [user]);
 
   // Calculate the date for the selected day
   const selectedDate = winterArcStartDate
@@ -90,18 +90,27 @@ export function DailyRoutine() {
       <Header />
 
       {/* Day Counter with Navigation */}
-      <View style={tw`flex-row items-center justify-between px-2 mt-4 mb-2`}>
-        <Text>
-          <GradientText style={tw`text-white font-tussi text-lg`}>
-            DAY
-          </GradientText>
-          <GradientText style={tw`text-white font-tussi text-3xl pl-2`}>
-            {currentDay}
-          </GradientText>
-          <GradientText style={tw`text-white font-tussi text-lg pl-1`}>
-            /66
-          </GradientText>
-        </Text>
+      <View
+        style={tw`flex-row items-center justify-between px-2 mt-4 mb-2 relative`}
+      >
+        <View style={tw`flex-col gap-1`}>
+          <View style={tw`flex-row items-center gap-2`}>
+            <Text>
+              <GradientText style={tw`text-white font-tussi text-lg`}>
+                DAY
+              </GradientText>
+              <GradientText style={tw`text-white font-tussi text-3xl pl-2`}>
+                {currentDay}
+              </GradientText>
+              <GradientText style={tw`text-white font-tussi text-lg pl-1`}>
+                /66
+              </GradientText>
+            </Text>
+          </View>
+          <Text style={tw`text-white/60 font-mont text-xs`}>
+            {moment(selectedDate).format("ddd, MMM D")}
+          </Text>
+        </View>
 
         <View style={tw`flex-row items-center gap-3`}>
           <TouchableOpacity

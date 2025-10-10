@@ -46,7 +46,7 @@ export function FinalScoreStep() {
   };
 
   return (
-    <View style={tw`flex-1 flex-col justify-around px-3 py-6 `}>
+    <View style={tw`flex-1 flex-col justify-around px-3 pt-6 pb-6`}>
       <View style={tw`gap-4 flex flex-col items-center `}>
         <GradientText
           style={tw`text-textPrimary text-center font-tussi-bold text-4`}

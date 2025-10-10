@@ -131,7 +131,7 @@ export function CategoryEditor({
 
   return (
     <KeyboardAvoidingView
-      style={tw`flex-1 flex-col`}
+      style={tw`flex-1 flex-col pb-6`}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       {/* Header */}

@@ -95,7 +95,7 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
 
   return (
     <KeyboardAvoidingView
-      style={tw`flex-1 px-6 py-8`}
+      style={tw`flex-1 px-6 pt-8 pb-6`}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 0}
     >
@@ -191,7 +191,7 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
         </ScrollView>
       </TouchableWithoutFeedback>
 
-      <View style={tw`mt-3`}>
+      <View>
         <Button
           title="GET MY ROUTINE"
           onPress={handleNext}

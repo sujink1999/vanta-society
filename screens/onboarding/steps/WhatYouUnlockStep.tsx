@@ -39,7 +39,7 @@ export function WhatYouUnlockStep({ onNext }: WhatYouUnlockStepProps) {
   };
 
   return (
-    <View style={tw`flex-1 px-6 py-8`}>
+    <View style={tw`flex-1 px-6 pt-8 pb-6`}>
       {/* Title */}
       <View style={tw`mb-8`}>
         <Text style={tw`text-sm font-tussi-bold text-white text-center mb-4`}>

@@ -4,7 +4,7 @@ import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useRouter } from "expo-router";
 import React from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 
 export function Header() {
   const { winterArcStats } = useGlobalContext();
@@ -15,7 +15,12 @@ export function Header() {
   const vitalScore = Math.round(winterArcStats.currentScores.society ?? 0);
 
   return (
-    <View style={tw`flex-row items-center justify-end `}>
+    <View style={tw`flex-row items-center justify-between `}>
+      <Image
+        source={require("@/assets/images/society-logo-no-bg.png")}
+        style={tw`w-16 h-10`}
+        resizeMode="contain"
+      />
       <TouchableOpacity
         onPress={() => router.push("/(tabs)/winterarc/profile")}
         style={tw`  rounded-md flex-row items-center justify-end p-2 py-1 gap-1 bg-white/5  border border-white/5`}

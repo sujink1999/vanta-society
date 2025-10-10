@@ -47,7 +47,7 @@ export function WinterArcInfoStep({ onNext }: WinterArcInfoStepProps) {
   };
 
   return (
-    <View style={tw`flex-1 px-3 py-6`}>
+    <View style={tw`flex-1 px-3 pt-6 pb-6`}>
       <View style={tw`flex-1 `}>
         <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
           {/* 66 Days Section */}

@@ -12,7 +12,7 @@ interface VitalsIntroStepProps {
 
 export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
   return (
-    <View style={tw`flex-1 px-6 py-8`}>
+    <View style={tw`flex-1 px-6 pt-8 pb-6`}>
       {/* Intro Screen */}
       <View style={tw`flex-1 items-center justify-between`}>
         <View />

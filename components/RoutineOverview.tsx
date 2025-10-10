@@ -88,7 +88,7 @@ export function RoutineOverview({
           );
         })}
       </ScrollView>
-      <View style={tw`pb-3 `}>
+      <View style={tw`pb-6`}>
         <Button title="Lock In" onPress={onSubmit} />
       </View>
     </View>

@@ -52,7 +52,7 @@ export function WinterArcStartDateStep({
   };
 
   return (
-    <View style={tw`flex-1 px-3 py-8`}>
+    <View style={tw`flex-1 px-3 pt-8 pb-6`}>
       <View style={tw` flex-col items-center gap-8 flex-1`}>
         <View style={tw` flex-col items-center gap-3`}>
           <GradientText

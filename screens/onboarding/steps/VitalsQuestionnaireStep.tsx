@@ -121,7 +121,7 @@ export function VitalsQuestionnaireStep({
   }
 
   return (
-    <View style={tw`flex-1 px-3 pb-8 pt-8 `}>
+    <View style={tw`flex-1 px-3 pt-8 pb-6`}>
       {/* Progress */}
       <View style={tw`flex flex-col gap-8 mb-4`}>
         <StoryProgressBar
