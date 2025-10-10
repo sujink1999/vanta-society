@@ -1,29 +1,8 @@
-import {
-  CommunityIcon,
-  StoreIcon,
-  ToolsIcon,
-  WinterArcIcon,
-} from "@/components/icons/TabIcons";
 import { Colors } from "@/constants/theme";
+import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import { View } from "react-native";
-
-const AnimatedTabIcon = ({
-  IconComponent,
-  focused,
-  color,
-}: {
-  IconComponent: any;
-  focused: boolean;
-  color: string;
-}) => {
-  return (
-    <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
-      <IconComponent size={20} color={color} />
-    </View>
-  );
-};
 
 export default function TabLayout() {
   return (
@@ -67,12 +46,9 @@ export default function TabLayout() {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ color, focused }) => (
-            <AnimatedTabIcon
-              IconComponent={WinterArcIcon}
-              focused={focused}
-              color={color}
-              key="winterarc"
-            />
+            <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
+              <Ionicons name="snow" size={20} color={color} />
+            </View>
           ),
         }}
       />
@@ -81,12 +57,9 @@ export default function TabLayout() {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ color, focused }) => (
-            <AnimatedTabIcon
-              IconComponent={StoreIcon}
-              focused={focused}
-              color={color}
-              key="store"
-            />
+            <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
+              <Ionicons name="storefront" size={20} color={color} />
+            </View>
           ),
         }}
       />
@@ -95,12 +68,9 @@ export default function TabLayout() {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ color, focused }) => (
-            <AnimatedTabIcon
-              IconComponent={CommunityIcon}
-              focused={focused}
-              color={color}
-              key="community"
-            />
+            <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
+              <Ionicons name="people" size={20} color={color} />
+            </View>
           ),
         }}
       />
@@ -109,12 +79,9 @@ export default function TabLayout() {
         options={{
           tabBarShowLabel: false,
           tabBarIcon: ({ color, focused }) => (
-            <AnimatedTabIcon
-              IconComponent={ToolsIcon}
-              focused={focused}
-              color={color}
-              key="tools"
-            />
+            <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
+              <Ionicons name="construct" size={20} color={color} />
+            </View>
           ),
         }}
       />

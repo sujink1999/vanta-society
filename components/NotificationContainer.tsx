@@ -177,7 +177,7 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
   return (
     <Animated.View
       style={[
-        tw`mb-2`,
+        tw`mb-2 rounded-md`,
         {
           transform: [{ translateY: slideYAnim }, { scale: scaleAnim }],
           opacity: opacityAnim,
@@ -314,7 +314,7 @@ function VitalNotificationItem({
       <BlurView
         intensity={80}
         style={[
-          tw`border border-white/10 rounded-md`,
+          tw` rounded-md overflow-hidden border border-white/10`,
           { backgroundColor: getBackgroundColor() },
         ]}
         tint="dark"
@@ -365,7 +365,7 @@ function VitalNotificationItem({
           {/* Dismiss button */}
           <TouchableOpacity
             onPress={handleDismiss}
-            style={tw`ml-2 p-1 absolute -right-2 -top-2 p-1 bg-black/90 border border-white/10 rounded-full `}
+            style={tw`ml-2 p-1 pt-[6px] pr-[6px] absolute -right-1 -top-1  bg-black/90 border border-white/5 rounded-tr-none rounded-lg `}
           >
             <XIcon size={16} color="#979797" />
           </TouchableOpacity>
