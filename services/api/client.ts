@@ -29,6 +29,8 @@ if (__DEV__) {
 
 class ApiClient {
   private client: AxiosInstance;
+  private authErrorHandler?: () => void;
+  private isHandlingAuthError = false;
 
   constructor() {
     this.client = axios.create({
@@ -40,6 +42,10 @@ class ApiClient {
     });
 
     this.setupInterceptors();
+  }
+
+  setAuthErrorHandler(handler: () => void) {
+    this.authErrorHandler = handler;
   }
 
   private setupInterceptors() {
@@ -108,8 +114,15 @@ class ApiClient {
           // Clear stored token
           await this.clearToken();
 
-          // You can emit an event here to redirect to login
-          // EventEmitter.emit('unauthorized');
+          // Call auth error handler if set, but only once to prevent multiple alerts
+          if (this.authErrorHandler && !this.isHandlingAuthError) {
+            this.isHandlingAuthError = true;
+            this.authErrorHandler();
+            // Reset flag after a short delay to allow for future auth errors
+            setTimeout(() => {
+              this.isHandlingAuthError = false;
+            }, 1000);
+          }
         }
 
         // Transform error to our ApiError format

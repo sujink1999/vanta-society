@@ -17,6 +17,7 @@ interface GlobalContextType {
   isAuthenticating: boolean;
   refetchUser: (checkBackup?: boolean) => Promise<void>;
   refetchUserSilently: () => Promise<void>;
+  logout: () => Promise<void>;
   winterArcStats: {
     currentScores: {
       discipline: number;

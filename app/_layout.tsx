@@ -4,6 +4,7 @@ import { useAppFonts } from '@/constants/useFonts';
 import { GlobalProvider } from '@/contexts/GlobalContext';
 import AuthNavigator from '@/components/AuthNavigator';
 import { NotificationContainer } from '@/components/NotificationContainer';
+import { AuthErrorHandler } from '@/components/AuthErrorHandler';
 import { dataSyncManager } from '@/services/storage/DataSyncManager';
 import { checkInStorageManager } from '@/services/storage/CheckInStorageManager';
 import { useEffect } from 'react';
@@ -28,6 +29,7 @@ export default function RootLayout() {
   return (
     <View style={{ flex: 1, backgroundColor: '#000000' }}>
       <GlobalProvider>
+        <AuthErrorHandler />
         <AuthNavigator>
           <Stack screenOptions={{ contentStyle: { backgroundColor: '#000000' } }}>
             <Stack.Screen name="(tabs)" options={{ headerShown: false }} />

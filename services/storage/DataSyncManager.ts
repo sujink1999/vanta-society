@@ -1,5 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { syncData, getBackupData } from "../api";
+import { getBackupData, syncData } from "../api";
+import { checkInStorageManager } from "./CheckInStorageManager";
 import { scoreStorageManager } from "./ScoreStorageManager";
 import { taskStorageManager } from "./TaskStorageManager";
 
@@ -46,6 +47,7 @@ class DataSyncManager {
       // Get all local data
       const scores = await scoreStorageManager.getScores();
       const completions = await taskStorageManager.getAllCompletions();
+      const checkIns = await checkInStorageManager.getCache();
 
       // Don't sync if no scores yet (user hasn't completed onboarding)
       if (!scores) {
@@ -65,6 +67,7 @@ class DataSyncManager {
           society: scores.society,
         },
         completions,
+        checkIns,
         lastSync: currentTimestamp,
       };
 
@@ -136,7 +139,7 @@ class DataSyncManager {
       console.log("Cloud data is newer, restoring from backup...");
 
       // Restore scores to local storage
-      if (backupData.scores) {
+      if (backupData?.scores) {
         await scoreStorageManager.updateScores({
           discipline: backupData.scores.discipline,
           mindset: backupData.scores.mindset,
@@ -149,14 +152,15 @@ class DataSyncManager {
       }
 
       // Restore task completions to local storage
-      if (backupData.completions) {
-        // TaskStorageManager expects TaskCompletionData format
-        // We need to restore the entire cache
-        const taskManager = taskStorageManager as any;
-        await taskManager.initialize();
-        taskManager.cache = backupData.completions;
-        await (taskManager as any).saveToStorage();
+      if (backupData?.completions) {
+        await taskStorageManager.restoreCache(backupData.completions);
         console.log("Task completions restored from backup");
+      }
+
+      // Restore check-in data to local storage
+      if (backupData?.checkIns) {
+        await checkInStorageManager.restoreCache(backupData.checkIns);
+        console.log("Check-in data restored from backup");
       }
 
       // Update last sync time

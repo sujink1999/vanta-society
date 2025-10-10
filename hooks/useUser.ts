@@ -4,6 +4,7 @@ import { getProfile } from "@/services/api/users";
 import { dataSyncManager } from "@/services/storage/DataSyncManager";
 import { scoreStorageManager } from "@/services/storage/ScoreStorageManager";
 import { useCallback, useEffect, useState } from "react";
+import { AppState, AppStateStatus } from "react-native";
 
 interface UseUserReturn {
   user: User | null;
@@ -12,6 +13,7 @@ interface UseUserReturn {
   isAuthenticating: boolean;
   refetchUser: () => Promise<void>;
   refetchUserSilently: () => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export function useUser(): UseUserReturn {
@@ -98,9 +100,34 @@ export function useUser(): UseUserReturn {
     await fetchUser();
   }, [fetchUser]);
 
+  const logout = useCallback(async () => {
+    await apiClient.clearToken();
+    setUser(null);
+    setRoutine([]);
+    setHasCompletedQuestionnaire(false);
+  }, []);
+
   useEffect(() => {
     fetchUser();
   }, [fetchUser]);
+
+  // Listen for app state changes to trigger re-render when app becomes active
+  useEffect(() => {
+    const subscription = AppState.addEventListener(
+      "change",
+      (nextAppState: AppStateStatus) => {
+        if (nextAppState === "active" && user) {
+          // App came to foreground, force re-render to recalculate dates with current time
+          // This avoids unnecessary network calls and potential auth errors
+          setUser({ ...user });
+        }
+      }
+    );
+
+    return () => {
+      subscription.remove();
+    };
+  }, [user]);
 
   return {
     user,
@@ -109,5 +136,6 @@ export function useUser(): UseUserReturn {
     isAuthenticating,
     refetchUser,
     refetchUserSilently,
+    logout,
   };
 }

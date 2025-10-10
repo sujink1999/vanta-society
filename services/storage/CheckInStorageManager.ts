@@ -162,6 +162,12 @@ class CheckInStorageManager {
     await this.initialize();
     return this.cache;
   }
+
+  async restoreCache(data: CheckInData): Promise<void> {
+    await this.initialize();
+    this.cache = data;
+    await this.save();
+  }
 }
 
 export const checkInStorageManager = CheckInStorageManager.getInstance();

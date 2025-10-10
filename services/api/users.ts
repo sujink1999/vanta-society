@@ -120,6 +120,7 @@ export async function syncData(request: {
       society: number;
     };
     completions: any;
+    checkIns: any;
     lastSync: string;
   };
 }): Promise<ApiResponse<{
@@ -158,6 +159,7 @@ export async function getBackupData(): Promise<ApiResponse<{
       society: number;
     };
     completions: any;
+    checkIns: any;
     lastSync: string;
   };
   lastSyncDate: string;
@@ -173,6 +175,7 @@ export async function getBackupData(): Promise<ApiResponse<{
         society: number;
       };
       completions: any;
+      checkIns: any;
       lastSync: string;
     };
     lastSyncDate: string;

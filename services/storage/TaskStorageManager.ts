@@ -126,6 +126,13 @@ class TaskStorageManager {
       console.error('Failed to save task completions:', error);
     }
   }
+
+  async restoreCache(data: TaskCompletionData): Promise<void> {
+    await this.initialize();
+    this.cache = data;
+    await this.saveToStorage();
+    this.notifyListeners();
+  }
 }
 
 export const taskStorageManager = TaskStorageManager.getInstance();
