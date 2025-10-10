@@ -46,7 +46,8 @@ export function FinalScoreStep() {
   };
 
   return (
-    <View style={tw`flex-1 flex-col justify-around px-3 pt-6 pb-6`}>
+    <View style={tw`flex-1 flex-col justify-between px-3 pt-6 pb-6`}>
+      <View style={tw`flex-1`} />
       <View style={tw`gap-4 flex flex-col items-center `}>
         <GradientText
           style={tw`text-textPrimary text-center font-tussi-bold text-4`}
@@ -58,9 +59,11 @@ export function FinalScoreStep() {
           <Text style={tw`text-textSecondary  text-base`}>/ 100</Text>
         </Text>
       </View>
+      <View style={tw`flex-2`} />
 
       {/* Radar Chart */}
       <VitalsRadarChart scores={scores} />
+      <View style={tw`flex-2`} />
 
       <Button title="CONTINUE" onPress={handleFinish} loading={isLoading} />
     </View>
