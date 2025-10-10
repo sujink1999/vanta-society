@@ -9,6 +9,10 @@
       "distribution": "internal",
       "env": {
         "APP_ENV": "development"
+      },
+      "ios": {
+        "bundleIdentifier": "com.vanta.society.dev",
+        "appName": "Society Test"
       }
     },
     "ios-simulator": {

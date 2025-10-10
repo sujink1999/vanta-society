@@ -311,3 +311,13 @@ const readable = moment().format("dddd, MMM D");
 - Backend URL configured in `services/api/client.ts` (update for production)
 - **Step Components**: Use simple onNext callback pattern, no complex prop passing
 - **Date Operations**: Always use moment.js instead of native Date objects
+
+### Git Workflow
+
+**IMPORTANT**: Do NOT commit or push changes without explicit user approval.
+
+When making code changes:
+1. Make the requested code changes
+2. Show the user what was done
+3. **Ask for permission before committing**
+4. Only run `git commit` and `git push` after user explicitly approves

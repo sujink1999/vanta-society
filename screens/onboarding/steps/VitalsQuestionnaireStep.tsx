@@ -93,8 +93,6 @@ export function VitalsQuestionnaireStep({
       }
     } catch {
       Alert.alert("Error", "Failed to save responses. Please try again.");
-    } finally {
-      setIsLoading(false);
     }
   };
 

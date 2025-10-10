@@ -6,19 +6,13 @@ import { useGlobalContext } from "@/contexts/GlobalContext";
 import { completeOnboarding } from "@/services/api/users";
 import React, { useState } from "react";
 import { Alert, Text, View } from "react-native";
-import { OnboardingStepData } from "../Onboarding";
 
-interface FinalScoreStepProps {
-  data: OnboardingStepData;
-  onNext: () => void;
-}
-
-export function FinalScoreStep({ data }: FinalScoreStepProps) {
+export function FinalScoreStep() {
   const { user, refetchUserSilently } = useGlobalContext();
   const [isLoading, setIsLoading] = useState(false);
 
   // Use scores from data (just calculated) or user (existing)
-  const scores = data.scores || {
+  const scores = {
     discipline: user?.disciplineScore || 0,
     mindset: user?.mindsetScore || 0,
     strength: user?.strengthScore || 0,
