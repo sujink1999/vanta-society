@@ -32,6 +32,7 @@ interface WinterArcStats {
   streak: number;
   streakCadenceLast7Days: number[]; // [0,0,1,1,1,1,1] for last 7 days
   tasksCompletedCumulative: number[]; // cumulative count of completed tasks per day, index 0 = day 1
+  idealBedtime: string; // formatted bedtime string like "10:00 PM"
   isLoading: boolean;
 }
 
@@ -67,6 +68,7 @@ export function useWinterArcStats(
     streak: 0,
     streakCadenceLast7Days: [0, 0, 0, 0, 0, 0, 0],
     tasksCompletedCumulative: [],
+    idealBedtime: "10:00 PM",
     isLoading: true,
   });
 
@@ -233,6 +235,44 @@ export function useWinterArcStats(
 
         const potentialScores = calculatePotentialScores();
 
+        // Calculate ideal bedtime from routine
+        const calculateIdealBedtime = (): string => {
+          if (!routine || routine.length === 0) {
+            return "10:00 PM";
+          }
+
+          // Find "Consistent wake time" task to extract wake time
+          const wakeTask = routine.find(
+            (task) => task.taskName === "Consistent wake time"
+          );
+
+          if (wakeTask) {
+            const timeOption = wakeTask.optionsSet.find(
+              (opt) =>
+                opt.type === "time" || opt.name.toLowerCase().includes("time")
+            );
+            if (timeOption && timeOption.value) {
+              // Parse wake time (format: "6:00 AM", "6:30 PM", etc.)
+              const wakeTime = moment(timeOption.value, [
+                "h:mm A",
+                "h:mm a",
+                "hh:mm A",
+                "hh:mm a",
+              ]);
+              if (wakeTime.isValid()) {
+                // Calculate bedtime: wake time - 8.5 hours (8 hours sleep + 0.5 hour buffer)
+                const bedtime = wakeTime.clone().subtract(8.5, "hours");
+                return bedtime.format("h:mm A");
+              }
+            }
+          }
+
+          // Default bedtime if no wake time found
+          return "10:00 PM";
+        };
+
+        const idealBedtime = calculateIdealBedtime();
+
         setStats({
           currentScores,
           oldScores,
@@ -240,6 +280,7 @@ export function useWinterArcStats(
           streak,
           streakCadenceLast7Days,
           tasksCompletedCumulative,
+          idealBedtime,
           isLoading: false,
         });
       } catch (error) {

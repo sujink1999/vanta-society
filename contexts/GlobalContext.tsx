@@ -46,6 +46,7 @@ interface GlobalContextType {
     streak: number;
     streakCadenceLast7Days: number[];
     tasksCompletedCumulative: number[];
+    idealBedtime: string;
     isLoading: boolean;
   };
   notifications: (Notification | VitalNotification)[];

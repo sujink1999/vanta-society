@@ -85,6 +85,10 @@ export function DailyRoutine() {
     [undoTaskAction]
   );
 
+  const tasksWithoutSleep = tasks.filter(
+    (task) => task.taskName !== "Consistent wake time"
+  );
+
   return (
     <View style={tw`flex-1 px-3 pt-3 flex-col gap-3 relative`}>
       <Header />
@@ -164,7 +168,7 @@ export function DailyRoutine() {
         style={tw`flex-1`}
         contentContainerStyle={tw`gap-2 pb-[90px] pt-4`}
       >
-        {tasks.length === 0 ? (
+        {tasksWithoutSleep.length === 0 ? (
           <View style={tw`flex-1 justify-center items-center py-20`}>
             <Text style={tw`text-white/60 font-tussi text-sm text-center`}>
               {activeTab === "todos"
@@ -175,7 +179,7 @@ export function DailyRoutine() {
             </Text>
           </View>
         ) : (
-          tasks.map((task) => {
+          tasksWithoutSleep.map((task) => {
             const taskCommand = constructTaskCommand(
               task.taskText,
               task.taskName,
@@ -197,6 +201,7 @@ export function DailyRoutine() {
                 onUndo={() => handleTaskUndo(task.id)}
                 activeTab={activeTab}
                 isToday={isToday}
+                selectedDate={selectedDate}
               />
             );
           })

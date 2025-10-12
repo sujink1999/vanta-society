@@ -2,6 +2,7 @@ import { Button } from "@/components/Button";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useTasks } from "@/hooks/useTasks";
+import { appActivityStorageManager } from "@/services/storage/AppActivityStorageManager";
 import * as ImagePicker from "expo-image-picker";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
@@ -64,7 +65,10 @@ export function EveningCheckIn({ onComplete }: EveningCheckInProps) {
     });
   };
 
-  const handleComplete = () => {
+  const handleComplete = async () => {
+    // Clear all app activity timestamps
+    await appActivityStorageManager.clearAllActivities();
+
     // Complete check-in (called from BedtimeReminder after 5 seconds)
     const completedTaskIds = completedTasks.map((task) => task.id);
     onComplete({

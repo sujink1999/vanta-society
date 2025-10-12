@@ -18,7 +18,7 @@ let BASE_URL =
 // Override for development on physical device - use your Mac's IP
 if (__DEV__ && Platform.OS !== "web") {
   // Replace localhost with your Mac's IP for physical device testing
-  BASE_URL = BASE_URL.replace("localhost", "192.168.29.148");
+  BASE_URL = BASE_URL.replace("localhost", "192.168.29.124");
 }
 
 // Log which environment we're using
@@ -178,6 +178,7 @@ class ApiClient {
   }
 
   async post<T>(url: string, data?: any): Promise<T> {
+    console.log("post", url, data);
     const response = await this.client.post(url, data);
     return response.data;
   }

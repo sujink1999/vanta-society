@@ -6,8 +6,7 @@ import { VitalType } from "@/types/notification";
 import { useState } from "react";
 
 export function useTaskActions(date: string) {
-  const { routine, addVitalNotification, winterArcStats } =
-    useGlobalContext();
+  const { routine, addVitalNotification, winterArcStats } = useGlobalContext();
   const [loading, setLoading] = useState<{ [taskId: string]: boolean }>({});
   const [error, setError] = useState<string | null>(null);
 
@@ -17,6 +16,16 @@ export function useTaskActions(date: string) {
     setError(null);
 
     try {
+      // Check if task is already marked as done
+      const currentStatus = await taskStorageManager.getTaskStatus(
+        date,
+        userRoutineId
+      );
+      if (currentStatus === "done") {
+        // Already marked as done, nothing to do
+        return true;
+      }
+
       // Find the task in routine to get impact values
       const task = routine.find((r) => r.id === userRoutineId);
 
@@ -37,14 +46,22 @@ export function useTaskActions(date: string) {
       };
 
       // Find the vital with max impact BEFORE updating scores
-      const maxVital = Object.entries(scoreImpacts).reduce((max, [vital, impact]) => {
-        return impact > max.impact ? { vital: vital as VitalType, impact } : max;
-      }, { vital: "discipline" as VitalType, impact: 0 });
+      const maxVital = Object.entries(scoreImpacts).reduce(
+        (max, [vital, impact]) => {
+          return impact > max.impact
+            ? { vital: vital as VitalType, impact }
+            : max;
+        },
+        { vital: "discipline" as VitalType, impact: 0 }
+      );
 
       // Get previous score before updating
-      const previousScore = maxVital.impact > 0
-        ? winterArcStats.currentScores[maxVital.vital as keyof typeof winterArcStats.currentScores]
-        : 0;
+      const previousScore =
+        maxVital.impact > 0
+          ? winterArcStats.currentScores[
+              maxVital.vital as keyof typeof winterArcStats.currentScores
+            ]
+          : 0;
 
       // Now update the scores
       await scoreStorageManager.incrementMultipleScores(scoreImpacts);

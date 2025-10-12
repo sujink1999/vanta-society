@@ -1,6 +1,10 @@
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { UserRoutine } from "@/services/api/types";
-import { TaskStatus, TaskCompletion, taskStorageManager } from "@/services/storage/TaskStorageManager";
+import {
+  TaskCompletion,
+  TaskStatus,
+  taskStorageManager,
+} from "@/services/storage/TaskStorageManager";
 import moment from "moment";
 import { useEffect, useMemo, useState } from "react";
 
@@ -9,9 +13,14 @@ export interface TaskForDate extends UserRoutine {
   status: TaskStatus | null;
 }
 
-export function useTasks(date: string, filterBy?: 'todos' | 'done' | 'skipped'): TaskForDate[] {
+export function useTasks(
+  date: string,
+  filterBy?: "todos" | "done" | "skipped"
+): TaskForDate[] {
   const { routine } = useGlobalContext();
-  const [completionData, setCompletionData] = useState<{ [userRoutineId: string]: TaskCompletion }>({});
+  const [completionData, setCompletionData] = useState<{
+    [userRoutineId: string]: TaskCompletion;
+  }>({});
 
   // Load completion data for the date
   useEffect(() => {
@@ -55,12 +64,12 @@ export function useTasks(date: string, filterBy?: 'todos' | 'done' | 'skipped'):
     // Apply filter if specified
     if (filterBy) {
       switch (filterBy) {
-        case 'todos':
+        case "todos":
           return allTasks.filter((task) => !task.status);
-        case 'done':
-          return allTasks.filter((task) => task.status === 'done');
-        case 'skipped':
-          return allTasks.filter((task) => task.status === 'skipped');
+        case "done":
+          return allTasks.filter((task) => task.status === "done");
+        case "skipped":
+          return allTasks.filter((task) => task.status === "skipped");
         default:
           return allTasks;
       }
@@ -77,7 +86,7 @@ export function useRefreshTasks() {
   const [refreshKey, setRefreshKey] = useState(0);
 
   const refresh = () => {
-    setRefreshKey(prev => prev + 1);
+    setRefreshKey((prev) => prev + 1);
   };
 
   return { refresh, refreshKey };

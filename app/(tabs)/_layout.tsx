@@ -1,10 +1,13 @@
 import { Colors } from "@/constants/theme";
+import { useAppActivityTracker } from "@/hooks/useAppActivityTracker";
 import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import { View } from "react-native";
 
 export default function TabLayout() {
+  useAppActivityTracker();
+
   return (
     <Tabs
       screenOptions={{
