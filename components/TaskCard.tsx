@@ -25,6 +25,7 @@ interface TaskCardProps {
   onUndo?: () => Promise<boolean>;
   activeTab: "todos" | "done" | "skipped";
   isToday?: boolean;
+  selectedDate?: string;
 }
 
 export function TaskCard({
@@ -37,6 +38,7 @@ export function TaskCard({
   onUndo,
   activeTab,
   isToday = true,
+  selectedDate,
 }: TaskCardProps) {
   const [showOverlay, setShowOverlay] = useState(false);
   const [overlayVisible, setOverlayVisible] = useState(false);
@@ -46,6 +48,10 @@ export function TaskCard({
 
   const canUpdate = isToday;
   const isTodos = activeTab === "todos";
+
+  useEffect(() => {
+    setShowOverlay(false);
+  }, [selectedDate]);
 
   useEffect(() => {
     if (showOverlay) {

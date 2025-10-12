@@ -10,7 +10,7 @@ import {
   Product,
 } from "@/services/api";
 import React, { useCallback, useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function StoreScreen() {
@@ -84,6 +84,13 @@ export default function StoreScreen() {
           showsVerticalScrollIndicator={false}
           nestedScrollEnabled={true}
         >
+          <View style={tw` flex-row items-center justify-left px-3 pt-3 pb-6`}>
+            <Image
+              source={require("@/assets/images/society-logo-no-bg.png")}
+              style={tw`w-16 h-10`}
+              resizeMode="contain"
+            />
+          </View>
           {/* Marketplace Brands Section */}
           <View style={tw`mb-10`}>
             <View
@@ -107,13 +114,13 @@ export default function StoreScreen() {
           </View>
 
           {/* Society Products Section */}
-          <View style={tw`mb-6`}>
+          <View style={tw`mb-6 mt-4`}>
             <View style={tw`px-4 mb-3 flex-col gap-1 mb-6`}>
               <Text style={tw`text-textPrimary font-tussi-bold text-lg`}>
                 PRODUCTS
               </Text>
               <Text style={tw`text-white/90 font-mont text-[11px]`}>
-                products curated by our team
+                From the house of Vanta
               </Text>
             </View>
 

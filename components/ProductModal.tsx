@@ -11,9 +11,11 @@ import {
   Alert,
   Image,
   Modal,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
+  useWindowDimensions,
 } from "react-native";
 
 interface ProductModalProps {
@@ -30,10 +32,19 @@ export function ProductModal({
   onNotificationChange,
 }: ProductModalProps) {
   const [loading, setLoading] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const { width: windowWidth } = useWindowDimensions();
 
   if (!product) return null;
 
   const hasNotification = product.userRequestedNotification;
+  const modalWidth = Math.min(windowWidth - 32, 400); // Max width 400, with 32px padding
+
+  const handleImageScroll = (event: any) => {
+    const scrollPosition = event.nativeEvent.contentOffset.x;
+    const index = Math.round(scrollPosition / modalWidth);
+    setActiveImageIndex(index);
+  };
 
   const handleNotification = async () => {
     setLoading(true);
@@ -86,14 +97,54 @@ export function ProductModal({
             <Text style={tw`text-white font-mont-bold text-lg`}>✕</Text>
           </TouchableOpacity>
 
-          <View style={tw`p-6 border border-white/10 rounded-md`}>
-            {/* Product Image and Name */}
-            <View style={tw`items-start mb-6`}>
-              <Image
-                source={{ uri: product.imageUrl }}
-                style={tw`h-24 w-24 rounded-full mb-4`}
-                resizeMode="contain"
-              />
+          <View style={tw` border border-white/10 rounded-md overflow-hidden `}>
+            {/* Product Image Carousel */}
+            <View style={tw`relative`}>
+              <ScrollView
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                onMomentumScrollEnd={handleImageScroll}
+              >
+                {product.imageUrls.map((imageUrl, index) => (
+                  <View
+                    key={index}
+                    style={[
+                      tw`items-center justify-center`,
+                      {
+                        height: modalWidth,
+                        width: modalWidth,
+                      }, // Subtract padding
+                    ]}
+                  >
+                    <Image
+                      source={{ uri: imageUrl }}
+                      style={tw`w-full h-full `}
+                      resizeMode="contain"
+                    />
+                  </View>
+                ))}
+              </ScrollView>
+
+              {/* Pagination Dots */}
+              {product.imageUrls.length > 1 && (
+                <View
+                  style={tw`absolute bottom-3 left-0 right-0 flex-row justify-center items-center gap-1`}
+                >
+                  {product.imageUrls.map((_, index) => (
+                    <View
+                      key={index}
+                      style={tw`h-[6px] w-[6px] rounded-full ${
+                        index === activeImageIndex ? "bg-white" : "bg-white/30"
+                      }`}
+                    />
+                  ))}
+                </View>
+              )}
+            </View>
+
+            <View style={tw`flex-col p-3 gap-2 `}>
+              {/* Product Name and Description */}
               <Text style={tw`text-white font-tussi-bold text-lg text-left`}>
                 {product.name}
               </Text>
@@ -101,41 +152,58 @@ export function ProductModal({
                 {product.description}
               </Text>
 
-              <Text style={tw`text-primary font-mont-medium text-lg mt-3`}>
+              {/* Tags */}
+              {product.tags && product.tags.length > 0 && (
+                <View style={tw`flex-row flex-wrap gap-2 mt-3 mb-5`}>
+                  {product.tags.map((tag, index) => (
+                    <View
+                      key={index}
+                      style={tw`bg-white/10 px-3 py-1 rounded-full`}
+                    >
+                      <Text style={tw`text-white/80 font-mont text-xs`}>
+                        {tag}
+                      </Text>
+                    </View>
+                  ))}
+                </View>
+              )}
+
+              {/* Price */}
+              {/* <Text style={tw`text-primary font-mont-medium text-lg mt-3`}>
                 ${product.finalCost.toFixed(2)}
-              </Text>
-            </View>
+              </Text> */}
 
-            {/* Sold Out Label */}
-            <View style={tw`mb-4`}>
-              <View
-                style={tw`bg-red-500/20 border border-red-500 rounded-sm px-4 py-2`}
-              >
-                <Text
-                  style={tw`text-red-500 font-tussi-bold text-sm text-center`}
+              {/* Sold Out Label */}
+              {/* <View style={tw`mt-4 mb-1`}>
+                <View
+                  style={tw`bg-red-500/20 border border-red-500 rounded-sm px-4 py-2`}
                 >
-                  SOLD OUT
-                </Text>
-              </View>
-            </View>
+                  <Text
+                    style={tw`text-red-500 font-tussi-bold text-sm text-center`}
+                  >
+                    SOLD OUT
+                  </Text>
+                </View>
+              </View> */}
 
-            {/* CTA Button */}
-            {hasNotification ? (
-              <View style={tw`  rounded-sm px-4 py-3`}>
-                <Text
-                  style={tw`text-green-500 font-mont-medium text-sm text-center`}
-                >
-                  We&apos;ll notify you when this product is back in stock
-                </Text>
-              </View>
-            ) : (
-              <Button
-                title="Notify Me"
-                onPress={handleNotification}
-                loading={loading}
-                style={{ backgroundColor: "#FF5C2A" }}
-              />
-            )}
+              {/* CTA Button */}
+              {hasNotification ? (
+                <View style={tw`  rounded-sm px-4 py-3`}>
+                  <Text
+                    style={tw`text-green-500 font-mont-medium text-sm text-center`}
+                  >
+                    We&apos;ll notify you when this product is back in stock
+                  </Text>
+                </View>
+              ) : (
+                <Button
+                  title="Notify Me"
+                  onPress={handleNotification}
+                  loading={loading}
+                  style={{ backgroundColor: "#FF5C2A" }}
+                />
+              )}
+            </View>
           </View>
         </BlurView>
       </BlurView>

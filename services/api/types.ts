@@ -291,12 +291,13 @@ export interface Product {
   id: number;
   name: string;
   description: string;
-  imageUrl: string;
+  imageUrls: string[];
   initialCost: number;
   discountPercentage: number;
   finalCost: number;
   redirectUrl: string | null;
   category: string;
+  tags: string[];
   userRequestedNotification?: boolean;
   userNotified?: boolean;
 }

@@ -76,12 +76,12 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
             <Text style={tw`text-white font-mont-bold text-lg`}>✕</Text>
           </TouchableOpacity>
 
-          <View style={tw`p-6 border border-white/10 rounded-md `}>
+          <View style={tw`p-4 border border-white/10 rounded-md `}>
             {/* Brand Image and Name */}
             <View style={tw`items-start mb-6`}>
               <Image
                 source={{ uri: brand.imageUrl }}
-                style={tw`h-24 w-24 rounded-full mb-4`}
+                style={tw`h-24 w-24  mb-4`}
                 resizeMode="contain"
               />
               <Text style={tw`text-white font-tussi-bold text-lg text-left`}>
@@ -94,7 +94,7 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
 
             {/* Discount Code Section */}
             {hasDiscountCode && (
-              <View style={tw`mb-4`}>
+              <View style={tw`mb-6 flex-col gap-2`}>
                 <View
                   style={tw`bg-white/5 border border-white/20 rounded-sm pl-4 pr-2 py-1`}
                 >
@@ -113,6 +113,11 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
                     </TouchableOpacity>
                   </View>
                 </View>
+
+                <Text style={tw`text-white/70 font-mont text-xs`}>
+                  use the above code while checkout to avail{" "}
+                  {brand.discountPercentage}% off
+                </Text>
               </View>
             )}
 
