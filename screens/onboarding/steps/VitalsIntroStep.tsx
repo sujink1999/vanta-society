@@ -33,8 +33,6 @@ export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
             source={require("@/assets/videos/aura-cut.mp4")}
             style={tw`flex-1 w-full`}
             resizeMode={ResizeMode.COVER}
-            shouldPlay
-            isLooping
             isMuted
             useNativeControls={true}
           />

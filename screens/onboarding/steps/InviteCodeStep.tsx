@@ -34,9 +34,8 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   const [inviteCode, setInviteCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [glitchOffset, setGlitchOffset] = useState({ x: 0, y: 0 });
+  const [glitchIntensity, setGlitchIntensity] = useState(0); // 0 = normal, 1 = light gray, 2 = medium gray, 3 = white
   const fadeAnim = useRef(new Animated.Value(1)).current;
-  const glitchOpacity = useRef(new Animated.Value(1)).current;
   const videoRef = useRef<Video>(null);
   const { refetchUserSilently, addNotification } = useGlobalContext();
 
@@ -44,13 +43,13 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   useEffect(() => {
     const createNaturalGlitch = () => {
       const glitchSequence = [
-        { x: -3, y: 2, opacity: 0.7, duration: 80 },
-        { x: 2, y: -1, opacity: 1, duration: 40 },
-        { x: -4, y: 3, opacity: 0.5, duration: 60 },
-        { x: 0, y: 0, opacity: 1, duration: 30 },
-        { x: 5, y: -2, opacity: 0.3, duration: 120 }, // Peak glitch
-        { x: -2, y: 1, opacity: 0.8, duration: 50 },
-        { x: 0, y: 0, opacity: 1, duration: 100 }, // Return to normal
+        { intensity: 1, duration: 80 }, // Light gray
+        { intensity: 0, duration: 40 }, // Normal
+        { intensity: 2, duration: 60 }, // Medium gray
+        { intensity: 0, duration: 30 }, // Normal
+        { intensity: 3, duration: 120 }, // White (peak)
+        { intensity: 1, duration: 50 }, // Light gray
+        { intensity: 0, duration: 100 }, // Normal (end)
       ];
 
       let currentStep = 0;
@@ -58,13 +57,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       const executeGlitchStep = () => {
         if (currentStep < glitchSequence.length) {
           const step = glitchSequence[currentStep];
-          setGlitchOffset({ x: step.x, y: step.y });
-
-          Animated.timing(glitchOpacity, {
-            toValue: step.opacity,
-            duration: step.duration,
-            useNativeDriver: true,
-          }).start();
+          setGlitchIntensity(step.intensity);
 
           setTimeout(() => {
             currentStep++;
@@ -113,7 +106,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       clearTimeout(initialDelay);
       clearInterval(animationInterval);
     };
-  }, [fadeAnim, glitchOpacity]);
+  }, [fadeAnim]);
 
   const handleSubmit = async () => {
     if (!inviteCode.trim()) {
@@ -147,6 +140,30 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
     }
   };
 
+  const getGlitchStyle = () => {
+    switch (glitchIntensity) {
+      case 1:
+        return { backgroundColor: "rgba(64, 64, 64, 0.3)" }; // Light gray
+      case 2:
+        return { backgroundColor: "rgba(128, 128, 128, 0.4)" }; // Medium gray
+      case 3:
+        return { backgroundColor: "rgba(255, 255, 255, 0.7)" }; // White
+      default:
+        return {}; // Normal (black)
+    }
+  };
+
+  const getTextColor = () => {
+    switch (glitchIntensity) {
+      case 3:
+        return "black"; // White background = black text
+      case 2:
+        return "lightgray"; // Medium gray = light gray text
+      default:
+        return "white"; // Normal/light gray = white text
+    }
+  };
+
   return (
     <KeyboardAvoidingView
       style={tw`flex-1`}
@@ -154,13 +171,11 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       keyboardVerticalOffset={-32}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={tw`flex-1 px-3 gap-3`}>
+        <View style={[tw`flex-1 px-3 gap-3`]}>
           <View
             style={tw`flex-1  flex flex-col items-center justify-center gap-8`}
           >
-            <View
-              style={tw`h-[300px] w-[300px] rounded-lg overflow-hidden opacity-50`}
-            >
+            <View style={tw`h-[300px] w-[300px] overflow-hidden opacity-50`}>
               <Video
                 ref={videoRef}
                 source={require("@/assets/videos/walking.mp4")}
@@ -171,20 +186,20 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
                 isMuted
               />
             </View>
-            <Animated.Text
-              style={[
-                tw`font-tussi text-lg text-center text-white`,
-                {
-                  opacity: Animated.multiply(fadeAnim, glitchOpacity),
-                  transform: [
-                    { translateX: glitchOffset.x },
-                    { translateY: glitchOffset.y },
-                  ],
-                },
-              ]}
-            >
-              {PHRASES[currentPhraseIndex]}
-            </Animated.Text>
+
+            <View style={getGlitchStyle()}>
+              <Animated.Text
+                style={[
+                  tw`font-tussi text-lg text-center`,
+                  {
+                    opacity: fadeAnim,
+                    color: getTextColor(),
+                  },
+                ]}
+              >
+                {PHRASES[currentPhraseIndex]}
+              </Animated.Text>
+            </View>
           </View>
           <View style={tw`flex flex-col gap-5 mb-10`}>
             <View style={tw`flex-row items-end gap-2`}>
