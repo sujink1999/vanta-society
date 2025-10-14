@@ -34,8 +34,9 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   const [inviteCode, setInviteCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [glitchIntensity, setGlitchIntensity] = useState(0); // 0 = normal, 1 = light gray, 2 = medium gray, 3 = white
+  const [glitchOffset, setGlitchOffset] = useState({ x: 0, y: 0 });
   const fadeAnim = useRef(new Animated.Value(1)).current;
+  const glitchOpacity = useRef(new Animated.Value(1)).current;
   const videoRef = useRef<Video>(null);
   const { refetchUserSilently, addNotification } = useGlobalContext();
 
@@ -43,13 +44,13 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   useEffect(() => {
     const createNaturalGlitch = () => {
       const glitchSequence = [
-        { intensity: 1, duration: 80 }, // Light gray
-        { intensity: 0, duration: 40 }, // Normal
-        { intensity: 2, duration: 60 }, // Medium gray
-        { intensity: 0, duration: 30 }, // Normal
-        { intensity: 3, duration: 120 }, // White (peak)
-        { intensity: 1, duration: 50 }, // Light gray
-        { intensity: 0, duration: 100 }, // Normal (end)
+        { x: -3, y: 2, opacity: 0.7, duration: 80 },
+        { x: 2, y: -1, opacity: 1, duration: 40 },
+        { x: -4, y: 3, opacity: 0.5, duration: 60 },
+        { x: 0, y: 0, opacity: 1, duration: 30 },
+        { x: 5, y: -2, opacity: 0.3, duration: 120 }, // Peak glitch
+        { x: -2, y: 1, opacity: 0.8, duration: 50 },
+        { x: 0, y: 0, opacity: 1, duration: 100 }, // Return to normal
       ];
 
       let currentStep = 0;
@@ -57,7 +58,13 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       const executeGlitchStep = () => {
         if (currentStep < glitchSequence.length) {
           const step = glitchSequence[currentStep];
-          setGlitchIntensity(step.intensity);
+          setGlitchOffset({ x: step.x, y: step.y });
+
+          Animated.timing(glitchOpacity, {
+            toValue: step.opacity,
+            duration: step.duration,
+            useNativeDriver: true,
+          }).start();
 
           setTimeout(() => {
             currentStep++;
@@ -106,7 +113,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       clearTimeout(initialDelay);
       clearInterval(animationInterval);
     };
-  }, [fadeAnim]);
+  }, [fadeAnim, glitchOpacity]);
 
   const handleSubmit = async () => {
     if (!inviteCode.trim()) {
@@ -140,30 +147,6 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
     }
   };
 
-  const getGlitchStyle = () => {
-    switch (glitchIntensity) {
-      case 1:
-        return { backgroundColor: "rgba(64, 64, 64, 0.3)" }; // Light gray
-      case 2:
-        return { backgroundColor: "rgba(128, 128, 128, 0.4)" }; // Medium gray
-      case 3:
-        return { backgroundColor: "rgba(255, 255, 255, 0.7)" }; // White
-      default:
-        return {}; // Normal (black)
-    }
-  };
-
-  const getTextColor = () => {
-    switch (glitchIntensity) {
-      case 3:
-        return "black"; // White background = black text
-      case 2:
-        return "lightgray"; // Medium gray = light gray text
-      default:
-        return "white"; // Normal/light gray = white text
-    }
-  };
-
   return (
     <KeyboardAvoidingView
       style={tw`flex-1`}
@@ -171,7 +154,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
       keyboardVerticalOffset={-32}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={[tw`flex-1 px-3 gap-3`, getGlitchStyle()]}>
+        <View style={tw`flex-1 px-3 gap-3`}>
           <View
             style={tw`flex-1  flex flex-col items-center justify-center gap-8`}
           >
@@ -190,10 +173,13 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
             </View>
             <Animated.Text
               style={[
-                tw`font-tussi text-lg text-center`,
+                tw`font-tussi text-lg text-center text-white`,
                 {
-                  opacity: fadeAnim,
-                  color: getTextColor(),
+                  opacity: Animated.multiply(fadeAnim, glitchOpacity),
+                  transform: [
+                    { translateX: glitchOffset.x },
+                    { translateY: glitchOffset.y },
+                  ],
                 },
               ]}
             >
