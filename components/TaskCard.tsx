@@ -171,8 +171,8 @@ export function TaskCard({
         <TouchableHighlight onPress={() => canUpdate && setShowOverlay(true)}>
           <View style={tw`flex-row p-3 items-center`}>
             {IconComponent && (
-              <View style={tw`mr-3`}>
-                <IconComponent size={24} color={categoryColor} />
+              <View style={tw`mr-4`}>
+                <IconComponent size={20} color={categoryColor} />
               </View>
             )}
 

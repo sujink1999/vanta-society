@@ -2,11 +2,12 @@ import { OPTION_TYPES } from "@/constants/optionTypes";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useTasks } from "@/hooks/useTasks";
+import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import React, { useMemo } from "react";
 import { Text, View } from "react-native";
 import { CheckIcon } from "./icons/Icons";
-import { BedtimeIcon, SleepIcon } from "./icons/TaskIcons";
+import { BedtimeIcon } from "./icons/TaskIcons";
 
 interface SleepTimelineProps {
   date: string;
@@ -81,7 +82,7 @@ export function SleepTimeline({ date }: SleepTimelineProps) {
         <View
           style={tw`w-8 h-8 bg-white rounded-full -ml-4 flex justify-center items-center relative `}
         >
-          <SleepIcon size={24} color="black" />
+          <Ionicons name="sunny" size={24} color="black" />
 
           <View
             style={tw`absolute -bottom-6 left-1/2 -translate-x-1/2 flex-row items-center justify-center w-[80px] gap-1`}

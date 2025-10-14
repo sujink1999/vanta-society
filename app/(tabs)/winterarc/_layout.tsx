@@ -39,6 +39,7 @@ export default function WinterArcLayout() {
     >
       <Stack.Screen name="index" />
       <Stack.Screen name="profile" />
+      <Stack.Screen name="routine-editor" />
     </Stack>
   );
 }

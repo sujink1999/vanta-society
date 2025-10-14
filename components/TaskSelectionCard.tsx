@@ -135,7 +135,10 @@ export function TaskSelectionCard({
           </TouchableOpacity>
 
           <View style={tw`flex-1 flex-col ml-2`}>
-            <View style={tw`flex-row items-center`}>
+            <View
+              onTouchEnd={() => onToggle(task.id)}
+              style={tw`flex-row items-center `}
+            >
               <View style={tw`flex-col gap-1 flex-1`}>
                 <Text
                   style={tw`text-white font-mont-medium text-sm`}

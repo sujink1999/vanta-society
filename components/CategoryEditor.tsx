@@ -131,7 +131,7 @@ export function CategoryEditor({
 
   return (
     <KeyboardAvoidingView
-      style={tw`flex-1 flex-col pb-6`}
+      style={tw`flex-1 flex-col pb-6 `}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
       {/* Header */}
@@ -163,7 +163,7 @@ export function CategoryEditor({
           />
         </View>
       )}
-      <View style={tw`flex-row items-center gap-3 my-6`}>
+      <View style={tw`flex-row items-center gap-3 my-6 px-3`}>
         <Text style={tw`text-textSecondary font-tussi text-sm`}>routines</Text>
         <View style={tw`flex-1 h-[1px] bg-textSecondary`} />
       </View>

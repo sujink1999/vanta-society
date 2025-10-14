@@ -7,9 +7,13 @@ import { RoutineOverview } from "./RoutineOverview";
 
 interface RoutineEditorProps {
   onSubmit: () => void;
+  showBackButton?: boolean;
 }
 
-export function RoutineEditor({ onSubmit }: RoutineEditorProps) {
+export function RoutineEditor({
+  onSubmit,
+  showBackButton,
+}: RoutineEditorProps) {
   const { refetchUserSilently } = useGlobalContext();
   const [allTasks, setAllTasks] = useState<Task[]>([]);
   const [editingCategory, setEditingCategory] = useState<{
@@ -99,6 +103,7 @@ export function RoutineEditor({ onSubmit }: RoutineEditorProps) {
     <RoutineOverview
       onCategoryEdit={handleCategoryEdit}
       onSubmit={handleSubmit}
+      showBackButton={showBackButton}
     />
   );
 }

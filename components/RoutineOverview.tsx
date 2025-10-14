@@ -1,10 +1,12 @@
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { UserRoutine } from "@/services/api/types";
+import { useRouter } from "expo-router";
 import React from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { Button } from "./Button";
 import { CategoryTasks } from "./CategoryTasks";
+import { ChevronLeftIcon } from "./icons/Icons";
 
 interface RoutineOverviewProps {
   onCategoryEdit: (
@@ -13,14 +15,15 @@ interface RoutineOverviewProps {
     categoryColor: string
   ) => void;
   onSubmit: () => void;
+  showBackButton?: boolean;
 }
 
 // Category colors mapping
 const CATEGORY_COLORS: Record<string, string> = {
   movement: "#ED6E2F",
   recovery: "#3A8DFF",
-  growth: "#9AD041",
-  fuel: "#8B41D0",
+  growth: "#8B41D0",
+  fuel: "#9AD041",
 };
 
 // Category order
@@ -29,7 +32,9 @@ const CATEGORY_ORDER = ["movement", "recovery", "growth", "fuel"];
 export function RoutineOverview({
   onCategoryEdit,
   onSubmit,
+  showBackButton,
 }: RoutineOverviewProps) {
+  const router = useRouter();
   const { routine } = useGlobalContext();
 
   // Group routine tasks by category
@@ -64,10 +69,20 @@ export function RoutineOverview({
   }
 
   return (
-    <View style={tw`w-full flex-1 px-2 `}>
-      <Text style={tw`text-white font-tussi-bold text-base mb-4 text-center`}>
-        Your <Text style={tw` text-primary`}>WINTER ARC</Text> routine
-      </Text>
+    <View style={tw`w-full flex-1 px-2  `}>
+      <View style={tw`flex-row items-center gap-6 mb-4 mt-3 `}>
+        {showBackButton && (
+          <TouchableOpacity
+            onPress={() => router.back()}
+            style={tw`  p-2 bg-white/5 self-start border border-white/5 rounded-md`}
+          >
+            <ChevronLeftIcon size={20} color="white" />
+          </TouchableOpacity>
+        )}
+        <Text style={tw`text-white font-tussi-bold text-base text-center`}>
+          Your <Text style={tw` text-primary`}>WINTER ARC</Text> routine
+        </Text>
+      </View>
 
       <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
         {CATEGORY_ORDER.map((category) => {
@@ -88,9 +103,11 @@ export function RoutineOverview({
           );
         })}
       </ScrollView>
-      <View style={tw`pb-6`}>
-        <Button title="Lock In" onPress={onSubmit} />
-      </View>
+      {!showBackButton && (
+        <View style={tw`pb-6`}>
+          <Button title="Lock In" onPress={onSubmit} />
+        </View>
+      )}
     </View>
   );
 }

@@ -4,7 +4,8 @@ import { VitalsRadarChart } from "@/components/VitalsRadarChart";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { completeOnboarding } from "@/services/api/users";
-import React, { useState } from "react";
+import { scoreStorageManager } from "@/services/storage/ScoreStorageManager";
+import React, { useEffect, useState } from "react";
 import { Alert, Text, View } from "react-native";
 
 export function FinalScoreStep() {
@@ -20,6 +21,27 @@ export function FinalScoreStep() {
     confidence: user?.confidenceScore || 0,
     society: user?.societyScore || 0,
   };
+
+  // Initialize score storage manager with user's scores
+  useEffect(() => {
+    const initializeScores = async () => {
+      try {
+        const existingScores = await scoreStorageManager.getScores();
+
+        // If no existing scores, initialize with current user scores
+        if (!existingScores) {
+          await scoreStorageManager.initializeScores(scores);
+          console.log("Score storage initialized with user scores:", scores);
+        }
+      } catch (error) {
+        console.error("Failed to initialize score storage:", error);
+      }
+    };
+
+    if (user) {
+      initializeScores();
+    }
+  }, [user]);
 
   const handleFinish = async () => {
     setIsLoading(true);

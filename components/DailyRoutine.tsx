@@ -18,8 +18,8 @@ const today = moment().format("YYYY-MM-DD");
 const CATEGORY_COLORS: Record<string, string> = {
   movement: "#ED6E2F",
   recovery: "#3A8DFF",
-  growth: "#9AD041",
-  fuel: "#8B41D0",
+  growth: "#8B41D0",
+  fuel: "#9AD041",
 };
 
 export function DailyRoutine() {

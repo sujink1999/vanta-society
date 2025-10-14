@@ -185,8 +185,8 @@ export function CategoryTasks({
               <View key={task.id}>
                 <View style={tw`flex-row`}>
                   {IconComponent && (
-                    <View style={tw`mr-3`}>
-                      <IconComponent size={24} color={categoryColor} />
+                    <View style={tw`mr-4`}>
+                      <IconComponent size={20} color={categoryColor} />
                     </View>
                   )}
                   <View style={tw`flex-1 flex-col gap-2`}>
