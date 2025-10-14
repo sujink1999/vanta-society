@@ -11,6 +11,7 @@ export function CheckInManager() {
     isChecking,
     completeMorningCheckIn,
     completeEveningCheckIn,
+    logWeight,
   } = useCheckInFlow();
 
   // Don't render anything while checking
@@ -30,7 +31,10 @@ export function CheckInManager() {
   if (shouldShowEvening) {
     return (
       <FullScreenModal visible={true}>
-        <EveningCheckIn onComplete={completeEveningCheckIn} />
+        <EveningCheckIn
+          onComplete={completeEveningCheckIn}
+          onLogWeight={logWeight}
+        />
       </FullScreenModal>
     );
   }

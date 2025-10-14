@@ -207,7 +207,8 @@ export function TaskCard({
             ]}
           >
             <BlurView
-              intensity={20}
+              intensity={60}
+              tint="dark"
               style={tw`flex-1 justify-center items-center`}
               onTouchEnd={() => setShowOverlay(false)}
             >

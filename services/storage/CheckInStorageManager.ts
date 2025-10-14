@@ -18,9 +18,16 @@ export interface EveningCheckIn {
   imageRefs?: string[]; // URI references only
 }
 
+export interface WeightEntry {
+  value: string; // numeric value as string (e.g., "170")
+  unit: "kg" | "lbs";
+  timestamp: string;
+}
+
 export interface DailyCheckIn {
   morning?: MorningCheckIn;
   evening?: EveningCheckIn;
+  weight?: WeightEntry[];
 }
 
 export interface CheckInData {
@@ -136,6 +143,35 @@ class CheckInStorageManager {
   async getDailySummary(date: string): Promise<EveningCheckIn | null> {
     await this.initialize();
     return this.cache[date]?.evening || null;
+  }
+
+  async logWeight(
+    date: string,
+    value: string,
+    unit: "kg" | "lbs"
+  ): Promise<void> {
+    await this.initialize();
+
+    if (!this.cache[date]) {
+      this.cache[date] = {};
+    }
+
+    if (!this.cache[date].weight) {
+      this.cache[date].weight = [];
+    }
+
+    this.cache[date].weight!.push({
+      value,
+      unit,
+      timestamp: new Date().toISOString(),
+    });
+
+    await this.save();
+  }
+
+  async getWeightHistory(date: string): Promise<WeightEntry[]> {
+    await this.initialize();
+    return this.cache[date]?.weight || [];
   }
 
   async getAllSummaries(): Promise<

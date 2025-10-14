@@ -84,6 +84,11 @@ export function useCheckInFlow() {
     setShouldShowEvening(false);
   };
 
+  const logWeight = async (value: string, unit: "kg" | "lbs") => {
+    const today = moment().format("YYYY-MM-DD");
+    await checkInStorageManager.logWeight(today, value, unit);
+  };
+
   const getDailySummary = async (
     date: string
   ): Promise<EveningCheckIn | null> => {
@@ -96,6 +101,7 @@ export function useCheckInFlow() {
     isChecking,
     completeMorningCheckIn,
     completeEveningCheckIn,
+    logWeight,
     getDailySummary,
   };
 }

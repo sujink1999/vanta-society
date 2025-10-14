@@ -23,12 +23,16 @@ interface EveningCheckInProps {
     journal?: string;
     imageRefs?: string[];
   }) => void;
+  onLogWeight: (value: string, unit: "kg" | "lbs") => void;
 }
 
 const today = moment().format("YYYY-MM-DD");
 const tomorrow = moment().add(1, "day").format("YYYY-MM-DD");
 
-export function EveningCheckIn({ onComplete }: EveningCheckInProps) {
+export function EveningCheckIn({
+  onComplete,
+  onLogWeight,
+}: EveningCheckInProps) {
   const { user, winterArcStats } = useGlobalContext();
   const todayTasks = useTasks(today);
   const tomorrowTasks = useTasks(tomorrow);
@@ -38,6 +42,8 @@ export function EveningCheckIn({ onComplete }: EveningCheckInProps) {
   const [fadeAnim] = useState(new Animated.Value(0));
   const [selectedMood, setSelectedMood] = useState<string | null>(null);
   const [journal, setJournal] = useState("");
+  const [weight, setWeight] = useState("");
+  const [weightUnit, setWeightUnit] = useState<"kg" | "lbs">("kg");
   const [imageUris, setImageUris] = useState<string[]>([]);
 
   useEffect(() => {
@@ -47,7 +53,7 @@ export function EveningCheckIn({ onComplete }: EveningCheckInProps) {
       duration: 600,
       useNativeDriver: true,
     }).start();
-  }, [currentStep]);
+  }, [currentStep, fadeAnim]);
 
   const handleNext = () => {
     // Validate mood selection before proceeding from reflection step
@@ -71,6 +77,12 @@ export function EveningCheckIn({ onComplete }: EveningCheckInProps) {
 
     // Complete check-in (called from BedtimeReminder after 5 seconds)
     const completedTaskIds = completedTasks.map((task) => task.id);
+
+    // Log weight separately if provided
+    if (weight.trim()) {
+      onLogWeight(weight.trim(), weightUnit);
+    }
+
     onComplete({
       totalTasks: todayTasks.length,
       completedTasks: completedTasks.length,
@@ -129,6 +141,10 @@ export function EveningCheckIn({ onComplete }: EveningCheckInProps) {
             onSelectMood={setSelectedMood}
             journal={journal}
             onChangeJournal={setJournal}
+            weight={weight}
+            onChangeWeight={setWeight}
+            weightUnit={weightUnit}
+            onChangeWeightUnit={setWeightUnit}
             imageUris={imageUris}
             onPickImage={pickImage}
             onRemoveImage={removeImage}

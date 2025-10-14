@@ -25,6 +25,10 @@ interface DayReflectionProps {
   onSelectMood: (mood: string) => void;
   journal: string;
   onChangeJournal: (text: string) => void;
+  weight: string;
+  onChangeWeight: (text: string) => void;
+  weightUnit: "kg" | "lbs";
+  onChangeWeightUnit: (unit: "kg" | "lbs") => void;
   imageUris: string[];
   onPickImage: () => void;
   onRemoveImage: (index: number) => void;
@@ -45,6 +49,10 @@ export function DayReflection({
   onSelectMood,
   journal,
   onChangeJournal,
+  weight,
+  onChangeWeight,
+  weightUnit,
+  onChangeWeightUnit,
   imageUris,
   onPickImage,
   onRemoveImage,
@@ -94,7 +102,7 @@ export function DayReflection({
           </Text>
 
           <TextInput
-            style={tw`bg-white/5 border border-white/10 rounded-md p-2 px-3 text-white font-mont text-base min-h-40`}
+            style={tw`bg-white/5 border border-white/10 rounded-sm p-2 px-3 text-white font-mont text-base min-h-40`}
             placeholder="How was your day? What are you thankful for?"
             placeholderTextColor="#979797"
             multiline
@@ -102,6 +110,59 @@ export function DayReflection({
             value={journal}
             onChangeText={onChangeJournal}
           />
+        </View>
+
+        {/* Weight Entry */}
+        <View style={tw`mb-8`}>
+          <Text style={tw`text-white/60 font-mont text-sm mb-4`}>
+            Track Weight (optional)
+          </Text>
+
+          <View style={tw`flex-row items-center gap-2`}>
+            <TextInput
+              style={tw`flex-1 bg-white/5 border border-white/10 rounded-sm p-[6px] px-3 text-white font-mont text-base`}
+              placeholder="Enter weight"
+              placeholderTextColor="#979797"
+              value={weight}
+              onChangeText={onChangeWeight}
+              keyboardType="decimal-pad"
+            />
+
+            <View
+              style={tw`flex-row bg-white/5 border border-white/10 rounded-sm overflow-hidden`}
+            >
+              <TouchableOpacity
+                onPress={() => onChangeWeightUnit("kg")}
+                style={[tw`px-4 py-2`, weightUnit === "kg" && tw`bg-white/10`]}
+              >
+                <Text
+                  style={[
+                    tw`font-mont-medium text-sm`,
+                    weightUnit === "kg" ? tw`text-white` : tw`text-white/50`,
+                  ]}
+                >
+                  kg
+                </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => onChangeWeightUnit("lbs")}
+                style={[
+                  tw`px-4 py-2 border-l border-white/10`,
+                  weightUnit === "lbs" && tw`bg-white/10`,
+                ]}
+              >
+                <Text
+                  style={[
+                    tw`font-mont-medium text-sm`,
+                    weightUnit === "lbs" ? tw`text-white` : tw`text-white/50`,
+                  ]}
+                >
+                  lbs
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
 
         {/* Photo Attachments */}

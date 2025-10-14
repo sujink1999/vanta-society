@@ -9,6 +9,7 @@ import { ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { GradientText } from "./GradientText";
 import { Header } from "./Header";
 import { ChevronLeftIcon, ChevronRightIcon } from "./icons/Icons";
+import { SleepTimeline } from "./SleepTimeline";
 import { TaskCard } from "./TaskCard";
 
 const today = moment().format("YYYY-MM-DD");
@@ -135,8 +136,11 @@ export function DailyRoutine() {
         </View>
       </View>
 
+      {/* Sleep Timeline */}
+      <SleepTimeline date={selectedDate} />
+
       {/* Tabs */}
-      <View style={tw`rounded-md flex-row  p-1 gap-2 `}>
+      <View style={tw`rounded-md flex-row  p-1 gap-2 mt-3 `}>
         {(["todos", "done", "skipped"] as const).map((tab) => (
           <TouchableOpacity
             key={tab}
@@ -166,7 +170,7 @@ export function DailyRoutine() {
       {/* Tasks List */}
       <ScrollView
         style={tw`flex-1`}
-        contentContainerStyle={tw`gap-2 pb-[90px] pt-4`}
+        contentContainerStyle={tw`gap-2 pb-[90px] pt-2`}
       >
         {tasksWithoutSleep.length === 0 ? (
           <View style={tw`flex-1 justify-center items-center py-20`}>

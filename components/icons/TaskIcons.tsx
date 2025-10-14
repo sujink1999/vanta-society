@@ -1,5 +1,5 @@
 import React from "react";
-import { Svg, Path, Circle, G } from "react-native-svg";
+import { Circle, Path, Svg } from "react-native-svg";
 
 interface IconProps {
   size?: number;
@@ -21,78 +21,101 @@ export const SleepIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
   </Svg>
 );
 
-export const WakeUpIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const WakeUpIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="4" fill={color} />
     <Path d="M12 2V4" stroke={color} strokeWidth="2" strokeLinecap="round" />
     <Path d="M12 20V22" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M4.22 4.22L5.64 5.64" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M18.36 18.36L19.78 19.78" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    <Path
+      d="M4.22 4.22L5.64 5.64"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Path
+      d="M18.36 18.36L19.78 19.78"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
     <Path d="M2 12H4" stroke={color} strokeWidth="2" strokeLinecap="round" />
     <Path d="M20 12H22" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M4.22 19.78L5.64 18.36" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M18.36 5.64L19.78 4.22" stroke={color} strokeWidth="2" strokeLinecap="round" />
-  </Svg>
-);
-
-export const WindDownIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
-      d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79Z"
-      fill={color}
+      d="M4.22 19.78L5.64 18.36"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Path
+      d="M18.36 5.64L19.78 4.22"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
     />
   </Svg>
 );
 
-export const SunlightIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const WindDownIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79Z" fill={color} />
+  </Svg>
+);
+
+export const SunlightIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="5" fill={color} />
     <Path d="M12 1V3" stroke={color} strokeWidth="2" strokeLinecap="round" />
     <Path d="M12 21V23" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M4.22 4.22L5.64 5.64" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M18.36 18.36L19.78 19.78" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    <Path
+      d="M4.22 4.22L5.64 5.64"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Path
+      d="M18.36 18.36L19.78 19.78"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
     <Path d="M1 12H3" stroke={color} strokeWidth="2" strokeLinecap="round" />
     <Path d="M21 12H23" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M4.22 19.78L5.64 18.36" stroke={color} strokeWidth="2" strokeLinecap="round" />
-    <Path d="M18.36 5.64L19.78 4.22" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    <Path
+      d="M4.22 19.78L5.64 18.36"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Path
+      d="M18.36 5.64L19.78 4.22"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
   </Svg>
 );
 
-export const ColdShowerIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const ColdShowerIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M8 2V4H6V6H8V8H10V6H12V4H10V2H8Z"
-      fill={color}
-    />
-    <Path
-      d="M16 4V2H14V4H12V6H14V8H16V6H18V4H16Z"
-      fill={color}
-    />
-    <Path
-      d="M20 8V10H18V12H20V14H22V12H24V10H22V8H20Z"
-      fill={color}
-    />
-    <Path
-      d="M4 10V8H2V10H0V12H2V14H4V12H6V10H4Z"
-      fill={color}
-    />
-    <Path
-      d="M7 16L5 22H19L17 16H7Z"
-      fill={color}
-      opacity="0.6"
-    />
-    <Path
-      d="M9 18H15"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-    <Path
-      d="M8 20H16"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
+    <Path d="M8 2V4H6V6H8V8H10V6H12V4H10V2H8Z" fill={color} />
+    <Path d="M16 4V2H14V4H12V6H14V8H16V6H18V4H16Z" fill={color} />
+    <Path d="M20 8V10H18V12H20V14H22V12H24V10H22V8H20Z" fill={color} />
+    <Path d="M4 10V8H2V10H0V12H2V14H4V12H6V10H4Z" fill={color} />
+    <Path d="M7 16L5 22H19L17 16H7Z" fill={color} opacity="0.6" />
+    <Path d="M9 18H15" stroke={color} strokeWidth="2" strokeLinecap="round" />
+    <Path d="M8 20H16" stroke={color} strokeWidth="2" strokeLinecap="round" />
   </Svg>
 );
 
@@ -111,7 +134,10 @@ export const WaterIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
 );
 
 // MOVEMENT ICONS
-export const WorkoutIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const WorkoutIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M20.57 14.86L22 13.43L20.57 12L17 15.57L8.43 7L12 3.43L10.57 2L9.14 3.43L7.71 2L5.57 4.14L4.14 2.71L2.71 4.14L4.14 5.57L2 7.71L3.43 9.14L2 10.57L3.43 12L7 8.43L15.57 17L12 20.57L13.43 22L14.86 20.57L16.29 22L18.43 19.86L19.86 21.29L21.29 19.86L19.86 18.43L22 16.29L20.57 14.86Z"
@@ -120,7 +146,10 @@ export const WorkoutIcon = ({ size = 24, color = "currentColor" }: IconProps) =>
   </Svg>
 );
 
-export const StrengthTrainingIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const StrengthTrainingIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M2 12H6V8H10V12H14V8H18V12H22V14H18V16H14V12H10V16H6V12H2V14H2V12Z"
@@ -131,22 +160,24 @@ export const StrengthTrainingIcon = ({ size = 24, color = "currentColor" }: Icon
   </Svg>
 );
 
-export const RunningIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const RunningIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="6" cy="4" r="2" fill={color} />
     <Path
       d="M21 22H19L13.5 16.5L11.5 18.5L8.5 15.5L7 17H4V15H6L8.5 12.5L11.5 15.5L15.5 11.5L21 22Z"
       fill={color}
     />
-    <Path
-      d="M13 8L8.5 13.5L10.5 15.5L15 10L13 8Z"
-      fill={color}
-      opacity="0.6"
-    />
+    <Path d="M13 8L8.5 13.5L10.5 15.5L15 10L13 8Z" fill={color} opacity="0.6" />
   </Svg>
 );
 
-export const CyclingIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const CyclingIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="18" cy="18" r="4" stroke={color} strokeWidth="2" fill="none" />
     <Circle cx="6" cy="18" r="4" stroke={color} strokeWidth="2" fill="none" />
@@ -158,17 +189,15 @@ export const CyclingIcon = ({ size = 24, color = "currentColor" }: IconProps) =>
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <Path
-      d="M12 12V8"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
+    <Path d="M12 12V8" stroke={color} strokeWidth="2" strokeLinecap="round" />
     <Circle cx="12" cy="6" r="2" fill={color} />
   </Svg>
 );
 
-export const WalkingIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const WalkingIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="4" r="2" fill={color} />
     <Path
@@ -178,7 +207,10 @@ export const WalkingIcon = ({ size = 24, color = "currentColor" }: IconProps) =>
   </Svg>
 );
 
-export const PushupsIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const PushupsIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 4C13.1 4 14 4.9 14 6C14 7.1 13.1 8 12 8C10.9 8 10 7.1 10 6C10 4.9 10.9 4 12 4Z"
@@ -191,12 +223,12 @@ export const PushupsIcon = ({ size = 24, color = "currentColor" }: IconProps) =>
   </Svg>
 );
 
-export const PullupsIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const PullupsIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M2 2H22V4H2V2Z"
-      fill={color}
-    />
+    <Path d="M2 2H22V4H2V2Z" fill={color} />
     <Circle cx="12" cy="8" r="2" fill={color} />
     <Path
       d="M8 4V6H10V16C10 17.1 10.9 18 12 18C13.1 18 14 17.1 14 16V6H16V4H8Z"
@@ -220,7 +252,10 @@ export const PullupsIcon = ({ size = 24, color = "currentColor" }: IconProps) =>
 );
 
 // FUEL ICONS
-export const EatCleanIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const EatCleanIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 2L13.09 8.26L22 8L14 12L22 16L13.09 15.74L12 22L10.91 15.74L2 16L10 12L2 8L10.91 8.26L12 2Z"
@@ -229,7 +264,10 @@ export const EatCleanIcon = ({ size = 24, color = "currentColor" }: IconProps) =
   </Svg>
 );
 
-export const NoSugarIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const NoSugarIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
     <Path d="M4.93 4.93L19.07 19.07" stroke={color} strokeWidth="2" />
@@ -241,36 +279,33 @@ export const NoSugarIcon = ({ size = 24, color = "currentColor" }: IconProps) =>
   </Svg>
 );
 
-export const NoProcessedFoodIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const NoProcessedFoodIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
     <Path d="M4.93 4.93L19.07 19.07" stroke={color} strokeWidth="2" />
-    <Path
-      d="M8 8H16V10H14V12H16V14H14V16H8V8Z"
-      fill={color}
-      opacity="0.3"
-    />
+    <Path d="M8 8H16V10H14V12H16V14H14V16H8V8Z" fill={color} opacity="0.3" />
   </Svg>
 );
 
-export const NoSeedOilsIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const NoSeedOilsIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
     <Path d="M4.93 4.93L19.07 19.07" stroke={color} strokeWidth="2" />
-    <Path
-      d="M8 10L10 8L14 12L12 14L8 10Z"
-      fill={color}
-      opacity="0.3"
-    />
-    <Path
-      d="M14 14L16 16H18V18L16 16L14 14Z"
-      fill={color}
-      opacity="0.3"
-    />
+    <Path d="M8 10L10 8L14 12L12 14L8 10Z" fill={color} opacity="0.3" />
+    <Path d="M14 14L16 16H18V18L16 16L14 14Z" fill={color} opacity="0.3" />
   </Svg>
 );
 
-export const NoGlutenIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const NoGlutenIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
     <Path d="M4.93 4.93L19.07 19.07" stroke={color} strokeWidth="2" />
@@ -282,7 +317,10 @@ export const NoGlutenIcon = ({ size = 24, color = "currentColor" }: IconProps) =
   </Svg>
 );
 
-export const NoLactoseIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const NoLactoseIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
     <Path d="M4.93 4.93L19.07 19.07" stroke={color} strokeWidth="2" />
@@ -294,25 +332,25 @@ export const NoLactoseIcon = ({ size = 24, color = "currentColor" }: IconProps) 
   </Svg>
 );
 
-export const ProteinIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const ProteinIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 2C17.5 2 22 6.5 22 12C22 17.5 17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2Z"
       fill={color}
       opacity="0.3"
     />
-    <Path
-      d="M8 8H12V10H10V12H12V14H10V16H8V8Z"
-      fill={color}
-    />
-    <Path
-      d="M14 8H16V16H14V8Z"
-      fill={color}
-    />
+    <Path d="M8 8H12V10H10V12H12V14H10V16H8V8Z" fill={color} />
+    <Path d="M14 8H16V16H14V8Z" fill={color} />
   </Svg>
 );
 
-export const VegetablesIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const VegetablesIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 2C13.1 2 14 2.9 14 4V6C17.31 6 20 8.69 20 12V18C20 19.1 19.1 20 18 20H6C4.9 20 4 19.1 4 18V12C4 8.69 6.69 6 10 6V4C10 2.9 10.9 2 12 2Z"
@@ -324,7 +362,10 @@ export const VegetablesIcon = ({ size = 24, color = "currentColor" }: IconProps)
   </Svg>
 );
 
-export const CaloriesIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const CaloriesIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
@@ -334,7 +375,10 @@ export const CaloriesIcon = ({ size = 24, color = "currentColor" }: IconProps) =
   </Svg>
 );
 
-export const SupplementsIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const SupplementsIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M6 2H18C19.1 2 20 2.9 20 4V20C20 21.1 19.1 22 18 22H6C4.9 22 4 21.1 4 20V4C4 2.9 4.9 2 6 2Z"
@@ -350,30 +394,22 @@ export const SupplementsIcon = ({ size = 24, color = "currentColor" }: IconProps
 );
 
 // GROWTH ICONS
-export const DeepWorkIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const DeepWorkIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M4 4H20V20H4V4Z"
-      stroke={color}
-      strokeWidth="2"
-      fill="none"
-    />
-    <Path
-      d="M8 8H16V10H8V8Z"
-      fill={color}
-    />
-    <Path
-      d="M8 12H16V14H8V12Z"
-      fill={color}
-    />
-    <Path
-      d="M8 16H12V18H8V16Z"
-      fill={color}
-    />
+    <Path d="M4 4H20V20H4V4Z" stroke={color} strokeWidth="2" fill="none" />
+    <Path d="M8 8H16V10H8V8Z" fill={color} />
+    <Path d="M8 12H16V14H8V12Z" fill={color} />
+    <Path d="M8 16H12V18H8V16Z" fill={color} />
   </Svg>
 );
 
-export const SocialMediaLimitIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const SocialMediaLimitIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M4 2H20C21.1 2 22 2.9 22 4V16C22 17.1 21.1 18 20 18H4C2.9 18 2 17.1 2 16V4C2 2.9 2.9 2 4 2Z"
@@ -388,13 +424,13 @@ export const SocialMediaLimitIcon = ({ size = 24, color = "currentColor" }: Icon
   </Svg>
 );
 
-export const MeditationIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const MeditationIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Circle cx="12" cy="8" r="3" fill={color} />
-    <Path
-      d="M12 14C8 14 8 18 8 18V20H16V18C16 18 16 14 12 14Z"
-      fill={color}
-    />
+    <Path d="M12 14C8 14 8 18 8 18V20H16V18C16 18 16 14 12 14Z" fill={color} />
     <Path
       d="M8 18C6 16 4 14 4 12C4 10.9 4.9 10 6 10C7.1 10 8 10.9 8 12"
       stroke={color}
@@ -412,29 +448,26 @@ export const MeditationIcon = ({ size = 24, color = "currentColor" }: IconProps)
   </Svg>
 );
 
-export const ReadingIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const ReadingIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M4 2H20C21.1 2 22 2.9 22 4V20C22 21.1 21.1 22 20 22H4C2.9 22 2 21.1 2 20V4C2 2.9 2.9 2 4 2Z"
       fill={color}
       opacity="0.3"
     />
-    <Path
-      d="M6 6H18V8H6V6Z"
-      fill={color}
-    />
-    <Path
-      d="M6 10H18V12H6V10Z"
-      fill={color}
-    />
-    <Path
-      d="M6 14H14V16H6V14Z"
-      fill={color}
-    />
+    <Path d="M6 6H18V8H6V6Z" fill={color} />
+    <Path d="M6 10H18V12H6V10Z" fill={color} />
+    <Path d="M6 14H14V16H6V14Z" fill={color} />
   </Svg>
 );
 
-export const SideHustleIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const SideHustleIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
@@ -448,7 +481,10 @@ export const SideHustleIcon = ({ size = 24, color = "currentColor" }: IconProps)
   </Svg>
 );
 
-export const BusinessIdeaIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const BusinessIdeaIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 2L13 8L19 9L14 14L15 20L12 18L9 20L10 14L5 9L11 8L12 2Z"
@@ -458,7 +494,10 @@ export const BusinessIdeaIcon = ({ size = 24, color = "currentColor" }: IconProp
   </Svg>
 );
 
-export const EpicGoalIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const EpicGoalIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M12 2L15.09 8.26L22 9L17 14L18.18 21L12 17.77L5.82 21L7 14L2 9L8.91 8.26L12 2Z"
@@ -467,12 +506,12 @@ export const EpicGoalIcon = ({ size = 24, color = "currentColor" }: IconProps) =
   </Svg>
 );
 
-export const LearnSkillIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const LearnSkillIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M12 2L22 7L12 12L2 7L12 2Z"
-      fill={color}
-    />
+    <Path d="M12 2L22 7L12 12L2 7L12 2Z" fill={color} />
     <Path
       d="M2 17L12 22L22 17"
       stroke={color}
@@ -492,6 +531,18 @@ export const LearnSkillIcon = ({ size = 24, color = "currentColor" }: IconProps)
   </Svg>
 );
 
+export const BedtimeIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <Svg width={size} height={size} viewBox="0 0 20 12" fill="none">
+    <Path
+      d="M19 4.95429V2.57143C19 1.15714 17.65 0 16 0H12C11.23 0 10.53 0.257143 10 0.668572C9.47 0.257143 8.77 0 8 0H4C2.35 0 1 1.15714 1 2.57143V4.95429C0.39 5.42571 0 6.10286 0 6.85714V12H2V10.2857H18V12H20V6.85714C20 6.10286 19.61 5.42571 19 4.95429ZM12 1.71429H16C16.55 1.71429 17 2.1 17 2.57143V4.28571H11V2.57143C11 2.1 11.45 1.71429 12 1.71429ZM3 2.57143C3 2.1 3.45 1.71429 4 1.71429H8C8.55 1.71429 9 2.1 9 2.57143V4.28571H3V2.57143Z"
+      fill={color}
+    />
+  </Svg>
+);
+
 // Task name to icon mapping
 export const taskIcons: Record<string, React.ComponentType<IconProps>> = {
   // Recovery
@@ -503,13 +554,13 @@ export const taskIcons: Record<string, React.ComponentType<IconProps>> = {
   "Drink 2.5 L water": WaterIcon,
 
   // Movement
-  "Workout": WorkoutIcon,
+  Workout: WorkoutIcon,
   "Strength Training": StrengthTrainingIcon,
-  "Running": RunningIcon,
-  "Cycling": CyclingIcon,
+  Running: RunningIcon,
+  Cycling: CyclingIcon,
   "Walking steps target": WalkingIcon,
-  "Pushups": PushupsIcon,
-  "Pullups": PullupsIcon,
+  Pushups: PushupsIcon,
+  Pullups: PullupsIcon,
 
   // Fuel
   "Eat clean": EatCleanIcon,
@@ -526,8 +577,8 @@ export const taskIcons: Record<string, React.ComponentType<IconProps>> = {
   // Growth
   "Deep work": DeepWorkIcon,
   "Limit social media": SocialMediaLimitIcon,
-  "Meditation": MeditationIcon,
-  "Reading": ReadingIcon,
+  Meditation: MeditationIcon,
+  Reading: ReadingIcon,
   "Work on side hustle": SideHustleIcon,
   "Work on business idea": BusinessIdeaIcon,
   "Epic goal": EpicGoalIcon,
@@ -535,6 +586,8 @@ export const taskIcons: Record<string, React.ComponentType<IconProps>> = {
 };
 
 // Helper function to get icon component by task name
-export const getTaskIcon = (taskName: string): React.ComponentType<IconProps> | null => {
+export const getTaskIcon = (
+  taskName: string
+): React.ComponentType<IconProps> | null => {
   return taskIcons[taskName] || null;
 };
