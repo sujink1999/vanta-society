@@ -1,11 +1,13 @@
+import {
+  countdownMessages,
+  defaultCountdownMessage,
+} from "@/constants/countdownMessages";
 import { notificationPermissionManager } from "@/services/storage/NotificationPermissionManager";
 import * as Notifications from "expo-notifications";
+import moment from "moment";
 import { Platform } from "react-native";
 import { notificationContentSelector } from "./NotificationContentSelector";
 import { userEngagementAnalyzer } from "./UserEngagementAnalyzer";
-import { countdownMessages, defaultCountdownMessage } from "@/constants/countdownMessages";
-import moment from "moment";
-
 // Configure how notifications are displayed when app is in foreground
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -159,9 +161,9 @@ class NotificationScheduler {
 
       // Schedule notifications for each time slot
       const scheduledHours = [
-        { hour: 7, slot: "morning" as const },
+        { hour: 6, slot: "morning" as const },
         { hour: 12, slot: "midday" as const },
-        { hour: 18, slot: "evening" as const },
+        { hour: 19, slot: "evening" as const },
         { hour: 21, slot: "night" as const },
       ];
 

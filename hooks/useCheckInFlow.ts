@@ -21,8 +21,8 @@ export function useCheckInFlow() {
     // Morning window: 5:00 AM - 11:59 AM
     const isMorningWindow = currentHour >= 5 && currentHour < 12;
 
-    // Evening window: 8:00 PM - 11:59 PM
-    const isEveningWindow = currentHour >= 18 && currentHour < 24;
+    // Evening window: 7:00 PM - 11:59 PM
+    const isEveningWindow = currentHour >= 19 && currentHour < 24;
 
     // Check completion status
     const morningCompleted = await checkInStorageManager.hasMorningCheckIn(
