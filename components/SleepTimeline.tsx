@@ -64,7 +64,9 @@ export function SleepTimeline({ date }: SleepTimelineProps) {
     <View style={tw`relative w-full mb-8 mt-4`}>
       <View style={tw`flex-row items-center`}>
         <View style={[tw`w-[40%] h-7 bg-white/10 rounded-sm `]}></View>
-        <View style={tw`w-[60%] h-6  flex-row justify-between`}>
+        <View
+          style={tw`w-[60%] h-6  flex-row justify-between rounded-tr-full rounded-br-full overflow-hidden`}
+        >
           {Array.from({ length: 50 }).map((_, index) => (
             <View key={index} style={tw`w-[1px] h-6 bg-white/20`}></View>
           ))}
