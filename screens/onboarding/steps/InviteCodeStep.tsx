@@ -3,11 +3,11 @@ import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { submitInviteCode } from "@/services/api/users";
 import { Ionicons } from "@expo/vector-icons";
+import { ResizeMode, Video } from "expo-av";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
-  Image,
   Keyboard,
   KeyboardAvoidingView,
   Platform,
@@ -30,19 +30,13 @@ const PHRASES = [
   "TOGETHER WE'RE STRONGER",
 ];
 
-const MODEL_IMAGES = [
-  require("@/assets/images/model/model-meditating.png"),
-  require("@/assets/images/model/model-running.png"),
-  require("@/assets/images/model/model-standing.png"),
-];
-
 export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   const [inviteCode, setInviteCode] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [glitchIntensity, setGlitchIntensity] = useState(0); // 0 = normal, 1 = light gray, 2 = medium gray, 3 = white
   const fadeAnim = useRef(new Animated.Value(1)).current;
+  const videoRef = useRef<Video>(null);
   const { refetchUserSilently, addNotification } = useGlobalContext();
 
   // Synchronized glitch and text rotation animation
@@ -85,9 +79,8 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
         duration: 150,
         useNativeDriver: true,
       }).start(() => {
-        // Change text and image while faded out
+        // Change text while faded out
         setCurrentPhraseIndex((prev) => (prev + 1) % PHRASES.length);
-        setCurrentImageIndex((prev) => (prev + 1) % MODEL_IMAGES.length);
 
         // Fade text back in
         Animated.timing(fadeAnim, {
@@ -183,12 +176,16 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
             style={tw`flex-1  flex flex-col items-center justify-center gap-8`}
           >
             <View
-              style={tw`h-[220px] w-40 rounded-lg overflow-hidden opacity-50`}
+              style={tw`h-[300px] w-[300px] rounded-lg overflow-hidden opacity-50`}
             >
-              <Image
-                source={MODEL_IMAGES[currentImageIndex]}
+              <Video
+                ref={videoRef}
+                source={require("@/assets/videos/walking.mp4")}
                 style={tw`flex-1 w-full`}
-                resizeMode="contain"
+                resizeMode={ResizeMode.CONTAIN}
+                shouldPlay
+                isLooping
+                isMuted
               />
             </View>
             <Animated.Text
