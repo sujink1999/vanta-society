@@ -1,3 +1,4 @@
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
 import { Circle, Line, Path, Polyline, Svg } from "react-native-svg";
 
@@ -417,8 +418,22 @@ export const ShareIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
     <Circle cx="18" cy="5" r="3" stroke={color} strokeWidth="2" fill="none" />
     <Circle cx="6" cy="12" r="3" stroke={color} strokeWidth="2" fill="none" />
     <Circle cx="18" cy="19" r="3" stroke={color} strokeWidth="2" fill="none" />
-    <Line x1="8.59" y1="13.51" x2="15.42" y2="17.49" stroke={color} strokeWidth="2" />
-    <Line x1="15.41" y1="6.51" x2="8.59" y2="10.49" stroke={color} strokeWidth="2" />
+    <Line
+      x1="8.59"
+      y1="13.51"
+      x2="15.42"
+      y2="17.49"
+      stroke={color}
+      strokeWidth="2"
+    />
+    <Line
+      x1="15.41"
+      y1="6.51"
+      x2="8.59"
+      y2="10.49"
+      stroke={color}
+      strokeWidth="2"
+    />
   </Svg>
 );
 
@@ -441,7 +456,10 @@ export const CopyIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
   </Svg>
 );
 
-export const StreakIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
+export const StreakIcon = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
       d="M13 2L3 14H12L11 22L21 10H12L13 2Z"
@@ -490,14 +508,31 @@ export const VitalIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
 
 export const FireIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    {/* Main flame */}
     <Path
-      d="M12 2C12 2 6 8 6 13C6 15.1217 6.84285 17.1566 8.34315 18.6569C9.84344 20.1571 11.8783 21 14 21C16.1217 21 18.1566 20.1571 19.6569 18.6569C21.1571 17.1566 22 15.1217 22 13C22 8 16 2 16 2C16 5 13 7 13 10C13 7 10 5 10 2H12Z"
+      d="M12 2L12 8C12 8 14 6 16 6C18 6 19 8 19 10C19 13 17 15 15 16C13 17 12 17 12 17C12 17 11 17 9 16C7 15 5 13 5 10C5 8 6 6 8 6C10 6 12 8 12 8L12 2Z"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
       fill={color}
-      opacity="0.8"
+      opacity="0.7"
+    />
+    {/* Bottom flame base */}
+    <Path
+      d="M15 16C15 16 16 17 16 19C16 20.1046 15.1046 21 14 21H10C8.89543 21 8 20.1046 8 19C8 17 9 16 9 16"
+      stroke={color}
+      strokeWidth="1"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      fill={color}
+      opacity="0.4"
+    />
+    {/* Center flame accent */}
+    <Path
+      d="M12 10C12 10 13 11 13 12.5C13 13.5 12.5 14 12 14C11.5 14 11 13.5 11 12.5C11 11 12 10 12 10Z"
+      fill={color}
+      opacity="0.9"
     />
   </Svg>
 );
@@ -507,58 +542,49 @@ export const StrongIcon = ({
   color = "currentColor",
 }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    {/* Face circle */}
+    <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
+    {/* Confident wide grin */}
     <Path
-      d="M16 8L18 10L22 6L20 4L16 8Z"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill={color}
-    />
-    <Path
-      d="M8 8L6 10L2 6L4 4L8 8Z"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill={color}
-    />
-    <Path
-      d="M18 10C18 10 18 11 18 13C18 16.3137 15.3137 19 12 19C8.68629 19 6 16.3137 6 13C6 11 6 10 6 10"
+      d="M6 13C6 13 8 18 12 18C16 18 18 13 18 13"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
+    {/* Strong determined eyes */}
+    <Circle cx="8" cy="9" r="1.5" fill={color} />
+    <Circle cx="16" cy="9" r="1.5" fill={color} />
+    {/* Bold eyebrows showing strength */}
     <Path
-      d="M9 13C9 13 9.5 15 12 15C14.5 15 15 13 15 13"
+      d="M5.5 6.5L9 7"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
-      strokeLinejoin="round"
+    />
+    <Path
+      d="M15 7L18.5 6.5"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
     />
   </Svg>
 );
 
 export const HappyIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Circle
-      cx="12"
-      cy="12"
-      r="10"
-      stroke={color}
-      strokeWidth="2"
-      fill="none"
-    />
+    <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="1" fill="none" />
+    {/* Big smile */}
     <Path
-      d="M8 14C8 14 9.5 16 12 16C14.5 16 16 14 16 14"
+      d="M7 13C7 13 9 17 12 17C15 17 17 13 17 13"
       stroke={color}
-      strokeWidth="2"
+      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <Circle cx="9" cy="9" r="1.5" fill={color} />
-    <Circle cx="15" cy="9" r="1.5" fill={color} />
+    {/* Happy eyes */}
+    <Circle cx="8.5" cy="9" r="1.5" fill={color} />
+    <Circle cx="15.5" cy="9" r="1.5" fill={color} />
   </Svg>
 );
 
@@ -567,84 +593,92 @@ export const NeutralIcon = ({
   color = "currentColor",
 }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Circle
-      cx="12"
-      cy="12"
-      r="10"
-      stroke={color}
-      strokeWidth="2"
-      fill="none"
-    />
+    <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
+    {/* Neutral line mouth */}
     <Line
       x1="8"
-      y1="14"
+      y1="15"
       x2="16"
-      y2="14"
+      y2="15"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
     />
-    <Circle cx="9" cy="9" r="1.5" fill={color} />
-    <Circle cx="15" cy="9" r="1.5" fill={color} />
+    {/* Normal eyes */}
+    <Circle cx="8.5" cy="9" r="1.5" fill={color} />
+    <Circle cx="15.5" cy="9" r="1.5" fill={color} />
   </Svg>
 );
 
 export const SadIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Circle
-      cx="12"
-      cy="12"
-      r="10"
-      stroke={color}
-      strokeWidth="2"
-      fill="none"
-    />
+    <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
+    {/* Sad frown */}
     <Path
-      d="M8 17C8 17 9.5 15 12 15C14.5 15 16 17 16 17"
+      d="M7 16C7 16 9 14 12 14C15 14 17 16 17 16"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
-    <Circle cx="9" cy="9" r="1.5" fill={color} />
-    <Circle cx="15" cy="9" r="1.5" fill={color} />
+    {/* Concerned eyebrows */}
+    <Path
+      d="M7 8C7 8 8 7.5 9 8"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    <Path
+      d="M15 8C15 8 16 7.5 17 8"
+      stroke={color}
+      strokeWidth="2"
+      strokeLinecap="round"
+    />
+    {/* Sad eyes */}
+    <Circle cx="9" cy="10.5" r="1.5" fill={color} />
+    <Circle cx="15" cy="10.5" r="1.5" fill={color} />
   </Svg>
 );
 
 export const TiredIcon = ({ size = 24, color = "currentColor" }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+    <Circle cx="12" cy="12" r="10" stroke={color} strokeWidth="2" fill="none" />
+    {/* Exhausted open mouth */}
     <Circle
       cx="12"
-      cy="12"
-      r="10"
+      cy="15.5"
+      r="2"
       stroke={color}
       strokeWidth="2"
       fill="none"
     />
+    {/* Tired closed eyes (X eyes) */}
     <Path
-      d="M8 14.5C8 14.5 9.5 15 12 15C14.5 15 16 14.5 16 14.5"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <Line
-      x1="7"
-      y1="9"
-      x2="11"
-      y2="9"
+      d="M7 8L10 10M10 8L7 10"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
     />
-    <Line
-      x1="13"
-      y1="9"
-      x2="17"
-      y2="9"
+    <Path
+      d="M14 8L17 10M17 8L14 10"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
+    />
+    {/* Fatigue marks under eyes */}
+    <Path
+      d="M7 11.5C7 11.5 8 11 9 11"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      opacity="0.6"
+    />
+    <Path
+      d="M15 11C15 11 16 11 17 11.5"
+      stroke={color}
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      opacity="0.6"
     />
   </Svg>
 );
@@ -657,32 +691,16 @@ export const DisciplineIcon = ({
 }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
-      d="M3 3H10V10H3V3Z"
+      d="M12 2L2 6V10C2 15.5 6.5 20.5 12 22C17.5 20.5 22 15.5 22 10V6L12 2Z"
       stroke={color}
       strokeWidth="2"
-      strokeLinecap="round"
       strokeLinejoin="round"
       fill={color}
-      opacity="0.3"
+      opacity="0.2"
     />
+    <Path d="M12 8V14" stroke={color} strokeWidth="2" strokeLinecap="round" />
     <Path
-      d="M14 3H21V10H14V3Z"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <Path
-      d="M14 14H21V21H14V14Z"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill={color}
-      opacity="0.3"
-    />
-    <Path
-      d="M3 14H10V21H3V14Z"
+      d="M9 11L12 14L15 11"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
@@ -716,51 +734,7 @@ export const MindsetIcon = ({
 export const StrengthIcon = ({
   size = 24,
   color = "currentColor",
-}: IconProps) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
-    <Path
-      d="M6.5 6H4.5C3.67157 6 3 6.67157 3 7.5V16.5C3 17.3284 3.67157 18 4.5 18H6.5"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <Path
-      d="M17.5 6H19.5C20.3284 6 21 6.67157 21 7.5V16.5C21 17.3284 20.3284 18 19.5 18H17.5"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <Path
-      d="M6.5 9H8.5C9.32843 9 10 9.67157 10 10.5V13.5C10 14.3284 9.32843 15 8.5 15H6.5V9Z"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill={color}
-      opacity="0.3"
-    />
-    <Path
-      d="M17.5 9H15.5C14.6716 9 14 9.67157 14 10.5V13.5C14 14.3284 14.6716 15 15.5 15H17.5V9Z"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      fill={color}
-      opacity="0.3"
-    />
-    <Line
-      x1="10"
-      y1="12"
-      x2="14"
-      y2="12"
-      stroke={color}
-      strokeWidth="2.5"
-      strokeLinecap="round"
-    />
-  </Svg>
-);
+}: IconProps) => <Ionicons name="barbell" size={size} color={color} />;
 
 export const MomentumIcon = ({
   size = 24,
@@ -768,35 +742,23 @@ export const MomentumIcon = ({
 }: IconProps) => (
   <Svg width={size} height={size} viewBox="0 0 24 24" fill="none">
     <Path
-      d="M12 2L12 12L22 12"
+      d="M3 18L9 12L13 16L21 8"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <Path
-      d="M12 12L20 4"
+      d="M16 8H21V13"
       stroke={color}
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
+      fill={color}
+      opacity="0.2"
     />
-    <Path
-      d="M8 12C8 14.1217 8.84285 16.1566 10.3431 17.6569C11.8434 19.1571 13.8783 20 16 20"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      opacity="0.5"
-    />
-    <Path
-      d="M4 12C4 16.4183 7.58172 20 12 20"
-      stroke={color}
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      opacity="0.3"
-    />
+    <Circle cx="9" cy="12" r="2" fill={color} opacity="0.5" />
+    <Circle cx="13" cy="16" r="2" fill={color} opacity="0.5" />
   </Svg>
 );
 

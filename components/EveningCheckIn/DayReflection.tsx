@@ -1,12 +1,3 @@
-import {
-  FireIcon,
-  HappyIcon,
-  NeutralIcon,
-  SadIcon,
-  StrongIcon,
-  TiredIcon,
-} from "@/components/icons/Icons";
-import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import React from "react";
 import {
@@ -16,6 +7,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   View,
 } from "react-native";
 
@@ -35,12 +27,11 @@ interface DayReflectionProps {
 }
 
 const MOOD_OPTIONS = [
-  { id: "fire", label: "On Fire", icon: FireIcon },
-  { id: "strong", label: "Strong", icon: StrongIcon },
-  { id: "good", label: "Good", icon: HappyIcon },
-  { id: "okay", label: "Okay", icon: NeutralIcon },
-  { id: "tough", label: "Tough", icon: SadIcon },
-  { id: "tired", label: "Tired", icon: TiredIcon },
+  { id: "fire", label: "On Fire", icon: "🔥" },
+  { id: "good", label: "Good", icon: "😊" },
+  { id: "okay", label: "Okay", icon: "😐" },
+  { id: "tough", label: "Tough", icon: "😔" },
+  { id: "tired", label: "Tired", icon: "😴" },
 ];
 
 export function DayReflection({
@@ -80,16 +71,19 @@ export function DayReflection({
               const MoodIcon = mood.icon;
               const isSelected = selectedMood === mood.id;
               return (
-                <TouchableOpacity
+                <TouchableWithoutFeedback
                   key={mood.id}
                   onPress={() => onSelectMood(mood.id)}
                   style={[tw`items-center justify-center `]}
                 >
-                  <MoodIcon
-                    size={32}
-                    color={isSelected ? Colors.primary : "#979797"}
-                  />
-                </TouchableOpacity>
+                  <Text
+                    style={tw`text-white font-mont text-4xl ${
+                      isSelected ? "opacity-100" : "opacity-50 scale-90"
+                    }`}
+                  >
+                    {MoodIcon}
+                  </Text>
+                </TouchableWithoutFeedback>
               );
             })}
           </View>
