@@ -133,6 +133,13 @@ class TaskStorageManager {
     await this.saveToStorage();
     this.notifyListeners();
   }
+
+  async clearData(): Promise<void> {
+    await this.initialize();
+    this.cache = {};
+    await AsyncStorage.removeItem(STORAGE_KEY);
+    this.notifyListeners();
+  }
 }
 
 export const taskStorageManager = TaskStorageManager.getInstance();

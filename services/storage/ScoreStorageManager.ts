@@ -117,11 +117,16 @@ class ScoreStorageManager {
     this.notifyListeners();
   }
 
-  async clearScores(): Promise<void> {
+  async clearData(): Promise<void> {
     await this.initialize();
     this.cache = null;
     await AsyncStorage.removeItem(STORAGE_KEY);
     this.notifyListeners();
+  }
+
+  // Deprecated: Use clearData() instead
+  async clearScores(): Promise<void> {
+    await this.clearData();
   }
 
   subscribe(listener: () => void): () => void {

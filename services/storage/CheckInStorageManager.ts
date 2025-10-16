@@ -188,10 +188,16 @@ class CheckInStorageManager {
       .sort((a, b) => b.date.localeCompare(a.date)); // Most recent first
   }
 
-  async clearAll(): Promise<void> {
+  async clearData(): Promise<void> {
     await this.initialize();
     this.cache = {};
-    await this.save();
+    await AsyncStorage.removeItem(STORAGE_KEY);
+    this.notifyListeners();
+  }
+
+  // Deprecated: Use clearData() instead
+  async clearAll(): Promise<void> {
+    await this.clearData();
   }
 
   async getCache(): Promise<CheckInData> {

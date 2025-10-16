@@ -5,11 +5,13 @@ import { scoreStorageManager } from "./ScoreStorageManager";
 import { taskStorageManager } from "./TaskStorageManager";
 
 const LAST_SYNC_KEY = "last_sync_timestamp";
+const LOGGED_IN_EMAIL_KEY = "logged_in_email";
 
 class DataSyncManager {
   private static instance: DataSyncManager;
   private isSyncing = false;
   private lastSyncTime: string | null = null;
+  private loggedInEmail: string | null = null;
 
   private constructor() {}
 
@@ -24,11 +26,101 @@ class DataSyncManager {
    * Initialize data sync manager
    */
   async initialize(): Promise<void> {
-    // Load last sync time from storage
+    // Load last sync time and logged in email from storage
     try {
       this.lastSyncTime = await AsyncStorage.getItem(LAST_SYNC_KEY);
+      this.loggedInEmail = await AsyncStorage.getItem(LOGGED_IN_EMAIL_KEY);
     } catch (error) {
-      console.error("Failed to load last sync time:", error);
+      console.error("Failed to load sync data:", error);
+    }
+  }
+
+  /**
+   * Set the logged in user's email
+   * Call this after successful login
+   */
+  async setLoggedInEmail(email: string): Promise<void> {
+    try {
+      this.loggedInEmail = email;
+      await AsyncStorage.setItem(LOGGED_IN_EMAIL_KEY, email);
+      console.log("Logged in email stored:", email);
+    } catch (error) {
+      console.error("Failed to store logged in email:", error);
+    }
+  }
+
+  /**
+   * Get the currently stored logged in email
+   */
+  getLoggedInEmail(): string | null {
+    return this.loggedInEmail;
+  }
+
+  /**
+   * Validate storage against current user email
+   * Clears all local data if email mismatch is detected
+   * Call this after user logs in, before restoring backup
+   *
+   * @param currentUserEmail - The email of the currently logged-in user
+   * @returns true if storage was cleared due to mismatch, false otherwise
+   */
+  async validateStorage(currentUserEmail: string): Promise<boolean> {
+    try {
+      const storedEmail = this.getLoggedInEmail();
+
+      if (storedEmail && storedEmail !== currentUserEmail) {
+        console.log(
+          `Email mismatch detected! Stored: ${storedEmail}, Current: ${currentUserEmail}`
+        );
+        console.log("Clearing all local data for new account...");
+
+        // Clear all storage managers
+        await scoreStorageManager.clearData();
+        await taskStorageManager.clearData();
+        await checkInStorageManager.clearData();
+
+        // Clear sync metadata
+        await AsyncStorage.removeItem(LAST_SYNC_KEY);
+        await AsyncStorage.removeItem(LOGGED_IN_EMAIL_KEY);
+
+        this.lastSyncTime = null;
+        this.loggedInEmail = null;
+
+        console.log("All local data cleared successfully");
+        return true;
+      }
+
+      console.log("Storage validation passed - same user");
+      return false;
+    } catch (error) {
+      console.error("Failed to validate storage:", error);
+      return false;
+    }
+  }
+
+  /**
+   * Clear all local data (scores, tasks, check-ins, sync info)
+   * Call this when logging out
+   */
+  async clearAllLocalData(): Promise<void> {
+    try {
+      console.log("Clearing all local data...");
+
+      // Clear all storage managers
+      await scoreStorageManager.clearData();
+      await taskStorageManager.clearData();
+      await checkInStorageManager.clearData();
+
+      // Clear sync metadata
+      await AsyncStorage.removeItem(LAST_SYNC_KEY);
+      await AsyncStorage.removeItem(LOGGED_IN_EMAIL_KEY);
+
+      this.lastSyncTime = null;
+      this.loggedInEmail = null;
+
+      console.log("All local data cleared successfully");
+    } catch (error) {
+      console.error("Failed to clear local data:", error);
     }
   }
 
@@ -109,7 +201,7 @@ class DataSyncManager {
 
   /**
    * Restore data from backend backup if cloud data is newer
-   * Call this when user logs in
+   * IMPORTANT: Call validateStorage() before this function
    */
   async restoreFromBackup(): Promise<boolean> {
     try {

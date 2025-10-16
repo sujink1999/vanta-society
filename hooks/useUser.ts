@@ -51,11 +51,15 @@ export function useUser(): UseUserReturn {
         if (checkBackup) {
           await dataSyncManager.initialize();
 
+          // Validate storage - clear data if account mismatch detected
+          await dataSyncManager.validateStorage(userData.email);
+          await dataSyncManager.setLoggedInEmail(userData.email);
+
           // Try to restore from backup if it exists
           if (userData.lastSyncDate) {
             await dataSyncManager.restoreFromBackup();
           } else if (hasCompletedQuestionnaire) {
-            // No backup exists, initialize scores from user data if not already present
+            // Initialize scores from user data if not already present
             const localScores = await scoreStorageManager.getScores();
             if (!localScores) {
               await scoreStorageManager.initializeScores({
@@ -102,6 +106,7 @@ export function useUser(): UseUserReturn {
 
   const logout = useCallback(async () => {
     await apiClient.clearToken();
+    await dataSyncManager.clearAllLocalData();
     setUser(null);
     setRoutine([]);
     setHasCompletedQuestionnaire(false);
