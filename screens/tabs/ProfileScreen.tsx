@@ -15,7 +15,7 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
-  const { user, winterArcStats } = useGlobalContext();
+  const { user, winterArcStats, logout } = useGlobalContext();
   const router = useRouter();
   const [lastSyncTime, setLastSyncTime] = useState<string | null>(null);
   const elapsedTime = useElapsedTime({
@@ -116,6 +116,15 @@ export default function ProfileScreen() {
                 <Text style={tw`font-mont text-textSecondary`}>
                   {user.email}
                 </Text>
+
+                <TouchableOpacity
+                  onPress={logout}
+                  style={tw`bg-white px-3 py-1.5 rounded-sm flex-row items-center gap-2 self-start mt-2`}
+                >
+                  <Text style={tw`font-mont-semibold text-black text-xs`}>
+                    Sign out
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
