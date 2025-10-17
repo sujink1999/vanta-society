@@ -64,7 +64,7 @@ export function BackupTile({ lastSyncTime, onSyncComplete }: BackupTileProps) {
       <TouchableOpacity
         onPress={handleForceSync}
         disabled={isSyncing}
-        style={tw`bg-white px-3 py-1.5 rounded-md flex-row items-center gap-2`}
+        style={tw`bg-white px-3 py-1.5 rounded-sm flex-row items-center gap-2`}
       >
         {isSyncing ? (
           <ActivityIndicator
