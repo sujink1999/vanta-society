@@ -36,6 +36,7 @@ export default function RootLayout() {
             <Stack.Screen name="(auth)" options={{ headerShown: false }} />
             <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
             <Stack.Screen name="(winterarc)" options={{ headerShown: false }} />
+            <Stack.Screen name="(tools)" options={{ headerShown: false }} />
           </Stack>
         </AuthNavigator>
         <NotificationContainer />
