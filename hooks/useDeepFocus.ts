@@ -20,7 +20,9 @@ export function useDeepFocus(): UseDeepFocusReturn {
   const [isPaused, setIsPaused] = useState(false);
 
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const startTimeRef = useRef<string | null>(null);
+  const startTimeRef = useRef<number | null>(null); // Changed to number (timestamp)
+  const pausedTimeRef = useRef<number>(0); // Track total paused time in ms
+  const pauseStartRef = useRef<number | null>(null); // When pause started
   const sessionIdRef = useRef<string | null>(null);
 
   // Calculate progress (0-1)
@@ -42,14 +44,16 @@ export function useDeepFocus(): UseDeepFocusReturn {
     setIsActive(true);
     setIsPaused(false);
 
-    const now = new Date().toISOString();
+    const now = Date.now();
     startTimeRef.current = now;
-    sessionIdRef.current = `${Date.now()}-${Math.random()}`;
+    pausedTimeRef.current = 0;
+    pauseStartRef.current = null;
+    sessionIdRef.current = `${now}-${Math.random()}`;
 
     // Save active session
     deepFocusStorageManager.saveActiveSession({
       id: sessionIdRef.current,
-      startTime: now,
+      startTime: new Date(now).toISOString(),
       duration: durationSeconds,
       remainingTime: durationSeconds,
       isPaused: false,
@@ -66,11 +70,14 @@ export function useDeepFocus(): UseDeepFocusReturn {
     setIsPaused(true);
     clearTimerInterval();
 
+    // Mark when pause started
+    pauseStartRef.current = Date.now();
+
     // Save paused state
     if (sessionIdRef.current && startTimeRef.current) {
       deepFocusStorageManager.saveActiveSession({
         id: sessionIdRef.current,
-        startTime: startTimeRef.current,
+        startTime: new Date(startTimeRef.current).toISOString(),
         duration: totalDuration,
         remainingTime: timeRemaining,
         isPaused: true,
@@ -88,11 +95,18 @@ export function useDeepFocus(): UseDeepFocusReturn {
 
     setIsPaused(false);
 
+    // Calculate and add paused duration
+    if (pauseStartRef.current !== null) {
+      const pauseDuration = Date.now() - pauseStartRef.current;
+      pausedTimeRef.current += pauseDuration;
+      pauseStartRef.current = null;
+    }
+
     // Save resumed state
     if (sessionIdRef.current && startTimeRef.current) {
       deepFocusStorageManager.saveActiveSession({
         id: sessionIdRef.current,
-        startTime: startTimeRef.current,
+        startTime: new Date(startTimeRef.current).toISOString(),
         duration: totalDuration,
         remainingTime: timeRemaining,
         isPaused: false,
@@ -108,18 +122,7 @@ export function useDeepFocus(): UseDeepFocusReturn {
     async (reason: "manual" | "navigation" | "completion" = "manual") => {
       clearTimerInterval();
 
-      if (isActive && startTimeRef.current) {
-        const completedDuration = totalDuration - timeRemaining;
-        const isCompleted = reason === "completion";
-
-        // Log session to history
-        await deepFocusStorageManager.logSession(
-          startTimeRef.current,
-          totalDuration,
-          completedDuration,
-          isCompleted
-        );
-
+      if (isActive) {
         // Clear active session
         await deepFocusStorageManager.clearActiveSession();
       }
@@ -129,6 +132,8 @@ export function useDeepFocus(): UseDeepFocusReturn {
       setTimeRemaining(0);
       setTotalDuration(0);
       startTimeRef.current = null;
+      pausedTimeRef.current = 0;
+      pauseStartRef.current = null;
       sessionIdRef.current = null;
 
       // Success haptic on completion
@@ -138,26 +143,33 @@ export function useDeepFocus(): UseDeepFocusReturn {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
       }
     },
-    [isActive, timeRemaining, totalDuration, clearTimerInterval]
+    [isActive, clearTimerInterval]
   );
 
-  // Timer interval effect
+  // Timer interval effect - calculates based on elapsed time
   useEffect(() => {
-    if (isActive && !isPaused) {
+    if (isActive && !isPaused && startTimeRef.current !== null) {
       intervalRef.current = setInterval(() => {
-        setTimeRemaining((prev) => {
-          if (prev <= 1) {
-            // Timer completed
-            stop("completion");
-            return 0;
-          }
-          return prev - 1;
-        });
+        const now = Date.now();
+        const elapsedMs = now - startTimeRef.current!;
+        const totalPausedMs = pausedTimeRef.current;
+        const activeElapsedMs = elapsedMs - totalPausedMs;
+        const activeElapsedSeconds = Math.floor(activeElapsedMs / 1000);
+
+        const remaining = totalDuration - activeElapsedSeconds;
+
+        if (remaining <= 0) {
+          // Timer completed
+          setTimeRemaining(0);
+          stop("completion");
+        } else {
+          setTimeRemaining(remaining);
+        }
       }, 1000);
 
       return () => clearTimerInterval();
     }
-  }, [isActive, isPaused, stop, clearTimerInterval]);
+  }, [isActive, isPaused, totalDuration, stop, clearTimerInterval]);
 
   // Cleanup on unmount
   useEffect(() => {

@@ -3,12 +3,13 @@ import { CircularProgressTimer } from "@/components/CircularProgressTimer";
 import { DurationSelector } from "@/components/DurationSelector";
 import { ChevronLeftIcon } from "@/components/icons/Icons";
 import { DeepWorkIcon } from "@/components/icons/TaskIcons";
+import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useDeepFocus } from "@/hooks/useDeepFocus";
 import { useKeepAwake } from "expo-keep-awake";
 import { useFocusEffect, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const DURATION_PRESETS = [
@@ -65,21 +66,6 @@ export default function DeepFocusScreen() {
     start(selectedDuration);
   };
 
-  const handleStop = () => {
-    Alert.alert(
-      "Stop Focus Session?",
-      "Your progress will be saved, but the session won't count as completed.",
-      [
-        { text: "Cancel", style: "cancel" },
-        {
-          text: "Stop",
-          style: "destructive",
-          onPress: () => stop("manual"),
-        },
-      ]
-    );
-  };
-
   if (isActive) {
     return (
       <SafeAreaView style={tw`flex-1 bg-black`}>
@@ -107,7 +93,7 @@ export default function DeepFocusScreen() {
             )}
             <TouchableOpacity
               style={tw`py-4 items-center`}
-              onPress={handleStop}
+              onPress={() => stop("manual")}
             >
               <Text style={tw`text-white/40 font-mont text-sm`}>
                 End Session
@@ -132,7 +118,7 @@ export default function DeepFocusScreen() {
       <View style={tw`flex-1 px-3`}>
         {/* Header */}
         <View style={tw`pb-6 flex-col items-center justify-center gap-2`}>
-          <DeepWorkIcon size={40} color="#FFFFFF" />
+          <DeepWorkIcon size={40} color={Colors.textSecondary} />
           <Text
             style={tw`text-white font-tussi-bold text-2xl mt-2 text-center`}
           >

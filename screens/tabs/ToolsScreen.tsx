@@ -1,15 +1,9 @@
-import { DeepWorkIcon } from "@/components/icons/TaskIcons";
+import { DeepWorkIcon, MeditationIcon } from "@/components/icons/TaskIcons";
+import { ToolCard } from "@/components/ToolCard";
 import tw from "@/constants/tw";
 import { router } from "expo-router";
 import React from "react";
-import {
-  Dimensions,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Dimensions, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
@@ -41,30 +35,21 @@ export default function ToolsScreen() {
 
       <ScrollView style={tw`flex-1 px-3 py-3`}>
         <View style={tw`flex-row flex-wrap gap-3`}>
-          {/* Deep Focus Card */}
-          <TouchableOpacity
-            style={[
-              tw`bg-white/5 border border-white/5 rounded-md p-3 py-4 flex-col items-left`,
-              { width: CARD_WIDTH },
-            ]}
+          <ToolCard
+            icon={<DeepWorkIcon size={28} color="white" />}
+            title="Deep Focus"
+            description="Start a deep focus session to help you stay focused and productive"
             onPress={() => router.push("/(tools)/deep-focus")}
-            activeOpacity={0.5}
-          >
-            <View style={tw`bg-white/10 rounded-full p-4 mb-4 self-start `}>
-              <DeepWorkIcon size={32} color="white" />
-            </View>
-            <Text
-              style={tw`text-white font-tussi-bold text-base mb-2 text-left`}
-            >
-              Deep Focus
-            </Text>
-            <Text
-              style={tw`text-white/60 font-mont text-xs  text-left`}
-              numberOfLines={3}
-            >
-              Start a deep focus session to help you stay focused and productive
-            </Text>
-          </TouchableOpacity>
+            width={CARD_WIDTH}
+          />
+
+          <ToolCard
+            icon={<MeditationIcon size={28} color="white" />}
+            title="Meditation"
+            description="Guided meditation sessions to calm your mind and reduce stress"
+            onPress={() => router.push("/(tools)/meditation")}
+            width={CARD_WIDTH}
+          />
         </View>
       </ScrollView>
     </SafeAreaView>
