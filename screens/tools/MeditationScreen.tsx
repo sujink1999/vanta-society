@@ -27,7 +27,7 @@ const AUDIO_FILES: Record<number, any> = {
 
 export default function MeditationScreen() {
   const router = useRouter();
-  const [selectedDuration, setSelectedDuration] = useState(5);
+  const [selectedDuration, setSelectedDuration] = useState(10);
   const [sound, setSound] = useState<Audio.Sound | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);

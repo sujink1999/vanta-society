@@ -29,7 +29,7 @@ export function ToolCard({
       <View style={tw`bg-white/5 rounded-full p-4 mb-4 self-start`}>
         {icon}
       </View>
-      <Text style={tw`text-white font-tussi-bold text-base mb-2 text-left`}>
+      <Text style={tw`text-white font-tussi-bold text-sm mb-2 text-left`}>
         {title}
       </Text>
       <Text
