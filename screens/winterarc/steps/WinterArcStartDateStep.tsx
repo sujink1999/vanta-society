@@ -53,16 +53,16 @@ export function WinterArcStartDateStep({
 
   return (
     <View style={tw`flex-1 px-3 pt-8 pb-6`}>
-      <View style={tw` flex-col items-center gap-8 flex-1`}>
+      <View style={tw` flex-col items-center gap-10 flex-1`}>
         <View style={tw` flex-col items-center gap-3`}>
           <GradientText
-            style={tw`text-textPrimary text-center font-tussi-bold text-6`}
+            style={tw`text-textPrimary text-center font-tussi-bold text-5`}
           >
             START DATE
           </GradientText>
 
           <Text
-            style={tw`text-textSecondary font-mont text-base text-center max-w-[300px]`}
+            style={tw`text-textSecondary font-mont text-sm text-center max-w-[300px]`}
           >
             Select the date you want to start your 66-day Winter Arc
           </Text>

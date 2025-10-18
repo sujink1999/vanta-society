@@ -79,7 +79,9 @@ export function RoutineOverview({
             <ChevronLeftIcon size={20} color="white" />
           </TouchableOpacity>
         )}
-        <Text style={tw`text-white font-tussi-bold text-base text-center`}>
+        <Text
+          style={tw`text-white font-tussi-bold text-base text-center w-full`}
+        >
           Your <Text style={tw` text-primary`}>WINTER ARC</Text> routine
         </Text>
       </View>

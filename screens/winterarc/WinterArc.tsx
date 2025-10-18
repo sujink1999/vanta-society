@@ -11,7 +11,8 @@ import { WinterArcPaymentStep } from "./steps/WinterArcPaymentStep";
 import { WinterArcStartDateStep } from "./steps/WinterArcStartDateStep";
 
 export default function WinterArc() {
-  const { user, routine } = useGlobalContext();
+  const { user, routine, winterArcPurchased, isPurchaseLoading } =
+    useGlobalContext();
   const [currentStep, setCurrentStep] = useState(0);
 
   // Update current step based on user progress
@@ -28,7 +29,11 @@ export default function WinterArc() {
 
     // If user has routine, skip routine setup, go to payment
     if (routine.length > 0) {
-      stepIndex = 3; // Skip to payment step
+      stepIndex = 2;
+
+      if (!winterArcPurchased) {
+        stepIndex = 3;
+      }
     }
 
     // If user has winter arc start date, redirect to tabs
@@ -38,9 +43,13 @@ export default function WinterArc() {
     }
 
     setCurrentStep(stepIndex);
-  }, [user, routine]);
+  }, [user, routine, winterArcPurchased, isPurchaseLoading]);
 
   const nextStep = () => {
+    if (currentStep === 2 && winterArcPurchased) {
+      setCurrentStep(4);
+      return;
+    }
     setCurrentStep(currentStep + 1);
   };
 

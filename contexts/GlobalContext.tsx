@@ -1,3 +1,4 @@
+import { useInAppPurchase } from "@/hooks/useInAppPurchase";
 import { useNotifications } from "@/hooks/useNotifications";
 import { useUser } from "@/hooks/useUser";
 import { useWinterArcStats } from "@/hooks/useWinterArcStats";
@@ -9,6 +10,7 @@ import {
   VitalType,
 } from "@/types/notification";
 import React, { createContext, ReactNode, useContext } from "react";
+import { PurchasesPackage } from "react-native-purchases";
 
 interface GlobalContextType {
   user: User | null;
@@ -63,6 +65,19 @@ interface GlobalContextType {
     duration?: number
   ) => void;
   removeNotification: (id: string) => void;
+  // In-app purchase
+  winterArcPurchased: boolean;
+  packages: PurchasesPackage[];
+  selectedPackage: PurchasesPackage | null;
+  isPurchaseLoading: boolean;
+  isPurchasing: boolean;
+  purchase: (pkg?: PurchasesPackage) => Promise<{
+    success: boolean;
+    error?: any;
+  }>;
+  restorePurchases: () => Promise<{ success: boolean; error?: any }>;
+  checkPurchaseAccess: () => Promise<void>;
+  setSelectedPackage: (pkg: PurchasesPackage | null) => void;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
@@ -75,11 +90,22 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
   const userState = useUser();
   const winterArcStats = useWinterArcStats(userState.user, userState.routine);
   const notificationState = useNotifications();
+  const purchaseState = useInAppPurchase();
 
   const contextValue = {
     ...userState,
     winterArcStats,
     ...notificationState,
+    // In-app purchase
+    winterArcPurchased: purchaseState.winterArcPurchased,
+    packages: purchaseState.packages,
+    selectedPackage: purchaseState.selectedPackage,
+    isPurchaseLoading: purchaseState.isLoading,
+    isPurchasing: purchaseState.isPurchasing,
+    purchase: purchaseState.purchase,
+    restorePurchases: purchaseState.restorePurchases,
+    checkPurchaseAccess: purchaseState.checkAccess,
+    setSelectedPackage: purchaseState.setSelectedPackage,
   };
 
   return (

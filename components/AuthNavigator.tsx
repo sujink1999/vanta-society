@@ -9,7 +9,8 @@ interface AuthNavigatorProps {
 }
 
 export default function AuthNavigator({ children }: AuthNavigatorProps) {
-  const { user, isAuthenticating } = useGlobalContext();
+  const { user, isAuthenticating, winterArcPurchased, isPurchaseLoading } =
+    useGlobalContext();
   const segments = useSegments();
 
   useEffect(() => {
@@ -17,8 +18,10 @@ export default function AuthNavigator({ children }: AuthNavigatorProps) {
     GoogleAuthService.configure();
   }, []);
 
+  const isLoading = isAuthenticating || isPurchaseLoading;
+
   useEffect(() => {
-    if (isAuthenticating) return;
+    if (isLoading) return;
 
     const inAuthGroup = segments[0] === "(auth)";
     const inOnboardingGroup = segments[0] === "(onboarding)";
@@ -54,7 +57,7 @@ export default function AuthNavigator({ children }: AuthNavigatorProps) {
       // User in winter arc but doesn't need it anymore
       router.replace("/(tabs)/winterarc");
     }
-  }, [user, isAuthenticating, segments]);
+  }, [user, isLoading, segments]);
 
   // Helper function to determine if user needs onboarding
   const needsOnboarding = (user: any) => {
@@ -64,11 +67,11 @@ export default function AuthNavigator({ children }: AuthNavigatorProps) {
 
   // Helper function to determine if user needs winter arc setup
   const needsWinterArcSetup = (user: any) => {
-    // If no start date set, needs setup
-    return Boolean(!user.winterArcStartDate);
+    // Only Winter Arc users need setup, and only if start date not set
+    return !winterArcPurchased || Boolean(!user.winterArcStartDate);
   };
 
-  if (isAuthenticating) {
+  if (isLoading) {
     return <LoadingScreen />;
   }
 
