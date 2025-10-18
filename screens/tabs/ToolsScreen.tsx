@@ -15,7 +15,7 @@ const CARD_WIDTH = (SCREEN_WIDTH - HORIZONTAL_PADDING * 2 - GAP) / 2;
 export default function ToolsScreen() {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <View style={tw` flex-row items-center justify-left px-3 pt-[13px] pb-6`}>
+      <View style={tw` flex-row items-center px-3 pt-[13px] pb-6`}>
         <Image
           source={require("@/assets/images/society-logo-no-bg.png")}
           style={tw`w-16 h-10`}

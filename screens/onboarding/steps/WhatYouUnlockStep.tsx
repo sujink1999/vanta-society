@@ -1,7 +1,10 @@
+import profile from "@/assets/images/screenshots/profile.png";
+import rituals from "@/assets/images/screenshots/rituals.png";
+import tools from "@/assets/images/screenshots/tools.png";
 import { Button } from "@/components/Button";
 import tw from "@/constants/tw";
 import React, { useRef, useState } from "react";
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { Dimensions, Image, ScrollView, Text, View } from "react-native";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -11,19 +14,22 @@ interface WhatYouUnlockStepProps {
 
 const CAROUSEL_ITEMS = [
   {
+    screenShot: rituals,
     title: "TRACK YOUR RITUALS",
     subtext:
       "Choose the habits and protocols that define your transformation. \nMove, Eat, Rest, Grow, and lock them into your daily arc.",
   },
   {
+    screenShot: tools,
     title: "ACTIVATE YOUR TOOLS",
     subtext:
       "Access the Society marketplace, calculators, and longevity protocols. \nEverything you need to sustain discipline, at your fingertips.",
   },
   {
-    title: "CONNECT WITH THE TRIBE",
+    screenShot: profile,
+    title: "YOUR WINTER ARC",
     subtext:
-      "Join events, explore threads, and see members near you. \nBecause nobody escapes alone - we rise together.",
+      "Make the most of your Winter Arc.\n All you need is 66 days to transform your life.",
   },
 ];
 
@@ -68,9 +74,22 @@ export function WhatYouUnlockStep({ onNext }: WhatYouUnlockStepProps) {
             >
               {/* Image placeholder */}
               <View
-                style={tw`w-64 h-64 bg-white/10 rounded-lg mb-8 items-center justify-center`}
+                style={tw`w-[220px] items-center bg-black h-[300px] border-2 border-white/10  rounded-lg overflow-hidden mb-8 justify-start`}
               >
-                <Text style={tw`text-white/50 font-tussi text-sm`}>Image</Text>
+                <Image
+                  source={item.screenShot}
+                  style={[
+                    tw`rounded-lg overflow-hidden`,
+                    {
+                      width: 200,
+                      height: 450,
+                      position: "absolute",
+                      top: -30,
+                      left: 8,
+                    },
+                  ]}
+                  resizeMode="cover"
+                />
               </View>
 
               {/* Title */}

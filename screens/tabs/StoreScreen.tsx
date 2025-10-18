@@ -84,9 +84,7 @@ export default function StoreScreen() {
           showsVerticalScrollIndicator={false}
           nestedScrollEnabled={true}
         >
-          <View
-            style={tw` flex-row items-center justify-left px-3 pt-[13px] pb-6`}
-          >
+          <View style={tw` flex-row items-center px-3 pt-[13px] pb-6`}>
             <Image
               source={require("@/assets/images/society-logo-no-bg.png")}
               style={tw`w-16 h-10`}
