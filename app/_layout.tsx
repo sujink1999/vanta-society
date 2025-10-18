@@ -7,15 +7,17 @@ import { NotificationContainer } from '@/components/NotificationContainer';
 import { AuthErrorHandler } from '@/components/AuthErrorHandler';
 import { dataSyncManager } from '@/services/storage/DataSyncManager';
 import { checkInStorageManager } from '@/services/storage/CheckInStorageManager';
+import { initializeRevenueCat } from '@/services/revenuecat';
 import { useEffect } from 'react';
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
 
-  // Initialize storage managers on app startup
+  // Initialize storage managers and RevenueCat on app startup
   useEffect(() => {
     dataSyncManager.initialize();
     checkInStorageManager.initialize();
+    initializeRevenueCat();
   }, []);
 
   if (!fontsLoaded) {

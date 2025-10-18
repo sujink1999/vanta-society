@@ -7,6 +7,7 @@ import moment from "moment";
 import React from "react";
 import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { WinterArcPaymentStep } from "../winterarc/steps/WinterArcPaymentStep";
 
 export default function WinterArcHome() {
   const { user } = useGlobalContext();
@@ -41,6 +42,14 @@ export default function WinterArcHome() {
     return (
       <SafeAreaView style={tw`flex-1 bg-black pb-[60px]`} edges={["top"]}>
         <Countdown />
+      </SafeAreaView>
+    );
+  }
+
+  if (1 === 1) {
+    return (
+      <SafeAreaView style={tw`flex-1 bg-black`}>
+        <WinterArcPaymentStep onNext={() => {}} />
       </SafeAreaView>
     );
   }

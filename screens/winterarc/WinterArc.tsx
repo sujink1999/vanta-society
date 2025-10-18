@@ -7,6 +7,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { RoutineSetupStep } from "./steps/RoutineSetupStep";
 import { WeightGoalStep } from "./steps/WeightGoalStep";
 import { WinterArcInfoStep } from "./steps/WinterArcInfoStep";
+import { WinterArcPaymentStep } from "./steps/WinterArcPaymentStep";
 import { WinterArcStartDateStep } from "./steps/WinterArcStartDateStep";
 
 export default function WinterArc() {
@@ -25,9 +26,9 @@ export default function WinterArc() {
       stepIndex = 1; // Skip to routine setup
     }
 
-    // If user has routine, skip routine setup
+    // If user has routine, skip routine setup, go to payment
     if (routine.length > 0) {
-      stepIndex = 2; // Skip to start date
+      stepIndex = 3; // Skip to payment step
     }
 
     // If user has winter arc start date, redirect to tabs
@@ -54,6 +55,9 @@ export default function WinterArc() {
       return <RoutineSetupStep onNext={nextStep} />;
     }
     if (currentStep === 3) {
+      return <WinterArcPaymentStep onNext={nextStep} />;
+    }
+    if (currentStep === 4) {
       return <WinterArcStartDateStep onNext={nextStep} />;
     }
 
