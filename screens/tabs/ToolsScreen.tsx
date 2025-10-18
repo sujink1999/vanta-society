@@ -1,6 +1,7 @@
 import { DeepWorkIcon, MeditationIcon } from "@/components/icons/TaskIcons";
 import { ToolCard } from "@/components/ToolCard";
 import tw from "@/constants/tw";
+import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import React from "react";
 import { Dimensions, Image, ScrollView, Text, View } from "react-native";
@@ -48,6 +49,14 @@ export default function ToolsScreen() {
             title="Meditation"
             description="Guided meditation sessions to calm your mind and reduce stress"
             onPress={() => router.push("/(tools)/meditation")}
+            width={CARD_WIDTH}
+          />
+
+          <ToolCard
+            icon={<Ionicons name="library" size={28} color="white" />}
+            title="Read Books"
+            description="Learn key insights from curated books in bite-sized summaries"
+            onPress={() => router.push("/(tools)/book-summaries")}
             width={CARD_WIDTH}
           />
         </View>

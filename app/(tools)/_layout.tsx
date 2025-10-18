@@ -11,6 +11,8 @@ export default function ToolsLayout() {
       }}
     >
       <Stack.Screen name="deep-focus" />
+      <Stack.Screen name="meditation" />
+      <Stack.Screen name="book-summaries" />
     </Stack>
   );
 }
