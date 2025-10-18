@@ -67,17 +67,6 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="community"
-        options={{
-          tabBarShowLabel: false,
-          tabBarIcon: ({ color, focused }) => (
-            <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
-              <Ionicons name="people" size={20} color={color} />
-            </View>
-          ),
-        }}
-      />
-      <Tabs.Screen
         name="tools"
         options={{
           tabBarShowLabel: false,
@@ -88,6 +77,18 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="community"
+        options={{
+          tabBarShowLabel: false,
+          tabBarIcon: ({ color, focused }) => (
+            <View style={{ transform: [{ scale: focused ? 1.2 : 1 }] }}>
+              <Ionicons name="people" size={20} color={color} />
+            </View>
+          ),
+        }}
+      />
+
       <Tabs.Screen
         name="profile"
         options={{

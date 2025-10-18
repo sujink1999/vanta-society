@@ -386,11 +386,7 @@ export default function MeditationScreen() {
 
       {/* Start Button */}
       <View style={tw`px-3 pb-6`}>
-        <Button
-          title={`Start Session`}
-          onPress={handleStart}
-          style={tw`py-4 `}
-        />
+        <Button title={`Start Session`} onPress={handleStart} />
       </View>
     </SafeAreaView>
   );
