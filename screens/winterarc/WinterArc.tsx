@@ -15,6 +15,8 @@ export default function WinterArc() {
     useGlobalContext();
   const [currentStep, setCurrentStep] = useState(0);
 
+  const shouldShowPurchaseStep = !winterArcPurchased && user?.needsPurchase;
+
   // Update current step based on user progress
   useEffect(() => {
     if (!user) return;
@@ -31,23 +33,29 @@ export default function WinterArc() {
     if (routine.length > 0) {
       stepIndex = 2;
 
-      if (!winterArcPurchased) {
+      if (shouldShowPurchaseStep) {
         stepIndex = 3;
       }
     }
 
-    // If user has winter arc start date, redirect to tabs
-    if (user.winterArcStartDate) {
+    // If user has winter arc start date but needs to pay, show payment only
+    if (user.winterArcStartDate && shouldShowPurchaseStep) {
+      stepIndex = 3; // Payment step only
+    }
+
+    // If user has winter arc start date and doesn't need payment, exit flow
+    if (user.winterArcStartDate && !shouldShowPurchaseStep) {
       // Winter arc setup is complete, this flow shouldn't be shown
       return;
     }
 
     setCurrentStep(stepIndex);
-  }, [user, routine, winterArcPurchased, isPurchaseLoading]);
+  }, [user, routine, shouldShowPurchaseStep, isPurchaseLoading]);
 
   const nextStep = () => {
-    if (currentStep === 2 && winterArcPurchased) {
-      setCurrentStep(4);
+    // If at routine setup step and DON'T need purchase, skip payment step
+    if (currentStep === 2 && !shouldShowPurchaseStep) {
+      setCurrentStep(4); // Skip to start date step
       return;
     }
     setCurrentStep(currentStep + 1);

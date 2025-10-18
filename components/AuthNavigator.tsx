@@ -67,8 +67,12 @@ export default function AuthNavigator({ children }: AuthNavigatorProps) {
 
   // Helper function to determine if user needs winter arc setup
   const needsWinterArcSetup = (user: any) => {
-    // Only Winter Arc users need setup, and only if start date not set
-    return !winterArcPurchased || Boolean(!user.winterArcStartDate);
+    // User needs setup if no start date OR if they need to purchase but haven't
+    // (payment-only flow for users who completed setup but lost purchase access)
+    return (
+      Boolean(!user.winterArcStartDate) ||
+      (user.needsPurchase && !winterArcPurchased)
+    );
   };
 
   if (isLoading) {

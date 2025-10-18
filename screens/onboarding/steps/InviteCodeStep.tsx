@@ -3,7 +3,7 @@ import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { submitInviteCode } from "@/services/api/users";
 import { Ionicons } from "@expo/vector-icons";
-import { ResizeMode, Video } from "expo-av";
+import { VideoView, useVideoPlayer } from "expo-video";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -36,8 +36,13 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
   const [glitchIntensity, setGlitchIntensity] = useState(0); // 0 = normal, 1 = light gray, 2 = medium gray, 3 = white
   const fadeAnim = useRef(new Animated.Value(1)).current;
-  const videoRef = useRef<Video>(null);
   const { refetchUserSilently, addNotification } = useGlobalContext();
+
+  const player = useVideoPlayer(require("@/assets/videos/walking.mp4"), (player) => {
+    player.muted = true;
+    player.loop = true;
+    player.play();
+  });
 
   // Synchronized glitch and text rotation animation
   useEffect(() => {
@@ -176,14 +181,11 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
             style={tw`flex-1  flex flex-col items-center justify-center gap-8`}
           >
             <View style={tw`h-[300px] w-[300px] overflow-hidden opacity-50`}>
-              <Video
-                ref={videoRef}
-                source={require("@/assets/videos/walking.mp4")}
+              <VideoView
+                player={player}
                 style={tw`flex-1 w-full`}
-                resizeMode={ResizeMode.CONTAIN}
-                shouldPlay
-                isLooping
-                isMuted
+                contentFit="contain"
+                nativeControls={false}
               />
             </View>
 

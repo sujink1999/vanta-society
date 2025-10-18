@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
 import { GradientText } from "@/components/GradientText";
 import tw from "@/constants/tw";
-import { ResizeMode, Video } from "expo-av";
+import { VideoView, useVideoPlayer } from "expo-video";
 import React from "react";
 import { Text, View } from "react-native";
 
@@ -11,6 +11,11 @@ interface VitalsIntroStepProps {
 }
 
 export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
+  const player = useVideoPlayer(require("@/assets/videos/aura-cut.mp4"), (player) => {
+    player.muted = true;
+    player.loop = false;
+  });
+
   return (
     <View style={tw`flex-1 px-3 pt-8 pb-6`}>
       {/* Intro Screen */}
@@ -29,12 +34,11 @@ export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
 
         {/* Video */}
         <View style={tw`h-64 w-64 rounded-lg mb-12 overflow-hidden`}>
-          <Video
-            source={require("@/assets/videos/aura-cut.mp4")}
+          <VideoView
+            player={player}
             style={tw`flex-1 w-full`}
-            resizeMode={ResizeMode.COVER}
-            isMuted
-            useNativeControls={true}
+            contentFit="cover"
+            nativeControls={true}
           />
         </View>
         <View />

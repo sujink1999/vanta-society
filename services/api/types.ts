@@ -23,6 +23,7 @@ export interface User {
   inviteCode: string | null;
   referrerInviteCode: string | null;
   hasAccess: boolean;
+  needsPurchase: boolean;
   disciplineScore: number | null;
   mindsetScore: number | null;
   strengthScore: number | null;

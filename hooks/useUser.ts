@@ -43,6 +43,11 @@ export function useUser(): UseUserReturn {
           routine,
           hasCompletedQuestionnaire,
         } = response.data;
+
+        if (userData.needsPurchase === undefined) {
+          userData.needsPurchase = true;
+        }
+
         setUser(userData);
 
         setRoutine(routine);
