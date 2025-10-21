@@ -1,5 +1,6 @@
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { apiClient } from "@/services/api/client";
+import { usePathname } from "expo-router";
 import { useEffect } from "react";
 import { Alert } from "react-native";
 
@@ -9,9 +10,13 @@ import { Alert } from "react-native";
  */
 export function AuthErrorHandler() {
   const { logout } = useGlobalContext();
+  const pathname = usePathname();
 
   useEffect(() => {
     apiClient.setAuthErrorHandler(() => {
+      // Don't show alert if user is already on login page
+      if (pathname === "/login") return;
+
       Alert.alert(
         "Session Expired",
         "Your session has expired. Please log in again.",
@@ -23,7 +28,7 @@ export function AuthErrorHandler() {
         ]
       );
     });
-  }, [logout]);
+  }, [logout, pathname]);
 
   return <></>; // This component doesn't render anything
 }

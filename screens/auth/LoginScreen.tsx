@@ -1,13 +1,17 @@
 import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
+import { EmailAuthModal } from "@/components/EmailAuthModal";
 import { GradientText } from "@/components/GradientText";
+import { MailIcon } from "@/components/icons/Icons";
+import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Text, View } from "react-native";
+import { Animated, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false);
+  const [emailModalVisible, setEmailModalVisible] = useState(false);
   const { refetchUser } = useGlobalContext();
   const fadeAnim = useRef(new Animated.Value(0.3)).current;
 
@@ -29,7 +33,7 @@ export default function LoginScreen() {
     ).start();
   }, [fadeAnim]);
 
-  const handleGoogleSignInSuccess = async (user: any, response: any) => {
+  const handleGoogleSignInSuccess = async () => {
     try {
       setIsLoading(true);
 
@@ -42,7 +46,20 @@ export default function LoginScreen() {
     }
   };
 
-  const handleGoogleSignInError = (error: string) => {};
+  const handleGoogleSignInError = () => {};
+
+  const handleEmailAuthSuccess = async () => {
+    try {
+      setIsLoading(true);
+
+      // Refetch user data to update context
+      await refetchUser(true);
+    } catch (error) {
+      console.error("Error after email sign-in:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
@@ -80,7 +97,18 @@ export default function LoginScreen() {
             >
               for the 1% - and those who are becoming
             </Text>
-            <View style={tw`mb-10 h-14`}>
+
+            <View style={tw`flex-col h-30 gap-1 w-full`}>
+              <TouchableOpacity
+                activeOpacity={0.8}
+                onPress={() => setEmailModalVisible(true)}
+                style={tw`w-full bg-white/10 border rounded-lg px-4 py-3 flex-row items-center gap-2 justify-center `}
+              >
+                <MailIcon size={20} color={Colors.textSecondary} />
+                <Text style={tw`text-base font-mont text-white ml-3`}>
+                  Sign in with Email
+                </Text>
+              </TouchableOpacity>
               <GoogleSignInButton
                 onSuccess={handleGoogleSignInSuccess}
                 onError={handleGoogleSignInError}
@@ -90,6 +118,12 @@ export default function LoginScreen() {
           </View>
         </View>
       </View>
+
+      <EmailAuthModal
+        visible={emailModalVisible}
+        onClose={() => setEmailModalVisible(false)}
+        onSuccess={handleEmailAuthSuccess}
+      />
     </SafeAreaView>
   );
 }

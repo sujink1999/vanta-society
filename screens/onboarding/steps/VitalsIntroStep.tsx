@@ -2,7 +2,7 @@ import { Button } from "@/components/Button";
 import { GradientText } from "@/components/GradientText";
 import tw from "@/constants/tw";
 import { VideoView, useVideoPlayer } from "expo-video";
-import React from "react";
+import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 
 interface VitalsIntroStepProps {
@@ -15,6 +15,13 @@ export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
     player.muted = true;
     player.loop = false;
   });
+
+  // Cleanup video player on unmount
+  useEffect(() => {
+    return () => {
+      player.release();
+    };
+  }, [player]);
 
   return (
     <View style={tw`flex-1 px-3 pt-8 pb-6`}>

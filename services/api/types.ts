@@ -76,6 +76,45 @@ export interface GoogleSignInRequest {
   token: string;
 }
 
+// Email Authentication types
+export interface EmailSignUpRequest {
+  email: string;
+  password: string;
+}
+
+export interface EmailSignUpResponse {
+  email: string;
+  verificationRequired: boolean;
+}
+
+export interface VerifyEmailRequest {
+  email: string;
+  otp: string;
+}
+
+export interface EmailSignInRequest {
+  email: string;
+  password: string;
+}
+
+export interface EmailSignInResponse extends AuthResponse {
+  requiresVerification?: boolean;
+}
+
+export interface ForgotPasswordRequest {
+  email: string;
+}
+
+export interface ResetPasswordRequest {
+  email: string;
+  otp: string;
+  newPassword: string;
+}
+
+export interface ResendVerificationRequest {
+  email: string;
+}
+
 // Profile completion types
 export interface CompleteProfileRequest {
   firstName: string;
