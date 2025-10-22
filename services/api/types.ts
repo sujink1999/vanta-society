@@ -76,6 +76,10 @@ export interface GoogleSignInRequest {
   token: string;
 }
 
+export interface AppleSignInRequest {
+  identityToken: string;
+}
+
 // Email Authentication types
 export interface EmailSignUpRequest {
   email: string;

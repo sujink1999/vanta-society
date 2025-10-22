@@ -40,23 +40,23 @@ export function GoogleSignInButton({
 
   return (
     <TouchableOpacity
-      style={tw`w-full bg-white/10 border rounded-lg px-4 py-3 flex-row items-center gap-1 justify-center `}
+      style={tw`w-full bg-white rounded-lg px-4 py-3 flex-row items-center justify-center `}
       onPress={handleSignIn}
       disabled={loading || disabled}
       activeOpacity={0.8}
     >
       {loading ? (
         <View style={tw` py-[2px] flex-row items-center justify-center`}>
-          <ActivityIndicator size="small" color="#666" />
+          <ActivityIndicator size="small" color="black" />
         </View>
       ) : (
         <>
           <Image
             source={GoogleIcon}
-            style={tw`w-5 h-5 mr-3`}
+            style={tw`w-4 h-4 mr-2`}
             resizeMode="contain"
           />
-          <Text style={tw`text-base font-mont text-white`}>
+          <Text style={tw`text-base font-medium text-black`}>
             Sign in with Google
           </Text>
         </>

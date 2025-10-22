@@ -11,6 +11,7 @@
     "ios": {
       "supportsTablet": false,
       "bundleIdentifier": "com.vanta.society",
+      "usesAppleSignIn": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false,
         "NSPhotoLibraryUsageDescription": "Vanta Society needs access to your photo library to let you add photos to your evening journal. The image is stored locally and never leaves your device.",
@@ -35,6 +36,7 @@
     "plugins": [
       "expo-router",
       "expo-video",
+      "expo-apple-authentication",
       [
         "expo-splash-screen",
         {

@@ -1,8 +1,8 @@
+import { AppleSignInButton } from "@/components/auth/AppleSignInButton";
 import { GoogleSignInButton } from "@/components/auth/GoogleSignInButton";
 import { EmailAuthModal } from "@/components/EmailAuthModal";
 import { GradientText } from "@/components/GradientText";
 import { MailIcon } from "@/components/icons/Icons";
-import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import React, { useEffect, useRef, useState } from "react";
@@ -47,6 +47,21 @@ export default function LoginScreen() {
   };
 
   const handleGoogleSignInError = () => {};
+
+  const handleAppleSignInSuccess = async () => {
+    try {
+      setIsLoading(true);
+
+      // Refetch user data to update context
+      await refetchUser(true);
+    } catch (error) {
+      console.error("Error after Apple sign-in:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleAppleSignInError = () => {};
 
   const handleEmailAuthSuccess = async () => {
     try {
@@ -98,20 +113,25 @@ export default function LoginScreen() {
               for the 1% - and those who are becoming
             </Text>
 
-            <View style={tw`flex-col h-30 gap-1 w-full`}>
+            <View style={tw`flex-col gap-1 w-full`}>
               <TouchableOpacity
                 activeOpacity={0.8}
                 onPress={() => setEmailModalVisible(true)}
-                style={tw`w-full bg-white/10 border rounded-lg px-4 py-3 flex-row items-center gap-2 justify-center `}
+                style={tw`w-full bg-white rounded-lg px-4 py-3 flex-row items-center justify-center `}
               >
-                <MailIcon size={24} color={Colors.textSecondary} />
-                <Text style={tw`text-base font-mont text-white ml-2`}>
+                <MailIcon size={18} color={"black"} />
+                <Text style={tw`text-base font-medium text-black ml-2`}>
                   Sign in with Email
                 </Text>
               </TouchableOpacity>
               <GoogleSignInButton
                 onSuccess={handleGoogleSignInSuccess}
                 onError={handleGoogleSignInError}
+                disabled={isLoading}
+              />
+              <AppleSignInButton
+                onSuccess={handleAppleSignInSuccess}
+                onError={handleAppleSignInError}
                 disabled={isLoading}
               />
             </View>

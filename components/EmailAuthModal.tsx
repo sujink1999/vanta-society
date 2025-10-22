@@ -269,16 +269,10 @@ export function EmailAuthModal({
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="fade"
-      transparent={true}
-      onRequestClose={handleClose}
-    >
+    <Modal visible={visible} animationType="fade" transparent={true}>
       <BlurView
         intensity={10}
-        onTouchEnd={handleClose}
-        style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
+        style={tw`flex-1 bg-black/90 justify-center items-center p-4`}
         experimentalBlurMethod="dimezisBlurView"
       >
         <KeyboardAvoidingView
