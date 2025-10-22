@@ -11,10 +11,13 @@ interface VitalsIntroStepProps {
 }
 
 export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
-  const player = useVideoPlayer(require("@/assets/videos/aura-cut.mp4"), (player) => {
-    player.muted = true;
-    player.loop = false;
-  });
+  const player = useVideoPlayer(
+    require("@/assets/videos/aura-cut.mp4"),
+    (player) => {
+      player.muted = true;
+      player.loop = false;
+    }
+  );
 
   // Cleanup video player on unmount
   useEffect(() => {
@@ -45,7 +48,7 @@ export function VitalsIntroStep({ onNext, loading }: VitalsIntroStepProps) {
             player={player}
             style={tw`flex-1 w-full`}
             contentFit="cover"
-            nativeControls={true}
+            nativeControls={false}
           />
         </View>
         <View />

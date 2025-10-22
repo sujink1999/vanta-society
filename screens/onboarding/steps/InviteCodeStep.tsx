@@ -10,7 +10,6 @@ import {
   Animated,
   Keyboard,
   KeyboardAvoidingView,
-  Platform,
   TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -182,7 +181,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   return (
     <KeyboardAvoidingView
       style={tw`flex-1`}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={"padding"}
       keyboardVerticalOffset={-32}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>

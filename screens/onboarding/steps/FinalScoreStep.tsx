@@ -76,7 +76,7 @@ export function FinalScoreStep() {
         >
           YOUR VITALS SCORE
         </GradientText>
-        <Text style={tw`text-primary font-tussi text-11 text-center`}>
+        <Text style={tw`text-primary font-tussi text-6xl text-center`}>
           {scores.society?.toFixed(0) || 0}{" "}
           <Text style={tw`text-textSecondary  text-base`}>/ 100</Text>
         </Text>

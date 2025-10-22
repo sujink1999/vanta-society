@@ -91,10 +91,7 @@ export function TaskSelectionCard({
   };
 
   return (
-    <TouchableOpacity
-      onPress={() => onToggle(task.id)}
-      disabled={task.isMandatory || isSelected}
-    >
+    <View>
       <LinearGradient
         colors={
           isSelected
@@ -109,6 +106,7 @@ export function TaskSelectionCard({
           {/* Radio button visual */}
           <TouchableOpacity
             onPress={() => onToggle(task.id)}
+            disabled={task.isMandatory}
             style={[
               tw`w-4 h-4 rounded-full border mr-3 mt-1 justify-center items-center`,
               {
@@ -135,17 +133,19 @@ export function TaskSelectionCard({
           </TouchableOpacity>
 
           <View style={tw`flex-1 flex-col ml-2`}>
-            <View
-              onTouchEnd={() => onToggle(task.id)}
-              style={tw`flex-row items-center `}
-            >
+            <View style={tw`flex-row items-center `}>
               <View style={tw`flex-col gap-1 flex-1`}>
-                <Text
-                  style={tw`text-white font-mont-medium text-sm`}
-                  numberOfLines={2}
+                <TouchableOpacity
+                  onPress={() => onToggle(task.id)}
+                  disabled={task.isMandatory}
                 >
-                  {task.name}
-                </Text>
+                  <Text
+                    style={tw`text-white font-mont-medium text-sm`}
+                    numberOfLines={2}
+                  >
+                    {task.name}
+                  </Text>
+                </TouchableOpacity>
                 {task.isMandatory && (
                   <Text style={tw`font-mont text-xs text-textSecondary`}>
                     Required
@@ -167,6 +167,6 @@ export function TaskSelectionCard({
           </View>
         </View>
       </LinearGradient>
-    </TouchableOpacity>
+    </View>
   );
 }

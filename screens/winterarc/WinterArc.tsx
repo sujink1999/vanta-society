@@ -32,10 +32,6 @@ export default function WinterArc() {
     // If user has routine, skip routine setup, go to payment
     if (routine.length > 0) {
       stepIndex = 2;
-
-      if (shouldShowPurchaseStep) {
-        stepIndex = 3;
-      }
     }
 
     // If user has winter arc start date but needs to pay, show payment only

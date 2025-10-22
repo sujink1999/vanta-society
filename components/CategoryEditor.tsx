@@ -127,8 +127,6 @@ export function CategoryEditor({
     }
   }, [hasChanges, selectedTasks, onSave, onCancel]);
 
-  console.log(selectedTasks);
-
   return (
     <KeyboardAvoidingView
       style={tw`flex-1 flex-col pb-6 `}
