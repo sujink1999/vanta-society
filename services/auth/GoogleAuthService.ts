@@ -10,7 +10,9 @@ export class GoogleAuthService {
       iosClientId:
         "173233017477-p9kg3199vq1gjplf0mka3h0c9mih1k7c.apps.googleusercontent.com",
       webClientId:
-        "173233017477-7eumhmqp1tm0hlq7dch296dqfrh7e384.apps.googleusercontent.com", // You'll need to get this from Google Console
+        "173233017477-7eumhmqp1tm0hlq7dch296dqfrh7e384.apps.googleusercontent.com",
+      // Note: webClientId is used for both Android and web
+      // Android OAuth client ID (173233017477-83v2s3jrl5jlgmhk5qrirl5o2mnktr1k) is configured in Google Console
     });
   }
 

@@ -208,13 +208,7 @@ export function MorningCheckIn({ onComplete }: MorningCheckInProps) {
 
       case 1:
         // Sleep Confirmation
-        return (
-          <SleepConfirmation
-            fadeAnim={fadeAnim}
-            onYes={handleSleepYes}
-            onNo={handleSleepNo}
-          />
-        );
+        return <SleepConfirmation fadeAnim={fadeAnim} />;
 
       case 2:
         // Quote
@@ -284,13 +278,26 @@ export function MorningCheckIn({ onComplete }: MorningCheckInProps) {
       <AutoHeightView>{renderStep()}</AutoHeightView>
 
       {/* Bottom Button - hide on sleep confirmation step */}
-      {currentStep !== 1 && (
+      {currentStep !== 1 ? (
         <View style={tw`pt-3`}>
           <Button
             title={currentStep === 3 ? "Start Your Day" : "Continue"}
             onPress={handleNext}
             disabled={isCheckingSleep}
           />
+        </View>
+      ) : (
+        <View style={tw`w-full flex-row gap-3 pt-3`}>
+          <View style={tw`flex-1`}>
+            <Button
+              title="No"
+              onPress={handleSleepNo}
+              style={tw`bg-white/10`}
+            />
+          </View>
+          <View style={tw`flex-1`}>
+            <Button title="Yes" onPress={handleSleepYes} />
+          </View>
         </View>
       )}
     </View>

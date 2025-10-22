@@ -1,0 +1,42 @@
+# Dependencies (EAS installs these from package.json)
+node_modules/
+
+# Native build folders (EAS builds these in the cloud)
+ios/
+android/
+
+# Local build artifacts
+.expo/
+.expo-shared/
+dist/
+
+# Documentation and development files
+context-images/
+*.md
+CLAUDE.md
+README.md
+
+# Git and version control
+.git/
+.gitignore
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs and debug files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment files (if you have any)
+.env.local
+.env.*.local

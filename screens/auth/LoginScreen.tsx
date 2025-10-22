@@ -104,8 +104,8 @@ export default function LoginScreen() {
                 onPress={() => setEmailModalVisible(true)}
                 style={tw`w-full bg-white/10 border rounded-lg px-4 py-3 flex-row items-center gap-2 justify-center `}
               >
-                <MailIcon size={20} color={Colors.textSecondary} />
-                <Text style={tw`text-base font-mont text-white ml-3`}>
+                <MailIcon size={24} color={Colors.textSecondary} />
+                <Text style={tw`text-base font-mont text-white ml-2`}>
                   Sign in with Email
                 </Text>
               </TouchableOpacity>

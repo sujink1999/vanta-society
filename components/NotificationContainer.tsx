@@ -191,6 +191,7 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
           { backgroundColor: getBackgroundColor() },
         ]}
         tint="dark"
+        experimentalBlurMethod="dimezisBlurView"
       >
         <View style={tw`flex-row items-center px-4 py-3`}>
           <View style={tw`mr-3`}>
@@ -318,6 +319,7 @@ function VitalNotificationItem({
           { backgroundColor: getBackgroundColor() },
         ]}
         tint="dark"
+        experimentalBlurMethod="dimezisBlurView"
       >
         <View style={tw`flex-row items-center px-3 py-3`}>
           {/* Icon on the left */}

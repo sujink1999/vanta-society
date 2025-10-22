@@ -153,6 +153,7 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
           intensity={10}
           tint="dark"
           style={tw`absolute inset-0 overflow-hidden`}
+          experimentalBlurMethod="dimezisBlurView"
         >
           <View
             style={tw`absolute inset-0 bg-black/70 justify-center items-center`}
@@ -161,6 +162,7 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
             <BlurView
               intensity={60}
               style={tw` rounded-md p-8 items-center border border-white/10 overflow-hidden`}
+              experimentalBlurMethod="dimezisBlurView"
             >
               <ActivityIndicator color={Colors.primary} size="large" />
               <Text style={tw`text-textPrimary mt-4 font-tussi`}>

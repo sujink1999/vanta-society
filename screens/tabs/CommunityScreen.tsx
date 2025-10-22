@@ -35,6 +35,7 @@ export default function CommunityScreen() {
         <BlurView
           intensity={30}
           style={tw`bg-white/5 border border-white/10 rounded-md p-3 w-full max-w-sm overflow-hidden`}
+          experimentalBlurMethod="dimezisBlurView"
           tint="dark"
         >
           <View style={tw`w-full gap-3 flex items-center justify-center mb-10`}>

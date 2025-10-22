@@ -101,6 +101,7 @@ export function OptionSelector({
                   intensity={40}
                   style={tw`border-t border-white/10`}
                   tint="dark"
+                  experimentalBlurMethod="dimezisBlurView"
                 >
                   <View style={tw`p-4`}>
                     <View
@@ -207,6 +208,7 @@ export function OptionSelector({
                 intensity={40}
                 style={tw`border border-white/10 rounded-lg max-h-60 w-full overflow-hidden`}
                 tint="dark"
+                experimentalBlurMethod="dimezisBlurView"
               >
                 <ScrollView>
                   {options.map((optionValue) => (

@@ -25,7 +25,7 @@ const PHRASES = [
   "OUTLIVE ORDINARY",
   "IDENTITY > MOTIVATION",
   "DISCIPLINE IS SEXY",
-  "NOBODY EXCAPES ALONE",
+  "NOBODY ESCAPES ALONE",
   "DATA IS TRUTH",
   "TOGETHER WE'RE STRONGER",
 ];
@@ -38,11 +38,14 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const { refetchUserSilently, addNotification } = useGlobalContext();
 
-  const player = useVideoPlayer(require("@/assets/videos/walking.mp4"), (player) => {
-    player.muted = true;
-    player.loop = true;
-    player.play();
-  });
+  const player = useVideoPlayer(
+    require("@/assets/videos/walking.mp4"),
+    (player) => {
+      player.muted = true;
+      player.loop = true;
+      player.play();
+    }
+  );
 
   // Cleanup video player on unmount
   useEffect(() => {
