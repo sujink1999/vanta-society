@@ -40,12 +40,7 @@ export default function Onboarding() {
     }
 
     // If user has details, skip to what you unlock
-    if (
-      user.firstName &&
-      user.lastName &&
-      user.instagramHandle &&
-      user.gender
-    ) {
+    if (user.firstName && user.lastName && user.gender) {
       stepIndex = 2;
     }
 

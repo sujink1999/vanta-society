@@ -314,10 +314,11 @@ const readable = moment().format("dddd, MMM D");
 
 ### Git Workflow
 
-**IMPORTANT**: Do NOT commit or push changes without explicit user approval.
+**CRITICAL**: NEVER commit or push changes unless the user explicitly asks you to commit.
 
 When making code changes:
 1. Make the requested code changes
 2. Show the user what was done
-3. **Ask for permission before committing**
-4. Only run `git commit` and `git push` after user explicitly approves
+3. **DO NOT commit automatically**
+4. **ONLY commit when user explicitly says "commit" or "push"**
+5. Wait for explicit permission every time

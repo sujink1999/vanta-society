@@ -14,6 +14,7 @@ export default function WinterArc() {
   const { user, routine, winterArcPurchased, isPurchaseLoading } =
     useGlobalContext();
   const [currentStep, setCurrentStep] = useState(0);
+  const [routineViewed, setRoutineViewed] = useState(false);
 
   const shouldShowPurchaseStep = !winterArcPurchased && user?.needsPurchase;
 
@@ -32,6 +33,10 @@ export default function WinterArc() {
     // If user has routine, skip routine setup, go to payment
     if (routine.length > 0) {
       stepIndex = 2;
+
+      if (routineViewed) {
+        stepIndex = 3;
+      }
     }
 
     // If user has winter arc start date but needs to pay, show payment only
@@ -53,6 +58,9 @@ export default function WinterArc() {
     if (currentStep === 2 && !shouldShowPurchaseStep) {
       setCurrentStep(4); // Skip to start date step
       return;
+    }
+    if (currentStep === 2) {
+      setRoutineViewed(true);
     }
     setCurrentStep(currentStep + 1);
   };

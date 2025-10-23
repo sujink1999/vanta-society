@@ -1,3 +1,4 @@
+import { DeleteAccountModal } from "@/components/DeleteAccountModal";
 import { GradientText } from "@/components/GradientText";
 import { ProfileMetrics } from "@/components/ProfileMetrics";
 import { VitalsComparison } from "@/components/VitalsComparison";
@@ -9,15 +10,15 @@ import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useElapsedTime } from "@/hooks/useElapsedTime";
 import { dataSyncManager } from "@/services/storage/DataSyncManager";
 import { useRouter } from "expo-router";
-import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
   const { user, winterArcStats, logout } = useGlobalContext();
   const router = useRouter();
   const [lastSyncTime, setLastSyncTime] = useState<string | null>(null);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const elapsedTime = useElapsedTime({
     startDate: user?.winterArcStartDate || "",
   });
@@ -38,18 +39,21 @@ export default function ProfileScreen() {
     setLastSyncTime(syncTime);
   };
 
+  const handleDeleteSuccess = () => {
+    setDeleteModalVisible(false);
+    Alert.alert("Account Deleted", "Your account has been successfully deleted.", [
+      {
+        text: "OK",
+        onPress: () => logout(),
+      },
+    ]);
+  };
+
   if (!user) return <></>;
 
   const firstName = user.firstName || "";
   const name =
     firstName?.charAt(0).toUpperCase() + firstName?.slice(1).toLowerCase();
-
-  const currentDay = user.winterArcStartDate
-    ? Math.max(
-        1,
-        Math.min(66, moment().diff(moment(user.winterArcStartDate), "days") + 1)
-      )
-    : 1;
 
   return (
     <SafeAreaView style={tw`flex-1 bg-black`} edges={["top"]}>
@@ -117,14 +121,24 @@ export default function ProfileScreen() {
                   {user.email}
                 </Text>
 
-                <TouchableOpacity
-                  onPress={logout}
-                  style={tw`bg-white px-3 py-1.5 rounded-sm flex-row items-center gap-2 self-start mt-2`}
-                >
-                  <Text style={tw`font-mont-semibold text-black text-xs`}>
-                    Sign out
-                  </Text>
-                </TouchableOpacity>
+                <View style={tw`flex-row gap-2 mt-2`}>
+                  <TouchableOpacity
+                    onPress={logout}
+                    style={tw`bg-white px-3 py-1.5 rounded-sm flex-row items-center gap-2`}
+                  >
+                    <Text style={tw`font-mont-semibold text-black text-xs`}>
+                      Sign out
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => setDeleteModalVisible(true)}
+                    style={tw`bg-red-500 px-3 py-1.5 rounded-sm flex-row items-center gap-2`}
+                  >
+                    <Text style={tw`font-mont-semibold text-white text-xs`}>
+                      Delete Account
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </View>
@@ -139,6 +153,12 @@ export default function ProfileScreen() {
           </View> */}
         </View>
       </ScrollView>
+
+      <DeleteAccountModal
+        visible={deleteModalVisible}
+        onClose={() => setDeleteModalVisible(false)}
+        onDeleteSuccess={handleDeleteSuccess}
+      />
     </SafeAreaView>
   );
 }

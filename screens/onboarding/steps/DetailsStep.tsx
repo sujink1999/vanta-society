@@ -6,7 +6,7 @@ import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { completeProfile } from "@/services/api/users";
 import React, { useState } from "react";
-import { Alert, ScrollView, TextInput, View } from "react-native";
+import { Alert, ScrollView, Text, TextInput, View } from "react-native";
 
 interface DetailsStepProps {
   onNext: () => void;
@@ -28,7 +28,6 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
     if (
       !details.firstName.trim() ||
       !details.lastName.trim() ||
-      !details.instagramHandle.trim() ||
       !details.gender
     ) {
       Alert.alert("Error", "Please fill in all required fields");
@@ -40,7 +39,7 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
       const response = await completeProfile({
         firstName: details.firstName.trim(),
         lastName: details.lastName.trim(),
-        instagramHandle: details.instagramHandle.trim(),
+        instagramHandle: details.instagramHandle.trim() || undefined,
         gender: details.gender,
         phone: details.phone.trim() || undefined,
         countryCode: details.countryCode,
@@ -63,9 +62,9 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
       <View style={tw` flex flex-col items-center`}>
         {/* <Text  */}
         <GradientText
-          style={tw`text-textPrimary text-center font-tussi-bold text-6`}
+          style={tw`text-textPrimary text-center font-tussi-bold text-5xl`}
         >
-          DETAILS
+          SOCIETY
         </GradientText>
       </View>
 
@@ -96,11 +95,14 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
       </View>
 
       <View style={tw`mb-4`}>
+        <Text style={tw`text-textSecondary/80 font-tussi text-sm mb-3`}>
+          Gender assigned at birth
+        </Text>
         <RadioButton
           options={[
             { label: "Male", value: "male" },
             { label: "Female", value: "female" },
-            { label: "Non-binary", value: "non-binary" },
+            // { label: "Non-binary", value: "non-binary" },
           ]}
           selectedValue={details.gender}
           onValueChange={(value) =>
@@ -116,7 +118,7 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
           onChangeText={(text) =>
             setDetails((prev) => ({ ...prev, instagramHandle: text }))
           }
-          placeholder="IG handle (without @)"
+          placeholder="IG handle (optional, without @)"
           placeholderTextColor="#666"
           autoCapitalize="none"
           autoCorrect={false}
@@ -146,7 +148,6 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
         disabled={
           !details.firstName.trim() ||
           !details.lastName.trim() ||
-          !details.instagramHandle.trim() ||
           !details.gender
         }
         loading={isLoading}

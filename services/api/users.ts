@@ -181,3 +181,8 @@ export async function getBackupData(): Promise<ApiResponse<{
     lastSyncDate: string;
   }>>('/users/backup-data');
 }
+
+// DELETE /users/delete-account
+export async function deleteAccount(): Promise<ApiResponse<{ message: string }>> {
+  return await apiClient.delete<ApiResponse<{ message: string }>>('/users/delete-account');
+}

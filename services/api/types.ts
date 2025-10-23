@@ -123,7 +123,7 @@ export interface ResendVerificationRequest {
 export interface CompleteProfileRequest {
   firstName: string;
   lastName: string;
-  instagramHandle: string;
+  instagramHandle?: string;
   gender: string;
   phone?: string;
   countryCode?: string;

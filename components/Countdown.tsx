@@ -7,6 +7,7 @@ import * as Sharing from "expo-sharing";
 import React, { useRef, useState } from "react";
 import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { captureRef } from "react-native-view-shot";
+import { Header } from "./Header";
 
 const handleCopyInviteCode = async (
   inviteCode: string,
@@ -106,9 +107,10 @@ export function Countdown() {
           </View>
         </View>
       </View>
+      <Header />
 
       {/* Visible UI */}
-      <View style={tw`flex-col items-center flex-1 justify-around `}>
+      <View style={tw`flex-col items-center flex-1 justify-around pt-3 `}>
         <View style={tw` flex-col items-center gap-4`}>
           <Text style={tw`text-white font-tussi text-center text-sm`}>
             YOUR WINTER ARC{"\n"}STARTS IN
