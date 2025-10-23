@@ -211,7 +211,6 @@ export function TaskCard({
               tint="dark"
               style={tw`flex-1 justify-center items-center`}
               onTouchEnd={() => setShowOverlay(false)}
-              experimentalBlurMethod="dimezisBlurView"
             >
               {isProcessing ? (
                 <ActivityIndicator size="small" color="#FFFFFF" />

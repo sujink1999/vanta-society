@@ -26,13 +26,11 @@ export function FullScreenModal({ visible, children }: FullScreenModalProps) {
           { paddingBottom: insets.bottom + 16 },
         ]}
         tint="dark"
-        experimentalBlurMethod="dimezisBlurView"
       >
         <BlurView
           intensity={40}
           style={tw`w-full max-w-2xl border border-white/10 rounded-lg overflow-hidden`}
           tint="dark"
-          experimentalBlurMethod="dimezisBlurView"
         >
           <View style={tw`min-h-[200px]`}>{children}</View>
         </BlurView>

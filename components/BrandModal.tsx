@@ -61,14 +61,12 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
         intensity={10}
         onTouchEnd={onClose}
         style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
-        experimentalBlurMethod="dimezisBlurView"
       >
         <BlurView
           onTouchEnd={(e) => e.stopPropagation()}
           intensity={60}
           style={tw` w-full max-w-md `}
           tint="dark"
-          experimentalBlurMethod="dimezisBlurView"
         >
           {/* Close Button */}
           <TouchableOpacity

@@ -9,7 +9,7 @@ import Purchases, {
 // TODO: Replace with your actual RevenueCat API keys from the dashboard
 // Get these from: RevenueCat Dashboard → Project Settings → API Keys
 const REVENUECAT_API_KEY_IOS = "appl_RJeHOZtwPyPykGwCUAbWDGfjOCM";
-const REVENUECAT_API_KEY_ANDROID = "YOUR_ANDROID_API_KEY_HERE";
+const REVENUECAT_API_KEY_ANDROID = "goog_gMgHDXpSsghDfHGQroHLFBJOPCg";
 
 // Entitlement identifier - this should match what you created in RevenueCat
 // For Winter Arc: the entitlement is "Winter Arc" (with space)

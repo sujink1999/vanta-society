@@ -273,7 +273,6 @@ export function EmailAuthModal({
       <BlurView
         intensity={10}
         style={tw`flex-1 bg-black/90 justify-center items-center p-4`}
-        experimentalBlurMethod="dimezisBlurView"
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -284,7 +283,6 @@ export function EmailAuthModal({
             intensity={60}
             style={tw`w-full max-w-md`}
             tint="dark"
-            experimentalBlurMethod="dimezisBlurView"
           >
             {/* Close Button */}
             <TouchableOpacity
