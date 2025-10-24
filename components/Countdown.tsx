@@ -5,7 +5,14 @@ import { useTimeLeft } from "@/hooks/useTimeLeft";
 import * as Clipboard from "expo-clipboard";
 import * as Sharing from "expo-sharing";
 import React, { useRef, useState } from "react";
-import { Alert, Image, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { captureRef } from "react-native-view-shot";
 import { Header } from "./Header";
 
@@ -110,85 +117,89 @@ export function Countdown() {
       <Header />
 
       {/* Visible UI */}
-      <View style={tw`flex-col items-center flex-1 justify-around pt-3 `}>
-        <View style={tw` flex-col items-center gap-4`}>
-          <Text style={tw`text-white font-tussi text-center text-sm`}>
-            YOUR WINTER ARC{"\n"}STARTS IN
-          </Text>
-          <View style={tw`flex-row justify-around`}>
-            <Text style={tw`text-xl font-tussi text-primary`}>
-              {timeLeft.days}d: {timeLeft.hours}h: {timeLeft.minutes}m:{" "}
-              {timeLeft.seconds}s
+      <ScrollView style={tw`flex-1`}>
+        <View
+          style={tw`flex-col items-center flex-1 justify-around pt-10 gap-8 pb-8`}
+        >
+          <View style={tw` flex-col items-center gap-4`}>
+            <Text style={tw`text-white font-tussi text-center text-sm`}>
+              YOUR WINTER ARC{"\n"}STARTS IN
             </Text>
+            <View style={tw`flex-row justify-around`}>
+              <Text style={tw`text-2xl font-tussi text-primary`}>
+                {timeLeft.days}d: {timeLeft.hours}h: {timeLeft.minutes}m:{" "}
+                {timeLeft.seconds}s
+              </Text>
+            </View>
           </View>
-        </View>
-        <View style={tw``}>
-          <View collapsable={false} ref={cardRef}>
-            <View
-              style={tw`w-[250px] h-[360px] relative overflow-hidden rounded-lg`}
-            >
-              <Image
-                source={require("@/assets/images/winter-arc-card.png")}
-                style={tw`w-full h-full`}
-                resizeMode="cover"
-              />
-
+          <View>
+            <View collapsable={false} ref={cardRef}>
               <View
-                style={tw`absolute bottom-6 left-1/2 -translate-x-1/2  flex items-center justify-center`}
+                style={tw`w-[250px] h-[360px] relative overflow-hidden rounded-lg`}
               >
-                <View style={tw`items-center`}>
-                  <Text
-                    style={tw`text-white font-tussi-bold text-center text-sm mb-2`}
-                  >
-                    {user?.firstName?.toUpperCase()}{" "}
-                    {user?.lastName?.toUpperCase()}
-                  </Text>
-                  <Text style={tw`text-white font-tussi text-xs`}>
-                    #{user?.id?.toString().padStart(2, "0")}
-                  </Text>
+                <Image
+                  source={require("@/assets/images/winter-arc-card.png")}
+                  style={tw`w-full h-full`}
+                  resizeMode="cover"
+                />
+
+                <View
+                  style={tw`absolute bottom-6 left-1/2 -translate-x-1/2  flex items-center justify-center`}
+                >
+                  <View style={tw`items-center`}>
+                    <Text
+                      style={tw`text-white font-tussi-bold text-center text-sm mb-2`}
+                    >
+                      {user?.firstName?.toUpperCase()}{" "}
+                      {user?.lastName?.toUpperCase()}
+                    </Text>
+                    <Text style={tw`text-white font-tussi text-xs`}>
+                      #{user?.id?.toString().padStart(2, "0")}
+                    </Text>
+                  </View>
                 </View>
               </View>
             </View>
-          </View>
 
-          {/* Share Button */}
-          <TouchableOpacity
-            onPress={handleShare}
-            style={tw` self-start mt-3 flex-row bg-white/10 rounded-md  items-center py-2 px-4 gap-2`}
-          >
-            <ShareIcon size={12} color="white" />
-            <Text style={tw`text-white font-tussi text-xs`}>Share</Text>
-          </TouchableOpacity>
-        </View>
-
-        {/* Countdown Display */}
-
-        {/* Invite Code Section */}
-        <View
-          style={tw`bg-white/5  rounded-md p-3 w-full flex-row items-center justify-between`}
-        >
-          <Text style={tw`text-white/60 font-mont text-xs text-center ml-2 `}>
-            Invite Code
-          </Text>
-          <View style={tw`flex-row items-center justify-center gap-3`}>
-            <Text style={tw`text-white font-tussi text-base`}>
-              {user?.inviteCode}
-            </Text>
+            {/* Share Button */}
             <TouchableOpacity
-              onPress={() =>
-                handleCopyInviteCode(user?.inviteCode || "", setIsCopied)
-              }
-              style={tw`p-2`}
+              onPress={handleShare}
+              style={tw` self-start mt-3 flex-row bg-white/10 rounded-md  items-center py-2 px-4 gap-2`}
             >
-              {isCopied ? (
-                <CheckIcon size={20} color="#22c55e" />
-              ) : (
-                <CopyIcon size={20} color="white" />
-              )}
+              <ShareIcon size={12} color="white" />
+              <Text style={tw`text-white font-tussi text-xs`}>Share</Text>
             </TouchableOpacity>
           </View>
+
+          {/* Countdown Display */}
+
+          {/* Invite Code Section */}
+          <View
+            style={tw`bg-white/5  rounded-md p-3 w-full flex-row items-center justify-between`}
+          >
+            <Text style={tw`text-white/60 font-mont text-xs text-center ml-2 `}>
+              Invite Code
+            </Text>
+            <View style={tw`flex-row items-center justify-center gap-3`}>
+              <Text style={tw`text-white font-tussi text-base`}>
+                {user?.inviteCode}
+              </Text>
+              <TouchableOpacity
+                onPress={() =>
+                  handleCopyInviteCode(user?.inviteCode || "", setIsCopied)
+                }
+                style={tw`p-2`}
+              >
+                {isCopied ? (
+                  <CheckIcon size={20} color="#22c55e" />
+                ) : (
+                  <CopyIcon size={20} color="white" />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
         </View>
-      </View>
+      </ScrollView>
     </View>
   );
 }

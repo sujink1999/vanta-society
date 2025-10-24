@@ -7,7 +7,7 @@ import { submitWinterArcStart } from "@/services/api/users";
 import { router } from "expo-router";
 import moment from "moment";
 import React, { useState } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, ScrollView, Text, View } from "react-native";
 
 interface WinterArcStartDateStepProps {
   onNext: () => void;
@@ -53,10 +53,10 @@ export function WinterArcStartDateStep({
 
   return (
     <View style={tw`flex-1 px-3 pt-8 pb-6`}>
-      <View style={tw` flex-col items-center gap-10 flex-1`}>
+      <ScrollView style={tw`flex-1`}>
         <View style={tw` flex-col items-center gap-3`}>
           <GradientText
-            style={tw`text-textPrimary text-center font-tussi-bold text-5`}
+            style={tw`text-textPrimary text-center font-tussi-bold text-3xl`}
           >
             START DATE
           </GradientText>
@@ -68,7 +68,7 @@ export function WinterArcStartDateStep({
           </Text>
         </View>
 
-        <View style={tw`w-full  `}>
+        <View style={tw`w-full pt-6 `}>
           <Calendar
             onDateSelect={setSelectedDate}
             selectedDate={selectedDate}
@@ -83,7 +83,7 @@ export function WinterArcStartDateStep({
 
         {selectedDate && (
           <Text
-            style={tw`text-textSecondary font-mont text-base text-center max-w-[300px]`}
+            style={tw`text-textSecondary font-mont text-base text-center max-w-[300px] mx-auto py-6`}
           >
             Your Winter Arc will end on{"\n"}
             <Text style={tw`text-textPrimary font-mont-medium text-lg`}>
@@ -91,7 +91,7 @@ export function WinterArcStartDateStep({
             </Text>
           </Text>
         )}
-      </View>
+      </ScrollView>
 
       <Button
         title="CONFIRM"

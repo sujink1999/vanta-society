@@ -103,21 +103,17 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
         <ScrollView style={tw`flex-1`}>
           <View style={tw` flex flex-col items-center gap-8`}>
             <GradientText
-              style={tw`text-xl font-tussi-bold text-white text-center `}
+              style={tw`text-2xl font-tussi-bold text-white text-center `}
             >
               SET YOUR GOALS
             </GradientText>
 
             {/* Epic Goal Section */}
             <View style={tw`flex-col  w-full`}>
-              <Text
-                style={tw`text-white font-mont-medium text-lg mb-2 text-center `}
-              >
+              <Text style={tw`text-white font-mont-medium text-lg mb-2  `}>
                 Do you have a goal you are chasing?
               </Text>
-              <Text
-                style={tw`text-white/70 font-mont text-sm  mb-4 text-center`}
-              >
+              <Text style={tw`text-white/70 font-mont text-sm  mb-4 `}>
                 This is your epic goal. It could be career, fitness, personal
                 development, or any major goal you want to achieve.
               </Text>
@@ -136,9 +132,7 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
 
             {/* Weight Goal Section */}
             <View style={tw` w-full flex flex-col mt-10`}>
-              <Text
-                style={tw`text-white font-mont-medium text-lg mb-6 text-center`}
-              >
+              <Text style={tw`text-white font-mont-medium text-lg mb-6`}>
                 What&apos;s your weight goal?
               </Text>
 

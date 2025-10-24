@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   Alert,
   Image,
+  ScrollView,
   Text,
   TouchableOpacity,
   View,
@@ -70,70 +71,73 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
 
   return (
     <View style={tw`flex-1 flex-col px-3 pt-3 pb-6`}>
-      <View
-        style={tw`flex-col items-center gap-6 bg-white/5 border border-white/5 rounded-md  pt-4 `}
-      >
-        <Image
-          source={require("@/assets/images/society-logo-no-bg.png")}
-          style={tw`w-20 h-20 self-center`}
-          resizeMode="contain"
-        />
-        <Text style={tw`text-white font-tussi-bold text-5`}>
-          SKIN IN THE GAME
-        </Text>
-        <Text
-          style={tw`text-white/70 font-mont-medium text-base text-center max-w-[350px]`}
-        >
-          Pay a redeemable amount of{" "}
-          <Text style={tw`text-primary font-mont-medium text-base`}>
-            {selectedPackage?.product?.priceString || ""}
-          </Text>{" "}
-          to keep yourself accountable and start your Winter Arc
-        </Text>
-
+      <ScrollView style={tw`flex-1`}>
         <View
-          style={tw`flex-col items-start  gap-2 bg-black/10 p-3 pt-6 pb-10 bg-black border border-white/5 rounded-md`}
+          style={tw`flex-col items-center gap-6 bg-white/5 border border-white/5 rounded-md p-1 pt-4 `}
         >
-          <Text
-            style={tw` pl-4  text-white/70 font-tussi-bold text-sm text-center max-w-[300px]`}
-          >
-            THE RULES
+          <Image
+            source={require("@/assets/images/society-logo-no-bg.png")}
+            style={tw`w-20 h-20 self-center`}
+            resizeMode="contain"
+          />
+          <Text style={tw`text-white font-tussi-bold text-5`}>
+            SKIN IN THE GAME
           </Text>
-          <View style={tw`flex-col items-start gap-2 px-4 max-w-[350px] mt-3`}>
-            <View style={tw`flex-row items-start gap-3`}>
-              <View
-                style={tw`w-[6px] h-[6px] bg-white rounded-full mt-2`}
-              ></View>
-              <Text
-                style={tw`text-white/80 font-mont-medium text-left text-sm  `}
-              >
-                If you complete at least 80% of your rituals, you get your money
-                back.
-              </Text>
-            </View>
-            <View style={tw`flex-row items-start gap-3`}>
-              <View
-                style={tw`w-[6px] h-[6px] bg-white rounded-full mt-2`}
-              ></View>
-              <Text
-                style={tw`text-white/80 font-mont-medium text-left text-sm  `}
-              >
-                If you break discipline and fall short, your stake is lost.
-              </Text>
+          <Text
+            style={tw`text-white/70 font-mont-medium text-base text-center max-w-[350px]  `}
+          >
+            Pay a redeemable amount of{" "}
+            <Text style={tw`text-primary font-mont-medium text-base`}>
+              {selectedPackage?.product?.priceString || ""}
+            </Text>{" "}
+            to keep yourself accountable and start your Winter Arc
+          </Text>
+
+          <View
+            style={tw`flex-col items-start  gap-2 bg-black/10 p-3 pt-6 pb-10 bg-black border border-white/5 rounded-md`}
+          >
+            <Text
+              style={tw` pl-4  text-white/70 font-tussi-bold text-sm text-center max-w-[300px]`}
+            >
+              THE RULES
+            </Text>
+            <View
+              style={tw`flex-col items-start gap-2 px-4 max-w-[350px] pt-3`}
+            >
+              <View style={tw`flex-row items-start gap-3`}>
+                <View
+                  style={tw`w-[6px] h-[6px] bg-white rounded-full mt-2`}
+                ></View>
+                <Text
+                  style={tw`text-white/80 font-mont-medium text-left text-sm  `}
+                >
+                  If you complete at least 80% of your rituals, you get your
+                  money back.
+                </Text>
+              </View>
+              <View style={tw`flex-row items-start gap-3`}>
+                <View
+                  style={tw`w-[6px] h-[6px] bg-white rounded-full mt-2`}
+                ></View>
+                <Text
+                  style={tw`text-white/80 font-mont-medium text-left text-sm  `}
+                >
+                  If you break discipline and fall short, your stake is lost.
+                </Text>
+              </View>
             </View>
           </View>
         </View>
-      </View>
 
-      <Text style={tw`text-white font-tussi text-center px-4 py-10 text-sm`}>
-        People are{" "}
-        <Text style={tw`text-primary font-mont-bold text-lg`}>3x</Text> more
-        likely to finish what they start when something real is at stake.
-      </Text>
-      <View style={tw`flex-1`}></View>
+        <Text style={tw`text-white font-tussi text-center px-4 py-10 text-sm`}>
+          People are{" "}
+          <Text style={tw`text-primary font-mont-bold text-lg`}>3x</Text> more
+          likely to finish what they start when something real is at stake.
+        </Text>
+      </ScrollView>
 
       {/* Purchase Button */}
-      <View style={tw`mt-4 flex-col gap-5`}>
+      <View style={tw` flex-col gap-4`}>
         <Button
           title={isPurchasing ? "PROCESSING..." : `CONTINUE`}
           onPress={handlePurchase}
