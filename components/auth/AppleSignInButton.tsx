@@ -44,8 +44,14 @@ export function AppleSignInButton({
         throw new Error("No identity token received from Apple");
       }
 
+      // Extract name from credential (only available on first sign-in)
+      const firstName = credential.fullName?.givenName || undefined;
+      const lastName = credential.fullName?.familyName || undefined;
+
       const response = await appleSignIn({
         identityToken: credential.identityToken,
+        firstName,
+        lastName,
       });
 
       if (response.success) {

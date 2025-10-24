@@ -78,6 +78,8 @@ export interface GoogleSignInRequest {
 
 export interface AppleSignInRequest {
   identityToken: string;
+  firstName?: string;
+  lastName?: string;
 }
 
 // Email Authentication types
