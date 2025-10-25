@@ -46,13 +46,6 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
     }
   );
 
-  // Cleanup video player on unmount
-  useEffect(() => {
-    return () => {
-      player.release();
-    };
-  }, [player]);
-
   // Synchronized glitch and text rotation animation
   useEffect(() => {
     const createNaturalGlitch = () => {
