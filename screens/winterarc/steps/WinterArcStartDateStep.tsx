@@ -68,7 +68,7 @@ export function WinterArcStartDateStep({
           </Text>
         </View>
 
-        <View style={tw`w-full pt-6 `}>
+        <View style={tw`w-full pt-10 `}>
           <Calendar
             onDateSelect={setSelectedDate}
             selectedDate={selectedDate}

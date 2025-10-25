@@ -57,6 +57,10 @@ export default function Onboarding() {
   };
 
   const getComponent = () => {
+    if (!user || user.onboardingDone) {
+      return <></>;
+    }
+
     if (currentStep === 0) {
       return <InviteCodeStep onNext={nextStep} />;
     }

@@ -155,7 +155,7 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
       {isPurchasing && (
         <PlatformBlurView
           intensity={10}
-          opacity={0.9}
+          opacity={0.8}
           tint="dark"
           style={tw`absolute inset-0 overflow-hidden`}
         >

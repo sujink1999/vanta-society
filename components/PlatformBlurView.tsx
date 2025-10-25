@@ -25,7 +25,7 @@ export function PlatformBlurView({
         onTouchEnd={blurProps.onTouchEnd}
         style={[
           flattenedStyle,
-          styleHasBorder && tw`border border-white/20`,
+          styleHasBorder && tw`border border-white/10`,
           {
             backgroundColor: `rgba(0, 0, 0, ${opacity})`,
           },

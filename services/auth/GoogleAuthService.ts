@@ -51,7 +51,7 @@ export class GoogleAuthService {
       } else {
         return {
           success: false,
-          error: error.message || "Unknown error occurred",
+          error: `${error.code}: ${error.message}` || "Unknown error occurred",
         };
       }
     }

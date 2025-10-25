@@ -39,6 +39,8 @@ export default function LoginScreen() {
     try {
       setIsLoading(true);
 
+      addNotification("Signed in successfully", "success", 3000);
+
       // Refetch user data to update context
       await refetchUser(true);
     } catch (error) {

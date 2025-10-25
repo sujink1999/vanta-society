@@ -39,9 +39,8 @@ export default function WinterArc() {
       }
     }
 
-    // If user has winter arc start date but needs to pay, show payment only
-    if (user.winterArcStartDate && shouldShowPurchaseStep) {
-      stepIndex = 3; // Payment step only
+    if (!shouldShowPurchaseStep) {
+      stepIndex = 4;
     }
 
     // If user has winter arc start date and doesn't need payment, exit flow
@@ -51,7 +50,7 @@ export default function WinterArc() {
     }
 
     setCurrentStep(stepIndex);
-  }, [user, routine, shouldShowPurchaseStep, isPurchaseLoading]);
+  }, [user, routine, shouldShowPurchaseStep]);
 
   const nextStep = () => {
     // If at routine setup step and DON'T need purchase, skip payment step
@@ -62,7 +61,7 @@ export default function WinterArc() {
     if (currentStep === 2) {
       setRoutineViewed(true);
     }
-    setCurrentStep(currentStep + 1);
+    setCurrentStep((c) => c + 1);
   };
 
   const getComponent = () => {
