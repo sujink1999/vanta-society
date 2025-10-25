@@ -1,3 +1,4 @@
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import {
   emailSignIn,
@@ -6,7 +7,6 @@ import {
   resetPassword,
   verifyEmail,
 } from "@/services/api";
-import { BlurView } from "expo-blur";
 import React, { useState } from "react";
 import {
   Alert,
@@ -270,15 +270,16 @@ export function EmailAuthModal({
 
   return (
     <Modal visible={visible} animationType="fade" transparent={true}>
-      <BlurView
+      <PlatformBlurView
         intensity={10}
+        opacity={0.9}
         style={tw`flex-1 bg-black/90 justify-center items-center p-4`}
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={tw`w-full max-w-md`}
         >
-          <BlurView
+          <PlatformBlurView
             onTouchEnd={(e) => e.stopPropagation()}
             intensity={60}
             style={tw`w-full max-w-md`}
@@ -298,9 +299,9 @@ export function EmailAuthModal({
             >
               {renderContent()}
             </ScrollView>
-          </BlurView>
+          </PlatformBlurView>
         </KeyboardAvoidingView>
-      </BlurView>
+      </PlatformBlurView>
     </Modal>
   );
 }

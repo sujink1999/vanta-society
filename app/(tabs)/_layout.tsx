@@ -1,7 +1,7 @@
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { Colors } from "@/constants/theme";
 import { useAppActivityTracker } from "@/hooks/useAppActivityTracker";
 import { Ionicons } from "@expo/vector-icons";
-import { BlurView } from "expo-blur";
 import { Tabs } from "expo-router";
 import { View } from "react-native";
 
@@ -27,7 +27,7 @@ export default function TabLayout() {
           overflow: "hidden",
         },
         tabBarBackground: () => (
-          <BlurView
+          <PlatformBlurView
             intensity={20}
             style={{
               flex: 1,

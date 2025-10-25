@@ -1,7 +1,7 @@
 import { CheckIcon, CopyIcon } from "@/components/icons/Icons";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
-import { BlurView } from "expo-blur";
 import * as Clipboard from "expo-clipboard";
 import React, { useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
@@ -32,8 +32,9 @@ export default function CommunityScreen() {
       />
 
       <View style={tw`flex-1 justify-center items-center p-4 gap-8`}>
-        <BlurView
+        <PlatformBlurView
           intensity={30}
+          opacity={0.9}
           style={tw`bg-white/5 border border-white/10 rounded-md p-3 w-full max-w-sm overflow-hidden`}
           tint="dark"
         >
@@ -76,7 +77,7 @@ export default function CommunityScreen() {
               </View>
             </View>
           )}
-        </BlurView>
+        </PlatformBlurView>
       </View>
     </SafeAreaView>
   );

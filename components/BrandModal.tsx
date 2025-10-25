@@ -1,8 +1,8 @@
 import { Button } from "@/components/Button";
 import { CheckIcon, CopyIcon } from "@/components/icons/Icons";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import { MarketplaceItem } from "@/services/api/types";
-import { BlurView } from "expo-blur";
 import * as Clipboard from "expo-clipboard";
 import React, { useState } from "react";
 import {
@@ -57,12 +57,13 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
       transparent={true}
       onRequestClose={onClose}
     >
-      <BlurView
+      <PlatformBlurView
         intensity={10}
+        opacity={0.9}
         onTouchEnd={onClose}
         style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
       >
-        <BlurView
+        <PlatformBlurView
           onTouchEnd={(e) => e.stopPropagation()}
           intensity={60}
           style={tw` w-full max-w-md `}
@@ -128,8 +129,8 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
               style={{ backgroundColor: "#FF5C2A" }}
             />
           </View>
-        </BlurView>
-      </BlurView>
+        </PlatformBlurView>
+      </PlatformBlurView>
     </Modal>
   );
 }

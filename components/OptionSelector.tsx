@@ -1,3 +1,4 @@
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import {
   OPTION_NAMES,
   OPTION_TYPES,
@@ -6,7 +7,6 @@ import {
 import tw from "@/constants/tw";
 import { TaskOption } from "@/services/api/types";
 import DateTimePicker from "@react-native-community/datetimepicker";
-import { BlurView } from "expo-blur";
 import React, { useState } from "react";
 import {
   Modal,
@@ -97,7 +97,7 @@ export function OptionSelector({
                 activeOpacity={1}
                 onPress={() => setIsOpen(false)}
               >
-                <BlurView
+                <PlatformBlurView
                   intensity={40}
                   style={tw`border-t border-white/10`}
                   tint="dark"
@@ -137,7 +137,7 @@ export function OptionSelector({
                       />
                     </View>
                   </View>
-                </BlurView>
+                </PlatformBlurView>
               </TouchableOpacity>
             </Modal>
           )}
@@ -203,7 +203,7 @@ export function OptionSelector({
             onPress={() => setIsOpen(false)}
           >
             <View style={tw`flex-1 justify-center items-center px-8`}>
-              <BlurView
+              <PlatformBlurView
                 intensity={40}
                 style={tw`border border-white/10 rounded-lg max-h-60 w-full overflow-hidden`}
                 tint="dark"
@@ -224,7 +224,7 @@ export function OptionSelector({
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
-              </BlurView>
+              </PlatformBlurView>
             </View>
           </TouchableOpacity>
         </Modal>

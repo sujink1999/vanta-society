@@ -1,7 +1,7 @@
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { UserRoutine } from "@/services/api/types";
-import { BlurView } from "expo-blur";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef, useState } from "react";
 import {
@@ -206,8 +206,9 @@ export function TaskCard({
               { opacity: fadeAnim },
             ]}
           >
-            <BlurView
+            <PlatformBlurView
               intensity={60}
+              opacity={0.9}
               tint="dark"
               style={tw`flex-1 justify-center items-center`}
               onTouchEnd={() => setShowOverlay(false)}
@@ -217,7 +218,7 @@ export function TaskCard({
               ) : (
                 showOverlay && getOverlayButtons()
               )}
-            </BlurView>
+            </PlatformBlurView>
           </Animated.View>
         )}
       </LinearGradient>

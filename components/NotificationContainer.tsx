@@ -10,6 +10,7 @@ import {
   WarningIcon,
   XIcon,
 } from "@/components/icons/Icons";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
@@ -19,7 +20,6 @@ import {
   VitalNotification,
   VitalType,
 } from "@/types/notification";
-import { BlurView } from "expo-blur";
 import React, { useCallback, useEffect, useRef } from "react";
 import { Animated, Easing, Text, TouchableOpacity, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -184,7 +184,7 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
         },
       ]}
     >
-      <BlurView
+      <PlatformBlurView
         intensity={80}
         style={[
           tw`border border-white/10 rounded-md overflow-hidden relative`,
@@ -206,7 +206,7 @@ function NotificationItem({ notification, onDismiss }: NotificationItemProps) {
             <XIcon size={16} color="#979797" />
           </TouchableOpacity>
         </View>
-      </BlurView>
+      </PlatformBlurView>
     </Animated.View>
   );
 }
@@ -311,7 +311,7 @@ function VitalNotificationItem({
         },
       ]}
     >
-      <BlurView
+      <PlatformBlurView
         intensity={80}
         style={[
           tw` rounded-md overflow-hidden border border-white/10`,
@@ -370,7 +370,7 @@ function VitalNotificationItem({
             <XIcon size={16} color="#979797" />
           </TouchableOpacity>
         </View>
-      </BlurView>
+      </PlatformBlurView>
     </Animated.View>
   );
 }

@@ -1,11 +1,11 @@
 import { CheckInManager } from "@/components/CheckInManager";
 import { Countdown } from "@/components/Countdown";
 import { DailyRoutine } from "@/components/DailyRoutine";
+import { LoadingScreen } from "@/components/LoadingScreen";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import moment from "moment";
 import React from "react";
-import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function WinterArcHome() {
@@ -22,18 +22,7 @@ export default function WinterArcHome() {
 
   // Case 1: Start date not set
   if (!hasWinterArcStartDate) {
-    return (
-      <SafeAreaView style={tw`flex-1 bg-black`} edges={["top"]}>
-        <View style={tw`flex-1 justify-center items-center p-4`}>
-          <Text style={tw`text-white font-tussi-bold text-lg mb-4 text-center`}>
-            WINTER ARC
-          </Text>
-          <Text style={tw`text-white/60 font-mont text-center text-sm`}>
-            Start Date: <Text style={tw`text-white`}>Not Set</Text>
-          </Text>
-        </View>
-      </SafeAreaView>
-    );
+    return <LoadingScreen />;
   }
 
   // Case 2: Winter Arc hasn't started yet (countdown phase)

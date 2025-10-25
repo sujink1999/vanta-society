@@ -5,6 +5,7 @@ import { GradientText } from "@/components/GradientText";
 import { MailIcon } from "@/components/icons/Icons";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
+import { useNotifications } from "@/hooks/useNotifications";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -13,6 +14,7 @@ export default function LoginScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [emailModalVisible, setEmailModalVisible] = useState(false);
   const { refetchUser } = useGlobalContext();
+  const { addNotification } = useNotifications();
   const fadeAnim = useRef(new Animated.Value(0.3)).current;
 
   useEffect(() => {
@@ -46,7 +48,10 @@ export default function LoginScreen() {
     }
   };
 
-  const handleGoogleSignInError = () => {};
+  const handleGoogleSignInError = (error: string) => {
+    console.error("Google Sign-In Error:", error);
+    addNotification(`Google Sign-In Failed: ${error}`, "error", 10000);
+  };
 
   const handleAppleSignInSuccess = async () => {
     try {
@@ -61,7 +66,10 @@ export default function LoginScreen() {
     }
   };
 
-  const handleAppleSignInError = () => {};
+  const handleAppleSignInError = (error: string) => {
+    console.error("Apple Sign-In Error:", error);
+    addNotification(`Apple Sign-In Failed: ${error}`, "error", 10000);
+  };
 
   const handleEmailAuthSuccess = async () => {
     try {

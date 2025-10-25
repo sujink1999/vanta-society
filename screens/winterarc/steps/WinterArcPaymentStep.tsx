@@ -1,8 +1,8 @@
 import { Button } from "@/components/Button";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
-import { BlurView } from "expo-blur";
 import React, { useEffect } from "react";
 import {
   ActivityIndicator,
@@ -153,8 +153,9 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
 
       {/* Loading Overlay */}
       {isPurchasing && (
-        <BlurView
+        <PlatformBlurView
           intensity={10}
+          opacity={0.9}
           tint="dark"
           style={tw`absolute inset-0 overflow-hidden`}
         >
@@ -162,7 +163,7 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
             style={tw`absolute inset-0 bg-black/70 justify-center items-center`}
             pointerEvents="box-none"
           >
-            <BlurView
+            <PlatformBlurView
               intensity={60}
               style={tw` rounded-md p-8 items-center border border-white/10 overflow-hidden`}
             >
@@ -170,9 +171,9 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
               <Text style={tw`text-textPrimary mt-4 font-tussi`}>
                 Processing payment...
               </Text>
-            </BlurView>
+            </PlatformBlurView>
           </View>
-        </BlurView>
+        </PlatformBlurView>
       )}
     </View>
   );

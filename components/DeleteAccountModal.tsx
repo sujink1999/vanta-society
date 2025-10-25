@@ -1,7 +1,7 @@
 import { Button } from "@/components/Button";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import { deleteAccount } from "@/services/api/users";
-import { BlurView } from "expo-blur";
 import React, { useState } from "react";
 import { Modal, Text, TouchableOpacity, View } from "react-native";
 
@@ -45,12 +45,13 @@ export function DeleteAccountModal({
       transparent={true}
       onRequestClose={onClose}
     >
-      <BlurView
+      <PlatformBlurView
         intensity={10}
+        opacity={0.9}
         onTouchEnd={onClose}
         style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
       >
-        <BlurView
+        <PlatformBlurView
           onTouchEnd={(e) => e.stopPropagation()}
           intensity={60}
           style={tw`w-full max-w-md`}
@@ -120,8 +121,8 @@ export function DeleteAccountModal({
               />
             </View>
           </View>
-        </BlurView>
-      </BlurView>
+        </PlatformBlurView>
+      </PlatformBlurView>
     </Modal>
   );
 }

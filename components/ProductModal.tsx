@@ -1,11 +1,11 @@
 import { Button } from "@/components/Button";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import {
   cancelProductNotification,
   requestProductNotification,
 } from "@/services/api";
 import { Product } from "@/services/api/types";
-import { BlurView } from "expo-blur";
 import React, { useState } from "react";
 import {
   Alert,
@@ -78,12 +78,13 @@ export function ProductModal({
       transparent={true}
       onRequestClose={onClose}
     >
-      <BlurView
+      <PlatformBlurView
         intensity={10}
+        opacity={0.9}
         onTouchEnd={onClose}
         style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
       >
-        <BlurView
+        <PlatformBlurView
           onTouchEnd={(e) => e.stopPropagation()}
           intensity={60}
           style={tw`w-full max-w-md`}
@@ -205,8 +206,8 @@ export function ProductModal({
               )}
             </View>
           </View>
-        </BlurView>
-      </BlurView>
+        </PlatformBlurView>
+      </PlatformBlurView>
     </Modal>
   );
 }
