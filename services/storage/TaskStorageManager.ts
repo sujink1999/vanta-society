@@ -51,7 +51,8 @@ class TaskStorageManager {
 
   async getTaskCompletion(date: string, userRoutineId: number): Promise<TaskCompletion | null> {
     await this.initialize();
-    return this.cache[date]?.[userRoutineId.toString()] || null;
+    const completion = this.cache[date]?.[userRoutineId.toString()];
+    return completion ? { ...completion } : null;
   }
 
   async setTaskStatus(date: string, userRoutineId: number, status: TaskStatus): Promise<void> {
@@ -87,7 +88,7 @@ class TaskStorageManager {
 
   async getCompletionsForDate(date: string): Promise<{ [userRoutineId: string]: TaskCompletion }> {
     await this.initialize();
-    return this.cache[date] || {};
+    return { ...(this.cache[date] || {}) };
   }
 
   async getDailyStats(date: string): Promise<{ done: number; skipped: number }> {
@@ -105,7 +106,7 @@ class TaskStorageManager {
 
   async getAllCompletions(): Promise<TaskCompletionData> {
     await this.initialize();
-    return this.cache;
+    return JSON.parse(JSON.stringify(this.cache));
   }
 
   subscribe(listener: () => void): () => void {

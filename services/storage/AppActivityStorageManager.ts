@@ -91,7 +91,8 @@ class AppActivityStorageManager {
 
   async getActivityForDate(date: string): Promise<ActivitySession[]> {
     await this.initialize();
-    return this.cache[date] || [];
+    const sessions = this.cache[date];
+    return sessions ? [...sessions] : [];
   }
 
   async getActivityDuringPeriod(

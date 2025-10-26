@@ -42,7 +42,7 @@ class ScoreStorageManager {
 
   async getScores(): Promise<VitalScores | null> {
     await this.initialize();
-    return this.cache;
+    return this.cache ? { ...this.cache } : null;
   }
 
   async updateScores(scores: VitalScores): Promise<void> {
@@ -73,7 +73,7 @@ class ScoreStorageManager {
 
     await this.saveToStorage();
     this.notifyListeners();
-    return this.cache;
+    return { ...this.cache };
   }
 
   async incrementMultipleScores(impacts: {
@@ -107,7 +107,7 @@ class ScoreStorageManager {
 
     await this.saveToStorage();
     this.notifyListeners();
-    return this.cache;
+    return { ...this.cache };
   }
 
   async initializeScores(initialScores: VitalScores): Promise<void> {

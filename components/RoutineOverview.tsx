@@ -80,10 +80,11 @@ export function RoutineOverview({
           </TouchableOpacity>
         )}
         <Text
-          style={tw`text-white font-tussi-bold text-base text-center w-full`}
+          style={tw`text-white font-tussi-bold text-base text-center flex-1 `}
         >
           Your <Text style={tw` text-primary`}>WINTER ARC</Text> routine
         </Text>
+        {showBackButton && <View style={tw`w-7 h-7`} />}
       </View>
 
       <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>

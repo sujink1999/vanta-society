@@ -36,11 +36,11 @@ export default function WinterArc() {
 
       if (routineViewed) {
         stepIndex = 3;
-      }
-    }
 
-    if (!shouldShowPurchaseStep) {
-      stepIndex = 4;
+        if (!shouldShowPurchaseStep) {
+          stepIndex = 4;
+        }
+      }
     }
 
     // If user has winter arc start date and doesn't need payment, exit flow

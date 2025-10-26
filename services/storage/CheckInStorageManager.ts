@@ -86,7 +86,8 @@ class CheckInStorageManager {
 
   async getCheckInStatus(date: string): Promise<DailyCheckIn> {
     await this.initialize();
-    return this.cache[date] || {};
+    const checkIn = this.cache[date];
+    return checkIn ? JSON.parse(JSON.stringify(checkIn)) : {};
   }
 
   async hasMorningCheckIn(date: string): Promise<boolean> {
@@ -142,7 +143,8 @@ class CheckInStorageManager {
 
   async getDailySummary(date: string): Promise<EveningCheckIn | null> {
     await this.initialize();
-    return this.cache[date]?.evening || null;
+    const evening = this.cache[date]?.evening;
+    return evening ? { ...evening } : null;
   }
 
   async logWeight(
@@ -171,7 +173,8 @@ class CheckInStorageManager {
 
   async getWeightHistory(date: string): Promise<WeightEntry[]> {
     await this.initialize();
-    return this.cache[date]?.weight || [];
+    const weight = this.cache[date]?.weight;
+    return weight ? [...weight] : [];
   }
 
   async getAllSummaries(): Promise<
@@ -202,7 +205,7 @@ class CheckInStorageManager {
 
   async getCache(): Promise<CheckInData> {
     await this.initialize();
-    return this.cache;
+    return JSON.parse(JSON.stringify(this.cache));
   }
 
   async restoreCache(data: CheckInData): Promise<void> {
