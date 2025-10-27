@@ -1,5 +1,6 @@
 import { Button } from "@/components/Button";
 import { CheckIcon, CopyIcon } from "@/components/icons/Icons";
+import { PhoneModal } from "@/components/PhoneModal";
 import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import { MarketplaceItem } from "@/services/api/types";
@@ -9,7 +10,6 @@ import {
   Alert,
   Image,
   Linking,
-  Modal,
   Text,
   TouchableOpacity,
   View,
@@ -51,22 +51,18 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="fade"
-      transparent={true}
-      onRequestClose={onClose}
-    >
+    <PhoneModal visible={visible} onClose={onClose}>
       <PlatformBlurView
         intensity={10}
         opacity={0.9}
         onTouchEnd={onClose}
         style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
+        tint="dark"
       >
         <PlatformBlurView
           onTouchEnd={(e) => e.stopPropagation()}
           intensity={60}
-          style={tw` w-full max-w-md `}
+          style={tw`w-full`}
           tint="dark"
         >
           {/* Close Button */}
@@ -131,6 +127,6 @@ export function BrandModal({ visible, brand, onClose }: BrandModalProps) {
           </View>
         </PlatformBlurView>
       </PlatformBlurView>
-    </Modal>
+    </PhoneModal>
   );
 }

@@ -2,11 +2,11 @@ import profile from "@/assets/images/screenshots/profile.png";
 import rituals from "@/assets/images/screenshots/rituals.png";
 import tools from "@/assets/images/screenshots/tools.png";
 import { Button } from "@/components/Button";
+import { MAX_PHONE_WIDTH } from "@/constants/layout";
 import tw from "@/constants/tw";
+import { useGlobalContext } from "@/contexts/GlobalContext";
 import React, { useRef, useState } from "react";
-import { Dimensions, Image, ScrollView, Text, View } from "react-native";
-
-const { width: screenWidth } = Dimensions.get("window");
+import { Image, ScrollView, Text, View, useWindowDimensions } from "react-native";
 
 interface WhatYouUnlockStepProps {
   onNext: () => void;
@@ -34,12 +34,18 @@ const CAROUSEL_ITEMS = [
 ];
 
 export function WhatYouUnlockStep({ onNext }: WhatYouUnlockStepProps) {
+  const { isTablet } = useGlobalContext();
+  const { width: windowWidth } = useWindowDimensions();
   const [currentIndex, setCurrentIndex] = useState(0);
   const scrollViewRef = useRef<ScrollView>(null);
 
+  // Get the actual container width (phone width on tablets, full width on phones)
+  const containerWidth = isTablet ? MAX_PHONE_WIDTH : windowWidth;
+  // Account for horizontal padding (px-6 = 24px on each side = 48px total)
+  const itemWidth = containerWidth - 48;
+
   const handleScroll = (event: any) => {
     const contentOffset = event.nativeEvent.contentOffset.x;
-    const itemWidth = screenWidth - 48; // Account for padding
     const index = Math.round(contentOffset / itemWidth);
     setCurrentIndex(index);
   };
@@ -63,14 +69,15 @@ export function WhatYouUnlockStep({ onNext }: WhatYouUnlockStepProps) {
             showsHorizontalScrollIndicator={false}
             onScroll={handleScroll}
             scrollEventThrottle={16}
+            nestedScrollEnabled={true}
             contentContainerStyle={tw`items-center  `}
           >
             {CAROUSEL_ITEMS.map((item, index) => (
               <View
                 key={index}
                 style={[
-                  tw`items-center justify-center px-6`,
-                  { width: screenWidth - 48 },
+                  tw`items-center justify-center`,
+                  { width: itemWidth },
                 ]}
               >
                 {/* Image placeholder */}

@@ -1,5 +1,6 @@
 import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { Colors } from "@/constants/theme";
+import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useAppActivityTracker } from "@/hooks/useAppActivityTracker";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
@@ -7,6 +8,8 @@ import { View } from "react-native";
 
 export default function TabLayout() {
   useAppActivityTracker();
+
+  const { isTablet } = useGlobalContext();
 
   return (
     <Tabs
@@ -17,22 +20,23 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors.primary,
         tabBarInactiveTintColor: "#666666",
         tabBarStyle: {
-          backgroundColor: "transparent",
+          backgroundColor: "rgba(0, 0, 0, 0.9)",
           // borderRightWidth: 1,
           // borderLeftWidth: 1,
-          borderColor: "#ffffff30",
+          borderColor: "#ffffff10",
           // borderTopLeftRadius: 20,
           // borderTopRightRadius: 20,
           position: "absolute",
           overflow: "hidden",
+          // Tab bar automatically constrained by CenteredContainer on tablets
         },
         tabBarBackground: () => (
           <PlatformBlurView
             intensity={20}
             style={{
               flex: 1,
-              backgroundColor: "rgba(0, 0, 0, 0.9)",
             }}
+            tint={!isTablet ? undefined : "dark"}
           />
         ),
         tabBarItemStyle: {

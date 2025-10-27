@@ -1,7 +1,8 @@
 import { PlatformBlurView } from "@/components/PlatformBlurView";
+import { PhoneModal } from "@/components/PhoneModal";
 import tw from "@/constants/tw";
 import React, { ReactNode } from "react";
-import { Modal, View } from "react-native";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 interface FullScreenModalProps {
@@ -13,12 +14,7 @@ export function FullScreenModal({ visible, children }: FullScreenModalProps) {
   const insets = useSafeAreaInsets();
 
   return (
-    <Modal
-      visible={visible}
-      animationType="fade"
-      transparent={true}
-      statusBarTranslucent={true}
-    >
+    <PhoneModal visible={visible} statusBarTranslucent={true}>
       <PlatformBlurView
         intensity={10}
         opacity={0.9}
@@ -36,6 +32,6 @@ export function FullScreenModal({ visible, children }: FullScreenModalProps) {
           <View style={tw`min-h-[200px]`}>{children}</View>
         </PlatformBlurView>
       </PlatformBlurView>
-    </Modal>
+    </PhoneModal>
   );
 }

@@ -6,7 +6,7 @@ import { useRouter } from "expo-router";
 import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 
-export function Header() {
+export function Header({ showLogo = true }: { showLogo?: boolean }) {
   const { winterArcStats } = useGlobalContext();
   const router = useRouter();
 
@@ -16,14 +16,20 @@ export function Header() {
 
   return (
     <View style={tw`flex-row items-center justify-between `}>
-      <Image
-        source={require("@/assets/images/society-logo-no-bg.png")}
-        style={tw`w-16 h-10`}
-        resizeMode="contain"
-      />
+      {showLogo ? (
+        <Image
+          source={require("@/assets/images/society-logo-no-bg.png")}
+          style={tw`w-16 h-10`}
+          resizeMode="contain"
+        />
+      ) : (
+        <View />
+      )}
       <TouchableOpacity
         onPress={() => router.push("/(tabs)/winterarc/profile")}
-        style={tw`  rounded-md flex-row items-center justify-end p-2 py-1 gap-1 bg-white/5  border border-white/5`}
+        style={tw`  rounded-md flex-row items-center justify-end p-2 py-1 gap-1 bg-white/5  border ${
+          showLogo ? "border-white/5" : "border-transparent"
+        }`}
       >
         {/* Streak */}
         <View style={tw`  px-3 py-2 flex-row items-center gap-2`}>

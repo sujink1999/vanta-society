@@ -1,4 +1,5 @@
 import { Button } from "@/components/Button";
+import { PhoneModal } from "@/components/PhoneModal";
 import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import {
@@ -10,7 +11,6 @@ import React, { useState } from "react";
 import {
   Alert,
   Image,
-  Modal,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -38,7 +38,7 @@ export function ProductModal({
   if (!product) return null;
 
   const hasNotification = product.userRequestedNotification;
-  const modalWidth = Math.min(windowWidth - 32, 400); // Max width 400, with 32px padding
+  const modalWidth = Math.min(windowWidth - 32, 400);
 
   const handleImageScroll = (event: any) => {
     const scrollPosition = event.nativeEvent.contentOffset.x;
@@ -72,22 +72,18 @@ export function ProductModal({
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="fade"
-      transparent={true}
-      onRequestClose={onClose}
-    >
+    <PhoneModal visible={visible} onClose={onClose}>
       <PlatformBlurView
         intensity={10}
         opacity={0.9}
         onTouchEnd={onClose}
         style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
+        tint="dark"
       >
         <PlatformBlurView
           onTouchEnd={(e) => e.stopPropagation()}
           intensity={60}
-          style={tw`w-full max-w-md`}
+          style={[tw`w-full max-w-md`, { maxWidth: modalWidth }]}
           tint="dark"
         >
           {/* Close Button */}
@@ -208,6 +204,6 @@ export function ProductModal({
           </View>
         </PlatformBlurView>
       </PlatformBlurView>
-    </Modal>
+    </PhoneModal>
   );
 }

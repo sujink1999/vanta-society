@@ -114,12 +114,11 @@ export function Countdown() {
           </View>
         </View>
       </View>
-      <Header />
 
       {/* Visible UI */}
-      <ScrollView style={tw`flex-1`}>
+      <ScrollView style={tw`flex-1 `}>
         <View
-          style={tw`flex-col items-center flex-1 justify-around pt-10 gap-8 pb-8`}
+          style={tw`flex-col items-center flex-1 justify-around  gap-8 pb-8 pt-6`}
         >
           <View style={tw` flex-col items-center gap-4`}>
             <Text style={tw`text-white font-tussi text-center text-sm`}>
@@ -164,7 +163,7 @@ export function Countdown() {
             {/* Share Button */}
             <TouchableOpacity
               onPress={handleShare}
-              style={tw` self-start mt-3 flex-row bg-white/10 rounded-md  items-center py-2 px-4 gap-2`}
+              style={tw`  self-stretch mt-3 flex-row bg-white/10 rounded-md  items-center justify-center py-2 px-4 gap-2`}
             >
               <ShareIcon size={12} color="white" />
               <Text style={tw`text-white font-tussi text-xs`}>Share</Text>
@@ -174,28 +173,34 @@ export function Countdown() {
           {/* Countdown Display */}
 
           {/* Invite Code Section */}
-          <View
-            style={tw`bg-white/5  rounded-md p-3 w-full flex-row items-center justify-between`}
-          >
-            <Text style={tw`text-white/60 font-mont text-xs text-center ml-2 `}>
-              Invite Code
-            </Text>
-            <View style={tw`flex-row items-center justify-center gap-3`}>
-              <Text style={tw`text-white font-tussi text-base`}>
-                {user?.inviteCode}
-              </Text>
-              <TouchableOpacity
-                onPress={() =>
-                  handleCopyInviteCode(user?.inviteCode || "", setIsCopied)
-                }
-                style={tw`p-2`}
+          <View style={tw`mt-10 gap-2`}>
+            <Header showLogo={false} />
+
+            <View
+              style={tw`bg-white/5  rounded-md p-3 w-full flex-row items-center justify-between`}
+            >
+              <Text
+                style={tw`text-white/60 font-mont text-xs text-center ml-2 `}
               >
-                {isCopied ? (
-                  <CheckIcon size={20} color="#22c55e" />
-                ) : (
-                  <CopyIcon size={20} color="white" />
-                )}
-              </TouchableOpacity>
+                Invite Code
+              </Text>
+              <View style={tw`flex-row items-center justify-center gap-3`}>
+                <Text style={tw`text-white font-tussi text-base`}>
+                  {user?.inviteCode}
+                </Text>
+                <TouchableOpacity
+                  onPress={() =>
+                    handleCopyInviteCode(user?.inviteCode || "", setIsCopied)
+                  }
+                  style={tw`p-2`}
+                >
+                  {isCopied ? (
+                    <CheckIcon size={20} color="#22c55e" />
+                  ) : (
+                    <CopyIcon size={20} color="white" />
+                  )}
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>

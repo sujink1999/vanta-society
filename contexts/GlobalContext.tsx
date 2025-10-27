@@ -1,5 +1,6 @@
 import { useInAppPurchase } from "@/hooks/useInAppPurchase";
 import { useNotifications } from "@/hooks/useNotifications";
+import { useTablet } from "@/hooks/useTablet";
 import { useUser } from "@/hooks/useUser";
 import { useWinterArcStats } from "@/hooks/useWinterArcStats";
 import { User, UserRoutine } from "@/services/api/types";
@@ -17,6 +18,7 @@ interface GlobalContextType {
   routine: UserRoutine[];
   hasCompletedQuestionnaire: boolean;
   isAuthenticating: boolean;
+  isTablet: boolean;
   refetchUser: (checkBackup?: boolean) => Promise<void>;
   refetchUserSilently: () => Promise<void>;
   logout: () => Promise<void>;
@@ -91,9 +93,11 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
   const winterArcStats = useWinterArcStats(userState.user, userState.routine);
   const notificationState = useNotifications();
   const purchaseState = useInAppPurchase();
+  const isTablet = useTablet();
 
   const contextValue = {
     ...userState,
+    isTablet,
     winterArcStats,
     ...notificationState,
     // In-app purchase

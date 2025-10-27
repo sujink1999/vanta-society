@@ -19,7 +19,7 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
   const { width: windowWidth } = useWindowDimensions();
 
   // Calculate card width (assuming 2 columns with padding)
-  const cardWidth = (windowWidth - 48) / 2; // 48 = padding (16 * 3)
+  const cardWidth = (Math.min(windowWidth, 500) - 48) / 2; // 48 = padding (16 * 3)
 
   return (
     <TouchableOpacity

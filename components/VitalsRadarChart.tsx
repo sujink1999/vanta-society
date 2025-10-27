@@ -1,10 +1,10 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, Dimensions, View } from "react-native";
+import { Animated, View, useWindowDimensions } from "react-native";
 import Svg, { Line, Polygon, Text as SvgText } from "react-native-svg";
+import { MAX_PHONE_WIDTH } from "@/constants/layout";
+import { useGlobalContext } from "@/contexts/GlobalContext";
 
 const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
-
-const { width: screenWidth } = Dimensions.get("window");
 
 interface VitalsRadarChartProps {
   scores: {
@@ -20,9 +20,15 @@ interface VitalsRadarChartProps {
 
 export function VitalsRadarChart({
   scores,
-  size = screenWidth - 80,
+  size,
 }: VitalsRadarChartProps) {
-  const center = size / 2;
+  const { isTablet } = useGlobalContext();
+  const { width: windowWidth } = useWindowDimensions();
+
+  // Calculate responsive size based on container width
+  const containerWidth = isTablet ? MAX_PHONE_WIDTH : windowWidth;
+  const chartSize = size ?? containerWidth - 80;
+  const center = chartSize / 2;
   const radius = center - 60; // Leave space for labels
 
   // Chart configuration
@@ -183,7 +189,7 @@ export function VitalsRadarChart({
 
   return (
     <View style={{ alignItems: "center", justifyContent: "center" }}>
-      <Svg width={size} height={size}>
+      <Svg width={chartSize} height={chartSize}>
         {/* Grid lines */}
         {gridLines}
 
@@ -204,7 +210,7 @@ export function VitalsRadarChart({
             top: 0,
           }}
         >
-          <Svg width={size} height={size}>
+          <Svg width={chartSize} height={chartSize}>
             <Polygon
               points={polygonPoints}
               fill="rgba(255, 92, 42, 0.6)"

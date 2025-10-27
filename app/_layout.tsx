@@ -1,14 +1,15 @@
-import { Stack } from 'expo-router';
-import { View, Text } from 'react-native';
-import { useAppFonts } from '@/constants/useFonts';
-import { GlobalProvider } from '@/contexts/GlobalContext';
-import AuthNavigator from '@/components/AuthNavigator';
-import { NotificationContainer } from '@/components/NotificationContainer';
-import { AuthErrorHandler } from '@/components/AuthErrorHandler';
-import { dataSyncManager } from '@/services/storage/DataSyncManager';
-import { checkInStorageManager } from '@/services/storage/CheckInStorageManager';
-import { initializeRevenueCat } from '@/services/revenuecat';
-import { useEffect } from 'react';
+import { AuthErrorHandler } from "@/components/AuthErrorHandler";
+import AuthNavigator from "@/components/AuthNavigator";
+import { CenteredContainer } from "@/components/CenteredContainer";
+import { NotificationContainer } from "@/components/NotificationContainer";
+import { useAppFonts } from "@/constants/useFonts";
+import { GlobalProvider } from "@/contexts/GlobalContext";
+import { initializeRevenueCat } from "@/services/revenuecat";
+import { checkInStorageManager } from "@/services/storage/CheckInStorageManager";
+import { dataSyncManager } from "@/services/storage/DataSyncManager";
+import { Stack } from "expo-router";
+import { useEffect } from "react";
+import { Text, View } from "react-native";
 
 export default function RootLayout() {
   const fontsLoaded = useAppFonts();
@@ -22,26 +23,45 @@ export default function RootLayout() {
 
   if (!fontsLoaded) {
     return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: '#000000' }}>
-        <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Loading Vanta Society...</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#000000",
+        }}
+      >
+        <Text style={{ color: "#FFFFFF", fontSize: 18 }}>
+          Loading Vanta Society...
+        </Text>
       </View>
     );
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: '#000000' }}>
+    <View style={{ flex: 1, backgroundColor: "#000000" }}>
       <GlobalProvider>
         <AuthErrorHandler />
-        <AuthNavigator>
-          <Stack screenOptions={{ contentStyle: { backgroundColor: '#000000' } }}>
-            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-            <Stack.Screen name="(onboarding)" options={{ headerShown: false }} />
-            <Stack.Screen name="(winterarc)" options={{ headerShown: false }} />
-            <Stack.Screen name="(tools)" options={{ headerShown: false }} />
-          </Stack>
-        </AuthNavigator>
-        <NotificationContainer />
+        <CenteredContainer>
+          <AuthNavigator>
+            <Stack
+              screenOptions={{ contentStyle: { backgroundColor: "#000000" } }}
+            >
+              <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+              <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+              <Stack.Screen
+                name="(onboarding)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen
+                name="(winterarc)"
+                options={{ headerShown: false }}
+              />
+              <Stack.Screen name="(tools)" options={{ headerShown: false }} />
+            </Stack>
+          </AuthNavigator>
+          <NotificationContainer />
+        </CenteredContainer>
       </GlobalProvider>
     </View>
   );

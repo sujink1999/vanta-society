@@ -1,9 +1,10 @@
 import { Button } from "@/components/Button";
+import { PhoneModal } from "@/components/PhoneModal";
 import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import { deleteAccount } from "@/services/api/users";
 import React, { useState } from "react";
-import { Modal, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 interface DeleteAccountModalProps {
   visible: boolean;
@@ -39,22 +40,18 @@ export function DeleteAccountModal({
   };
 
   return (
-    <Modal
-      visible={visible}
-      animationType="fade"
-      transparent={true}
-      onRequestClose={onClose}
-    >
+    <PhoneModal visible={visible} onClose={onClose}>
       <PlatformBlurView
         intensity={10}
         opacity={0.9}
         onTouchEnd={onClose}
         style={tw`flex-1 bg-black/80 justify-center items-center p-4`}
+        tint="dark"
       >
         <PlatformBlurView
           onTouchEnd={(e) => e.stopPropagation()}
           intensity={60}
-          style={tw`w-full max-w-md`}
+          style={tw`w-full `}
           tint="dark"
         >
           {/* Close Button */}
@@ -123,6 +120,6 @@ export function DeleteAccountModal({
           </View>
         </PlatformBlurView>
       </PlatformBlurView>
-    </Modal>
+    </PhoneModal>
   );
 }

@@ -1,3 +1,4 @@
+import { PhoneModal } from "@/components/PhoneModal";
 import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import {
@@ -11,7 +12,6 @@ import React, { useState } from "react";
 import {
   Alert,
   KeyboardAvoidingView,
-  Modal,
   Platform,
   ScrollView,
   Text,
@@ -269,11 +269,12 @@ export function EmailAuthModal({
   };
 
   return (
-    <Modal visible={visible} animationType="fade" transparent={true}>
+    <PhoneModal visible={visible} onClose={handleClose}>
       <PlatformBlurView
         intensity={10}
         opacity={0.9}
         style={tw`flex-1 bg-black/90 justify-center items-center p-4`}
+        tint="dark"
       >
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -302,6 +303,6 @@ export function EmailAuthModal({
           </PlatformBlurView>
         </KeyboardAvoidingView>
       </PlatformBlurView>
-    </Modal>
+    </PhoneModal>
   );
 }
