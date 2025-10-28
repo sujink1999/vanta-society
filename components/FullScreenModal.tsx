@@ -1,5 +1,5 @@
-import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { PhoneModal } from "@/components/PhoneModal";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
 import tw from "@/constants/tw";
 import React, { ReactNode } from "react";
 import { View } from "react-native";

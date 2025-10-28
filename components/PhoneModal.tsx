@@ -1,5 +1,5 @@
-import tw from "@/constants/tw";
 import { MAX_PHONE_HEIGHT, MAX_PHONE_WIDTH } from "@/constants/layout";
+import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import React, { ReactNode } from "react";
 import { Modal, ModalProps, View } from "react-native";
@@ -31,15 +31,13 @@ export function PhoneModal({
       {...modalProps}
     >
       {/* Outer container: centers the entire modal viewport on tablets */}
-      <View style={tw`flex-1 items-center justify-center`}>
+      <View style={tw`flex-1  items-center justify-center`}>
         <View
           style={[
-            tw`flex-1`,
+            tw`flex-1 w-full`,
             isTablet && {
-              width: MAX_PHONE_WIDTH,
-              height: MAX_PHONE_HEIGHT,
-              maxWidth: "100%",
-              maxHeight: "100%",
+              maxWidth: MAX_PHONE_WIDTH,
+              maxHeight: MAX_PHONE_HEIGHT,
             },
           ]}
         >
