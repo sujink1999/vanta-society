@@ -7,6 +7,23 @@ export interface ApiResponse<T> {
   details?: any;
 }
 
+// Arc Pass Copy types
+export interface ArcPassSubtitleSegment {
+  text: string;
+  type: "text" | "amount" | "primaryText";
+}
+
+export interface ArcPassCopy {
+  title: string;
+  subtitle: ArcPassSubtitleSegment[];
+  rules: string[];
+  questionCta: string;
+  disclaimer: string;
+  popupTitle: string;
+  popupPoints: string[];
+  popupDisclaimer: string;
+}
+
 // User related types
 export interface User {
   id: number;
@@ -39,6 +56,7 @@ export interface User {
   winterArcStartDate: string | null;
   onboardingDone: boolean;
   lastSyncDate: string | null;
+  arcPassCopy?: ArcPassCopy;
 }
 
 export interface UserScores {

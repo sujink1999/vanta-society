@@ -1,13 +1,15 @@
 import { Button } from "@/components/Button";
+import { InfoIcon } from "@/components/icons/Icons";
 import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Alert,
   Image,
+  Modal,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -20,6 +22,7 @@ interface WinterArcPaymentStepProps {
 
 export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
   const {
+    user,
     winterArcPurchased,
     selectedPackage,
     isPurchaseLoading,
@@ -27,6 +30,37 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
     purchase,
     restorePurchases,
   } = useGlobalContext();
+  const [showCreditsModal, setShowCreditsModal] = useState(false);
+
+  // Default copy (fallback if backend doesn't provide)
+  const defaultCopy = {
+    title: "ARC PASS",
+    subtitle: [
+      { text: "Purchase your Arc Pass for ", type: "text" as const },
+      { text: "", type: "amount" as const },
+      {
+        text: ", show up daily, and unlock Store Credits when you finish strong.",
+        type: "text" as const,
+      },
+    ],
+    rules: [
+      "Complete 80%+ of your daily rituals",
+      "Stay consistent through all 66 days",
+      "Verified completion unlocks Arc Credits",
+    ],
+    questionCta: "What are Store Credits?",
+    disclaimer:
+      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Apple is not a sponsor and is not involved in the Winter Arc challenge.",
+    popupTitle: "WHAT ARE STORE CREDITS?",
+    popupPoints: [
+      "Store Credits are points you earn by successfully completing the Winter Arc.",
+      "Redeem them for future Arc access or curated Vanta rewards like premium merch.",
+    ],
+    popupDisclaimer:
+      "Credits have no cash value. Reward options may change over time.",
+  };
+
+  const copy = user?.arcPassCopy || defaultCopy;
 
   useEffect(() => {
     // Check if user already has access
@@ -81,59 +115,83 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
             resizeMode="contain"
           />
           <Text style={tw`text-white font-tussi-bold text-5`}>
-            SKIN IN THE GAME
+            {copy.title}
           </Text>
           <Text
-            style={tw`text-white/70 font-mont-medium text-base text-center max-w-[350px]  `}
+            style={tw`text-white/70 font-mont-medium text-sm text-center max-w-[350px] px-2`}
           >
-            Pay a redeemable amount of{" "}
-            <Text style={tw`text-primary font-mont-medium text-base`}>
-              {selectedPackage?.product?.priceString || ""}
-            </Text>{" "}
-            to keep yourself accountable and start your Winter Arc
+            {copy.subtitle.map((segment, index) => {
+              if (segment.type === "amount") {
+                return (
+                  <Text
+                    key={index}
+                    style={tw`text-primary font-mont-semibold text-sm`}
+                  >
+                    {selectedPackage?.product?.priceString || ""}
+                  </Text>
+                );
+              } else if (segment.type === "primaryText") {
+                return (
+                  <Text
+                    key={index}
+                    style={tw`text-primary font-mont-semibold text-sm`}
+                  >
+                    {segment.text}
+                  </Text>
+                );
+              } else {
+                return <Text key={index}>{segment.text}</Text>;
+              }
+            })}
           </Text>
 
-          <View
-            style={tw`flex-col items-start  gap-2 bg-black/10 p-3 pt-6 pb-10 bg-black border border-white/5 rounded-md`}
-          >
-            <Text
-              style={tw` pl-4  text-white/70 font-tussi-bold text-sm text-center max-w-[300px]`}
-            >
-              THE RULES
-            </Text>
+          <View style={tw`flex-col`}>
             <View
-              style={tw`flex-col items-start gap-2 px-4 max-w-[350px] pt-3`}
+              style={tw`flex-col items-start gap-2 bg-black/10 p-3 pt-6 pb-6 bg-black border border-white/5 rounded-md w-full`}
             >
-              <View style={tw`flex-row items-start gap-3`}>
-                <View
-                  style={tw`w-[6px] h-[6px] bg-white rounded-full mt-2`}
-                ></View>
-                <Text
-                  style={tw`text-white/80 font-mont-medium text-left text-sm  `}
-                >
-                  If you complete at least 80% of your rituals, you get your
-                  money back.
-                </Text>
-              </View>
-              <View style={tw`flex-row items-start gap-3`}>
-                <View
-                  style={tw`w-[6px] h-[6px] bg-white rounded-full mt-2`}
-                ></View>
-                <Text
-                  style={tw`text-white/80 font-mont-medium text-left text-sm  `}
-                >
-                  If you break discipline and fall short, your stake is lost.
-                </Text>
+              <Text
+                style={tw`pl-4 text-white/70 font-tussi-bold text-sm max-w-[300px]`}
+              >
+                THE RULES
+              </Text>
+              <View
+                style={tw`flex-col items-start gap-2 px-4 max-w-[350px] pt-3`}
+              >
+                {copy.rules.map((rule, index) => (
+                  <View key={index} style={tw`flex-row items-start gap-3`}>
+                    <View
+                      style={tw`w-[6px] h-[6px] bg-white rounded-full mt-2`}
+                    ></View>
+                    <Text
+                      style={tw`text-white/80 font-mont-medium text-left text-sm`}
+                    >
+                      {rule}
+                    </Text>
+                  </View>
+                ))}
               </View>
             </View>
+
+            <TouchableOpacity
+              style={tw`flex-row items-center justify-end gap-1.5 p-2 pt-4`}
+              onPress={() => setShowCreditsModal(true)}
+            >
+              <InfoIcon size={14} color="white" />
+              <Text style={tw`text-white font-mont-medium text-xs`}>
+                {copy.questionCta}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {/* Disclaimers */}
+          <View style={tw`px-6 pb-4`}>
+            <Text
+              style={tw`text-white/40 font-mont text-xs text-center leading-5`}
+            >
+              {copy.disclaimer}
+            </Text>
           </View>
         </View>
-
-        <Text style={tw`text-white font-tussi text-center px-4 py-10 text-sm`}>
-          People are{" "}
-          <Text style={tw`text-primary font-mont-bold text-lg`}>3x</Text> more
-          likely to finish what they start when something real is at stake.
-        </Text>
       </ScrollView>
 
       {/* Purchase Button */}
@@ -175,6 +233,60 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
           </View>
         </PlatformBlurView>
       )}
+
+      {/* Arc Credits Info Modal */}
+      <Modal
+        visible={showCreditsModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={() => setShowCreditsModal(false)}
+      >
+        <View style={tw`flex-1 bg-black/80 justify-center items-center px-4`}>
+          <PlatformBlurView
+            intensity={40}
+            style={tw`w-full max-w-md border border-white/10 rounded-lg overflow-hidden`}
+            tint="dark"
+          >
+            <View style={tw`p-3 pt-6`}>
+              <Text
+                style={tw`text-white font-tussi-bold text-base mb-4 text-center`}
+              >
+                {copy.popupTitle}
+              </Text>
+
+              <View style={tw`mb-6 gap-1 px-3`}>
+                {copy.popupPoints.map((point, index) => (
+                  <View key={index} style={tw`flex-row items-start gap-3`}>
+                    <View
+                      style={tw`w-[6px] h-[6px] bg-white/80 rounded-full mt-[10px]`}
+                    ></View>
+                    <Text
+                      key={index}
+                      style={tw`text-white/80 font-mont text-sm leading-6`}
+                    >
+                      {point}
+                    </Text>
+                  </View>
+                ))}
+                <Text
+                  style={tw`text-white/60 font-mont text-xs leading-5 mt-6`}
+                >
+                  {copy.popupDisclaimer}
+                </Text>
+              </View>
+
+              <TouchableOpacity
+                onPress={() => setShowCreditsModal(false)}
+                style={tw`bg-primary py-3 px-6`}
+              >
+                <Text style={tw`text-white font-tussi-bold text-center`}>
+                  GOT IT
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </PlatformBlurView>
+        </View>
+      </Modal>
     </View>
   );
 }
