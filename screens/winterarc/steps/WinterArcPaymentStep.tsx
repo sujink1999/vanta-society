@@ -10,6 +10,7 @@ import {
   Alert,
   Image,
   Modal,
+  Platform,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -49,8 +50,10 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
       "Verified completion unlocks Arc Credits",
     ],
     questionCta: "What are Store Credits?",
-    disclaimer:
-      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Apple is not a sponsor and is not involved in the Winter Arc challenge.",
+    disclaimerIos:
+      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Purchases are processed through Apple's App Store and subject to Apple's refund policy. To request a refund, contact Apple Support. Apple is not a sponsor and is not involved in the Winter Arc challenge.",
+    disclaimerAndroid:
+      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Purchases are processed through Google Play Store and subject to Google's refund policy. To request a refund, contact Google Play Support. Google is not a sponsor and is not involved in the Winter Arc challenge.",
     popupTitle: "WHAT ARE STORE CREDITS?",
     popupPoints: [
       "Store Credits are points you earn by successfully completing the Winter Arc.",
@@ -184,11 +187,13 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
           </View>
 
           {/* Disclaimers */}
-          <View style={tw`px-6 pb-4`}>
+          <View style={tw`px-3 pb-4`}>
             <Text
               style={tw`text-white/40 font-mont text-xs text-center leading-5`}
             >
-              {copy.disclaimer}
+              {Platform.OS === "ios"
+                ? copy.disclaimerIos
+                : copy.disclaimerAndroid}
             </Text>
           </View>
         </View>

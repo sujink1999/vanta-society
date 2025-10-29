@@ -1,4 +1,5 @@
 import { CheckIcon, CopyIcon, ShareIcon } from "@/components/icons/Icons";
+import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useTimeLeft } from "@/hooks/useTimeLeft";
@@ -163,10 +164,10 @@ export function Countdown() {
             {/* Share Button */}
             <TouchableOpacity
               onPress={handleShare}
-              style={tw`  self-stretch mt-3 flex-row bg-white/10 rounded-md  items-center justify-center py-2 px-4 gap-2`}
+              style={tw`self-end mt-5 flex-row bg-white/10 border border-white/5 rounded-md  items-center justify-center py-2 px-4 gap-2`}
             >
-              <ShareIcon size={12} color="white" />
-              <Text style={tw`text-white font-tussi text-xs`}>Share</Text>
+              <ShareIcon size={12} color={Colors.primary} />
+              <Text style={tw`text-primary font-tussi text-xs`}>Share</Text>
             </TouchableOpacity>
           </View>
 

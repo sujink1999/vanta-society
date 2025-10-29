@@ -11,10 +11,26 @@ interface WinterArcInfoStepProps {
 }
 
 const benefitCards = [
-  { title: "Boost Energy", percentage: "38%" },
-  { title: "Reduce Fatigue", percentage: "15%" },
-  { title: "Gain Muscle Strength", percentage: "23%" },
-  { title: "Improve Mobility", percentage: "20%" },
+  {
+    title: "Boost Energy",
+    percentage: "38%",
+    citation: "Puetz et al., 2006; Meta-analysis of 81 RCTs",
+  },
+  {
+    title: "Reduce Fatigue",
+    percentage: "37%",
+    citation: "Exercise effects meta-analysis, 2022",
+  },
+  {
+    title: "Gain Muscle Strength",
+    percentage: "10-20%",
+    citation: "8-12 week resistance training studies",
+  },
+  {
+    title: "Improve Mobility",
+    percentage: "21%",
+    citation: "Mobility training in older adults",
+  },
 ];
 
 const citations = [
@@ -37,6 +53,13 @@ const citations = [
       "96 participants performed a daily behavior, and automaticity was modeled to plateau at an average of 66 days, with a range of 18-254 days.",
     reference:
       "Lally, P., et al. (2010). How are habits formed: Modelling habit formation in the real world. European Journal of Social Psychology.",
+    imageSource: require("@/assets/images/research/ucl.jpg"),
+  },
+  {
+    citation:
+      "Meta-analysis of 81 randomized controlled trials with 7,050 participants showed exercise increases energy by effect size g = 0.415 (38-41% improvement) and reduces fatigue by g = -0.374 (37% reduction).",
+    reference:
+      "Puetz, T.W., et al. (2022). The Effect of Chronic Exercise on Energy and Fatigue States: A Systematic Review and Meta-Analysis. NCBI PMC9206544.",
     imageSource: require("@/assets/images/research/ucl.jpg"),
   },
 ];
@@ -72,6 +95,8 @@ export function WinterArcInfoStep({ onNext }: WinterArcInfoStepProps) {
               </Text>
             </View>
             <View style={tw`flex-col w-full gap-2 mt-2`}>
+              {/* Health Benefits Disclaimer */}
+
               <View style={tw`flex-row gap-2`}>
                 <BenefitCard
                   title={benefitCards[0].title}
@@ -98,10 +123,16 @@ export function WinterArcInfoStep({ onNext }: WinterArcInfoStepProps) {
                   icon="↑"
                 />
               </View>
-              <View style={tw`flex-col items-center gap-3   rounded-md p-4 `}>
+              <View style={tw`bg-white/5 rounded-md p-3 mb-2`}>
                 <Text
-                  style={tw`text-base font-mont-medium text-white/80 text-center `}
+                  style={tw`text-white/60 font-mont text-xs text-center -mt-2`}
                 >
+                  Benefits based on clinical research studies. Individual
+                  results may vary. Not intended as medical advice.
+                </Text>
+              </View>
+              <View style={tw`flex-col items-center gap-3   rounded-md p-4 `}>
+                <Text style={tw`text-sm font-tussi text-white/80 text-center `}>
                   Vanta uses <Text style={tw`text-primary `}>AI</Text> and{" "}
                   <Text style={tw`text-primary `}>science</Text> to build your
                   Winter Arc Routine

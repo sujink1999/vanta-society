@@ -18,7 +18,8 @@ export interface ArcPassCopy {
   subtitle: ArcPassSubtitleSegment[];
   rules: string[];
   questionCta: string;
-  disclaimer: string;
+  disclaimerIos: string;
+  disclaimerAndroid: string;
   popupTitle: string;
   popupPoints: string[];
   popupDisclaimer: string;

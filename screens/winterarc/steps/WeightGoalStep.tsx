@@ -118,7 +118,7 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
                 development, or any major goal you want to achieve.
               </Text>
               <TextInput
-                style={tw`  border border-white/20 rounded-md px-4 py-3 text-white font-mont text-base min-h-[80px]`}
+                style={tw`  border border-white/20 rounded-sm px-4 py-3 text-white font-mont text-base min-h-[80px]`}
                 value={epicGoal}
                 onChangeText={setEpicGoal}
                 placeholder="e.g. Run a marathon, Start my own business..."
@@ -154,7 +154,7 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
                       Current Weight (kg)
                     </Text>
                     <TextInput
-                      style={tw` flex-1 max-w-30 border border-white/20 rounded-md px-4 py-2 text-white font-mont text-lg text-center`}
+                      style={tw` flex-1 max-w-30 border border-white/20 rounded-sm px-4 py-2 text-white font-mont text-lg text-center`}
                       value={currentWeight}
                       onChangeText={setCurrentWeight}
                       placeholder="75"
@@ -170,7 +170,7 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
                       Target Weight (kg)
                     </Text>
                     <TextInput
-                      style={tw` flex-1 max-w-30 border border-white/20 rounded-md px-4 py-2 text-white font-mont text-lg text-center`}
+                      style={tw` flex-1 max-w-30 border border-white/20 rounded-sm px-4 py-2 text-white font-mont text-lg text-center`}
                       value={targetWeight}
                       onChangeText={setTargetWeight}
                       placeholder="75"

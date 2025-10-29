@@ -2,16 +2,26 @@ import { DeleteAccountModal } from "@/components/DeleteAccountModal";
 import { GradientText } from "@/components/GradientText";
 import { ProfileMetrics } from "@/components/ProfileMetrics";
 import { VitalsComparison } from "@/components/VitalsComparison";
-import { ChevronLeftIcon } from "@/components/icons/Icons";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons/Icons";
 import { BackupTile } from "@/components/profile-tiles/BackupTile";
 import { MyRoutineTile } from "@/components/profile-tiles/MyRoutineTile";
+import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useElapsedTime } from "@/hooks/useElapsedTime";
 import { dataSyncManager } from "@/services/storage/DataSyncManager";
+import { Ionicons } from "@expo/vector-icons";
+import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function ProfileScreen() {
@@ -41,12 +51,16 @@ export default function ProfileScreen() {
 
   const handleDeleteSuccess = () => {
     setDeleteModalVisible(false);
-    Alert.alert("Account Deleted", "Your account has been successfully deleted.", [
-      {
-        text: "OK",
-        onPress: () => logout(),
-      },
-    ]);
+    Alert.alert(
+      "Account Deleted",
+      "Your account has been successfully deleted.",
+      [
+        {
+          text: "OK",
+          onPress: () => logout(),
+        },
+      ]
+    );
   };
 
   if (!user) return <></>;
@@ -141,6 +155,54 @@ export default function ProfileScreen() {
                 </View>
               </View>
             </View>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL("https://society.projectvanta.xyz/privacy")
+              }
+              style={tw`p-3 bg-white/5 rounded-md w-full flex-row gap-4 items-center`}
+            >
+              <View
+                style={tw`w-8 h-8 rounded-full items-center justify-center`}
+              >
+                <Ionicons
+                  name="document-text-outline"
+                  size={24}
+                  color={Colors.primary}
+                />
+              </View>
+              <View style={tw`flex-col gap-2`}>
+                <Text style={tw`font-tussi text-textPrimary`}>
+                  Privacy Policy
+                </Text>
+              </View>
+              <View style={tw`flex-row justify-end gap-1 flex-1`}>
+                <ChevronRightIcon size={16} color="#888" />
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL("https://society.projectvanta.xyz/terms")
+              }
+              style={tw`p-3 bg-white/5 rounded-md w-full flex-row gap-4 items-center`}
+            >
+              <View
+                style={tw`w-8 h-8 rounded-full items-center justify-center`}
+              >
+                <Ionicons
+                  name="clipboard-outline"
+                  size={24}
+                  color={Colors.primary}
+                />
+              </View>
+              <View style={tw`flex-col gap-2`}>
+                <Text style={tw`font-tussi text-textPrimary`}>
+                  Terms of Service
+                </Text>
+              </View>
+              <View style={tw`flex-row justify-end gap-1 flex-1`}>
+                <ChevronRightIcon size={16} color="#888" />
+              </View>
+            </TouchableOpacity>
           </View>
 
           {/* Progress Chart */}
