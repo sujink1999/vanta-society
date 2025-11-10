@@ -76,6 +76,8 @@ export default function StoreScreen() {
     loadProducts();
   };
 
+  const showProducts = products.length > 0;
+
   return (
     <SafeAreaView style={tw`flex-1 bg-black`} edges={["top"]}>
       <View style={tw`flex-1`}>
@@ -114,22 +116,24 @@ export default function StoreScreen() {
           </View>
 
           {/* Society Products Section */}
-          <View style={tw`mb-6 mt-4`}>
-            <View style={tw`px-4 mb-3 flex-col gap-1 mb-6`}>
-              <Text style={tw`text-textPrimary font-tussi-bold text-lg`}>
-                PRODUCTS
-              </Text>
-              <Text style={tw`text-white/90 font-mont text-[11px]`}>
-                From the house of Vanta
-              </Text>
-            </View>
+          {showProducts && (
+            <View style={tw`mb-6 mt-4`}>
+              <View style={tw`px-4 mb-3 flex-col gap-1 mb-6`}>
+                <Text style={tw`text-textPrimary font-tussi-bold text-lg`}>
+                  PRODUCTS
+                </Text>
+                <Text style={tw`text-white/90 font-mont text-[11px]`}>
+                  From the house of Vanta
+                </Text>
+              </View>
 
-            <ProductGrid
-              products={products}
-              loading={productsLoading}
-              onProductPress={handleProductPress}
-            />
-          </View>
+              <ProductGrid
+                products={products}
+                loading={productsLoading}
+                onProductPress={handleProductPress}
+              />
+            </View>
+          )}
         </ScrollView>
 
         {/* Modals */}
