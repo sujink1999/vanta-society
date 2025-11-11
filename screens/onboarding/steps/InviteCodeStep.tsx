@@ -217,7 +217,7 @@ export function InviteCodeStep({ onNext }: InviteCodeStepProps) {
                 autoCorrect={false}
                 autoComplete="off"
                 spellCheck={false}
-                maxLength={8}
+                maxLength={10}
                 textAlign="left"
                 returnKeyType="done"
                 onSubmitEditing={() => {
