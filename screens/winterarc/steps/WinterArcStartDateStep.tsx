@@ -64,7 +64,7 @@ export function WinterArcStartDateStep({
           <Text
             style={tw`text-textSecondary font-mont text-sm text-center max-w-[300px]`}
           >
-            Select the date you want to start your 66-day Project66
+            Select the date you want to start your Project66
           </Text>
         </View>
 
@@ -85,7 +85,7 @@ export function WinterArcStartDateStep({
           <Text
             style={tw`text-textSecondary font-mont text-base text-center max-w-[300px] mx-auto py-6`}
           >
-            Your Project66 will end on{"\n"}
+            Your challenge will end on{"\n"}
             <Text style={tw`text-textPrimary font-mont-medium text-lg`}>
               {moment(selectedDate).add(65, "days").format("MMM DD, YYYY")}
             </Text>
