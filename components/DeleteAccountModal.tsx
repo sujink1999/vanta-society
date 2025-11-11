@@ -82,7 +82,7 @@ export function DeleteAccountModal({
                 • Your profile and personal information
               </Text>
               <Text style={tw`text-textSecondary font-mont text-sm mb-1`}>
-                • All Winter Arc progress and stats
+                • All Project66 progress and stats
               </Text>
               <Text style={tw`text-textSecondary font-mont text-sm mb-1`}>
                 • Your routine and task history

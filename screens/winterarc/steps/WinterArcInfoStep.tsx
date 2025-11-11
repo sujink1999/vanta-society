@@ -135,7 +135,7 @@ export function WinterArcInfoStep({ onNext }: WinterArcInfoStepProps) {
                 <Text style={tw`text-sm font-tussi text-white/80 text-center `}>
                   Vanta uses <Text style={tw`text-primary `}>AI</Text> and{" "}
                   <Text style={tw`text-primary `}>science</Text> to build your
-                  Winter Arc Routine
+                  Project66 Routine
                 </Text>
               </View>
             </View>

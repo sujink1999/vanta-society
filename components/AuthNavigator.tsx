@@ -44,17 +44,17 @@ export default function AuthNavigator({ children }: AuthNavigatorProps) {
       // User in main app but needs onboarding
       router.replace("/(onboarding)");
     } else if (user && inTabsGroup && needsWinterArcSetup(user)) {
-      // User in main app but needs winter arc setup
+      // User in main app but needs Project66 setup
       router.replace("/(winterarc)");
     } else if (user && inOnboardingGroup && !needsOnboarding(user)) {
-      // User completed onboarding, check if needs winter arc setup
+      // User completed onboarding, check if needs Project66 setup
       if (needsWinterArcSetup(user)) {
         router.replace("/(winterarc)");
       } else {
         router.replace("/(tabs)/winterarc");
       }
     } else if (user && inWinterArcGroup && !needsWinterArcSetup(user)) {
-      // User in winter arc but doesn't need it anymore
+      // User in Project66 flow but doesn't need it anymore
       router.replace("/(tabs)/winterarc");
     }
   }, [user, isLoading, segments]);
@@ -65,7 +65,7 @@ export default function AuthNavigator({ children }: AuthNavigatorProps) {
     return !user.onboardingDone;
   };
 
-  // Helper function to determine if user needs winter arc setup
+  // Helper function to determine if user needs Project66 setup
   const needsWinterArcSetup = (user: any) => {
     // User needs setup if no start date OR if they need to purchase but haven't
     // (payment-only flow for users who completed setup but lost purchase access)

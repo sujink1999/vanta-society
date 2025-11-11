@@ -27,9 +27,9 @@ const CAROUSEL_ITEMS = [
   },
   {
     screenShot: profile,
-    title: "YOUR WINTER ARC",
+    title: "YOUR PROJECT66",
     subtext:
-      "Make the most of your Winter Arc.\n All you need is 66 days to transform your life.",
+      "Make the most of your Project66.\n All you need is 66 days to transform your life.",
   },
 ];
 

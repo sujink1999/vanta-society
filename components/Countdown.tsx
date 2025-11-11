@@ -61,7 +61,7 @@ export function Countdown() {
         console.log("Attempting to share...");
         await Sharing.shareAsync(uri, {
           mimeType: "image/png",
-          dialogTitle: "Share your Winter Arc card",
+          dialogTitle: "Share your Project66 card",
         });
         console.log("Share completed successfully");
       } else {
@@ -123,7 +123,7 @@ export function Countdown() {
         >
           <View style={tw` flex-col items-center gap-4`}>
             <Text style={tw`text-white font-tussi text-center text-sm`}>
-              YOUR WINTER ARC{"\n"}STARTS IN
+              YOUR PROJECT66{"\n"}STARTS IN
             </Text>
             <View style={tw`flex-row justify-around`}>
               <Text style={tw`text-2xl font-tussi text-primary`}>

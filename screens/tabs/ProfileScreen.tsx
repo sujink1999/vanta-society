@@ -84,7 +84,7 @@ export default function ProfileScreen() {
         <View style={tw` relative flex-col gap-8 items-center`}>
           <View style={tw`flex-col items-center justify-center gap-2  `}>
             <Text style={tw`font-tussi text-textSecondary`}>
-              {name}&apos;s Winter Arc
+              {name}&apos;s Project66
             </Text>
             <GradientText style={tw` font-tussi text-2xl`}>
               {elapsedTime.days}d: {elapsedTime.hours}h: {elapsedTime.minutes}m:{" "}

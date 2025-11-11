@@ -34,7 +34,7 @@ class NotificationContentSelector {
       // Fallback message if something goes wrong
       return {
         title: "Time to Check In",
-        body: "Your Winter Arc journey continues.",
+        body: "Your Project66 journey continues.",
       };
     }
 

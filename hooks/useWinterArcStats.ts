@@ -284,7 +284,7 @@ export function useWinterArcStats(
           isLoading: false,
         });
       } catch (error) {
-        console.error("Failed to calculate Winter Arc stats:", error);
+        console.error("Failed to calculate Project66 stats:", error);
         setStats((prev) => ({ ...prev, isLoading: false }));
       }
     };

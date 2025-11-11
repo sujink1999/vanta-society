@@ -94,7 +94,7 @@ class NotificationScheduler {
   }
 
   /**
-   * Schedule countdown notifications for Winter Arc start (once per day at 9 AM)
+   * Schedule countdown notifications for Project66 start (once per day at 9 AM)
    */
   async scheduleCountdownNotifications(startDate: string): Promise<void> {
     if (!this.isInitialized) {
@@ -136,7 +136,7 @@ class NotificationScheduler {
       });
 
       console.log(
-        `Countdown notification scheduled - ${daysUntilStart} days until Winter Arc`
+        `Countdown notification scheduled - ${daysUntilStart} days until Project66`
       );
     } catch (error) {
       console.error("Failed to schedule countdown notifications:", error);

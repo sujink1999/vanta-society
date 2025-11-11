@@ -11,12 +11,12 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function WinterArcHome() {
   const { user } = useGlobalContext();
 
-  // Check if user has Winter Arc start date set
+  // Check if user has Project66 start date set
   const hasWinterArcStartDate = user?.winterArcStartDate;
 
-  // Check if Winter Arc has started (start date is in the past)
+  // Check if Project66 has started (start date is in the past)
 
-  // Check if Winter Arc is in countdown phase (start date is in the future)
+  // Check if Project66 is in countdown phase (start date is in the future)
   const isInCountdown =
     hasWinterArcStartDate && moment(user.winterArcStartDate).isAfter(moment());
 
@@ -25,7 +25,7 @@ export default function WinterArcHome() {
     return <LoadingScreen />;
   }
 
-  // Case 2: Winter Arc hasn't started yet (countdown phase)
+  // Case 2: Project66 hasn't started yet (countdown phase)
   if (isInCountdown) {
     return (
       <SafeAreaView style={tw`flex-1 bg-black pb-[60px]`} edges={["top"]}>
@@ -34,7 +34,7 @@ export default function WinterArcHome() {
     );
   }
 
-  // Case 3: Winter Arc has started (show daily routine)
+  // Case 3: Project66 has started (show daily routine)
   return (
     <SafeAreaView style={tw`flex-1 bg-black`} edges={["top"]}>
       <DailyRoutine />

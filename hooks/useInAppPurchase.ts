@@ -30,7 +30,7 @@ export function useInAppPurchase(): UseInAppPurchaseReturn {
   const [isLoading, setIsLoading] = useState(true);
   const [isPurchasing, setIsPurchasing] = useState(false);
 
-  // Check if user has Winter Arc access
+  // Check if user has Project66 access
   const checkAccess = async () => {
     setIsLoading(true);
     try {
@@ -48,7 +48,7 @@ export function useInAppPurchase(): UseInAppPurchaseReturn {
         }
       }
     } catch (error) {
-      console.error("Error checking Winter Arc access:", error);
+      console.error("Error checking Project66 access:", error);
       setWinterArcPurchased(false);
     } finally {
       setIsLoading(false);

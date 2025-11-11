@@ -12,7 +12,7 @@ const REVENUECAT_API_KEY_IOS = "appl_RJeHOZtwPyPykGwCUAbWDGfjOCM";
 const REVENUECAT_API_KEY_ANDROID = "goog_gMgHDXpSsghDfHGQroHLFBJOPCg";
 
 // Entitlement identifier - this should match what you created in RevenueCat
-// For Winter Arc: the entitlement is "Winter Arc" (with space)
+// For Project66: the entitlement is "Winter Arc" (with space) - backend identifier unchanged
 export const WINTER_ARC_ENTITLEMENT_ID = "Winter Arc";
 
 /**
@@ -92,16 +92,16 @@ export const purchasePackage = async (
 
     const { customerInfo } = await Purchases.purchasePackage(packageToPurchase);
 
-    // Check if user now has Winter Arc entitlement
+    // Check if user now has Project66 entitlement
     const hasWinterArc =
       customerInfo.entitlements.active[WINTER_ARC_ENTITLEMENT_ID] !== undefined;
 
     if (hasWinterArc) {
-      console.log("✅ Purchase successful! User now has Winter Arc access");
+      console.log("✅ Purchase successful! User now has Project66 access");
       return { success: true, customerInfo };
     } else {
       console.warn(
-        "⚠️ Purchase completed but Winter Arc entitlement not active"
+        "⚠️ Purchase completed but Project66 entitlement not active"
       );
       return { success: false, customerInfo };
     }
@@ -131,10 +131,10 @@ export const restorePurchases = async (): Promise<CustomerInfo> => {
       customerInfo.entitlements.active[WINTER_ARC_ENTITLEMENT_ID] !== undefined;
 
     if (hasWinterArc) {
-      console.log("✅ Purchases restored! User has Winter Arc access");
+      console.log("✅ Purchases restored! User has Project66 access");
     } else {
       console.log(
-        "ℹ️ Purchases restored but no active Winter Arc entitlement found"
+        "ℹ️ Purchases restored but no active Project66 entitlement found"
       );
     }
 
@@ -146,8 +146,8 @@ export const restorePurchases = async (): Promise<CustomerInfo> => {
 };
 
 /**
- * Check if user has active Winter Arc access
- * @returns true if user has Winter Arc access, false otherwise
+ * Check if user has active Project66 access
+ * @returns true if user has Project66 access, false otherwise
  */
 export const checkWinterArcAccess = async (): Promise<boolean> => {
   try {
@@ -155,10 +155,10 @@ export const checkWinterArcAccess = async (): Promise<boolean> => {
     const hasWinterArc =
       customerInfo.entitlements.active[WINTER_ARC_ENTITLEMENT_ID] !== undefined;
 
-    console.log("🔍 Winter Arc access:", hasWinterArc);
+    console.log("🔍 Project66 access:", hasWinterArc);
     return hasWinterArc;
   } catch (error) {
-    console.error("❌ Error checking Winter Arc access:", error);
+    console.error("❌ Error checking Project66 access:", error);
     return false;
   }
 };

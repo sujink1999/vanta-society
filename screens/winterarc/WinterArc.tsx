@@ -43,9 +43,9 @@ export default function WinterArc() {
       }
     }
 
-    // If user has winter arc start date and doesn't need payment, exit flow
+    // If user has Project66 start date and doesn't need payment, exit flow
     if (user.winterArcStartDate && !shouldShowPurchaseStep) {
-      // Winter arc setup is complete, this flow shouldn't be shown
+      // Project66 setup is complete, this flow shouldn't be shown
       return;
     }
 

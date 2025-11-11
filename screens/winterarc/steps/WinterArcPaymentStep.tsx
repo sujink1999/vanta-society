@@ -35,9 +35,9 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
 
   // Default copy (fallback if backend doesn't provide)
   const defaultCopy = {
-    title: "ARC PASS",
+    title: "PROJECT66 PASS",
     subtitle: [
-      { text: "Purchase your Arc Pass for ", type: "text" as const },
+      { text: "Purchase your Project66 Pass for ", type: "text" as const },
       { text: "", type: "amount" as const },
       {
         text: ", show up daily, and unlock Store Credits when you finish strong.",
@@ -51,12 +51,12 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
     ],
     questionCta: "What are Store Credits?",
     disclaimerIos:
-      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Purchases are processed through Apple's App Store and subject to Apple's refund policy. To request a refund, contact Apple Support. Apple is not a sponsor and is not involved in the Winter Arc challenge.",
+      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Purchases are processed through Apple's App Store and subject to Apple's refund policy. To request a refund, contact Apple Support. Apple is not a sponsor and is not involved in the Project66 challenge.",
     disclaimerAndroid:
-      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Purchases are processed through Google Play Store and subject to Google's refund policy. To request a refund, contact Google Play Support. Google is not a sponsor and is not involved in the Winter Arc challenge.",
+      "Store Credits have no cash value and cannot be withdrawn or exchanged for money. Reward availability may vary. One-time digital access purchase. Restore anytime in Settings. Purchases are processed through Google Play Store and subject to Google's refund policy. To request a refund, contact Google Play Support. Google is not a sponsor and is not involved in the Project66 challenge.",
     popupTitle: "WHAT ARE STORE CREDITS?",
     popupPoints: [
-      "Store Credits are points you earn by successfully completing the Winter Arc.",
+      "Store Credits are points you earn by successfully completing Project66.",
       "Redeem them for future Arc access or curated Vanta rewards like premium merch.",
     ],
     popupDisclaimer:
@@ -83,7 +83,7 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
     if (result.success) {
       Alert.alert(
         "Purchase Restored",
-        "Your Winter Arc access has been restored!",
+        "Your Project66 access has been restored!",
         [{ text: "Continue", onPress: onNext }]
       );
     } else {

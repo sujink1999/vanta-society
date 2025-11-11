@@ -29,7 +29,7 @@ export function DailyRoutine() {
     "todos"
   );
 
-  // Calculate the actual current day based on Winter Arc start date
+  // Calculate the actual current day based on Project66 start date
   const winterArcStartDate = user?.winterArcStartDate;
 
   // Set current day to actual day on mount

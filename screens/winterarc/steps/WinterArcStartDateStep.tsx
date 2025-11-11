@@ -37,14 +37,14 @@ export function WinterArcStartDateStep({
       } else {
         Alert.alert(
           "Error",
-          "Failed to set Winter Arc start date. Please try again."
+          "Failed to set Project66 start date. Please try again."
         );
       }
     } catch (error) {
-      console.error("Error setting Winter Arc start date:", error);
+      console.error("Error setting Project66 start date:", error);
       Alert.alert(
         "Error",
-        "Failed to set Winter Arc start date. Please try again."
+        "Failed to set Project66 start date. Please try again."
       );
     } finally {
       setIsLoading(false);
@@ -64,7 +64,7 @@ export function WinterArcStartDateStep({
           <Text
             style={tw`text-textSecondary font-mont text-sm text-center max-w-[300px]`}
           >
-            Select the date you want to start your 66-day Winter Arc
+            Select the date you want to start your 66-day Project66
           </Text>
         </View>
 
@@ -85,7 +85,7 @@ export function WinterArcStartDateStep({
           <Text
             style={tw`text-textSecondary font-mont text-base text-center max-w-[300px] mx-auto py-6`}
           >
-            Your Winter Arc will end on{"\n"}
+            Your Project66 will end on{"\n"}
             <Text style={tw`text-textPrimary font-mont-medium text-lg`}>
               {moment(selectedDate).add(65, "days").format("MMM DD, YYYY")}
             </Text>

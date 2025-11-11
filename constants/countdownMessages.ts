@@ -5,7 +5,7 @@ interface CountdownMessage {
 
 export const countdownMessages: { [daysLeft: number]: CountdownMessage } = {
   7: {
-    title: "7 Days Until Winter Arc",
+    title: "7 Days Until Project66",
     body: "One week to go. Start preparing your mind and body.",
   },
   6: {
@@ -21,7 +21,7 @@ export const countdownMessages: { [daysLeft: number]: CountdownMessage } = {
     body: "Visualize the person you'll become in 90 days.",
   },
   3: {
-    title: "3 Days Until Winter Arc",
+    title: "3 Days Until Project66",
     body: "Final preparations. Commit to the process.",
   },
   2: {
@@ -30,15 +30,15 @@ export const countdownMessages: { [daysLeft: number]: CountdownMessage } = {
   },
   1: {
     title: "Tomorrow We Begin",
-    body: "Your Winter Arc starts tomorrow. Rest up, tomorrow we grind.",
+    body: "Your Project66 starts tomorrow. Rest up, tomorrow we grind.",
   },
   0: {
-    title: "Winter Arc Starts Today",
+    title: "Project66 Starts Today",
     body: "This is it. Day 1. Let's go.",
   },
 };
 
 export const defaultCountdownMessage: CountdownMessage = {
-  title: "Winter Arc Approaching",
+  title: "Project66 Approaching",
   body: "Your transformation begins soon. Stay ready.",
 };
