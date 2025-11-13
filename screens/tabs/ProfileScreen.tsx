@@ -15,6 +15,7 @@ import * as Linking from "expo-linking";
 import { useRouter } from "expo-router";
 import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   Alert,
   Image,
   ScrollView,
@@ -29,6 +30,7 @@ export default function ProfileScreen() {
   const router = useRouter();
   const [lastSyncTime, setLastSyncTime] = useState<string | null>(null);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [isSigningOut, setIsSigningOut] = useState(false);
   const elapsedTime = useElapsedTime({
     startDate: user?.winterArcStartDate || "",
   });
@@ -47,6 +49,22 @@ export default function ProfileScreen() {
     await dataSyncManager.initialize();
     const syncTime = dataSyncManager.getLastSyncTime();
     setLastSyncTime(syncTime);
+  };
+
+  const handleSignOut = async () => {
+    setIsSigningOut(true);
+
+    // Sync data to backend before logging out
+    try {
+      await dataSyncManager.forceSyncNow();
+      console.log("Data synced before logout");
+    } catch (error) {
+      console.error("Failed to sync data before logout:", error);
+      // Continue with logout even if sync fails
+    }
+
+    logout();
+    setIsSigningOut(false);
   };
 
   const handleDeleteSuccess = () => {
@@ -137,12 +155,21 @@ export default function ProfileScreen() {
 
                 <View style={tw`flex-row gap-2 mt-2`}>
                   <TouchableOpacity
-                    onPress={logout}
+                    onPress={handleSignOut}
+                    disabled={isSigningOut}
                     style={tw`bg-white px-3 py-1.5 rounded-sm flex-row items-center gap-2`}
                   >
-                    <Text style={tw`font-mont-semibold text-black text-xs`}>
-                      Sign out
-                    </Text>
+                    {isSigningOut ? (
+                      <ActivityIndicator
+                        size="small"
+                        color="black"
+                        style={tw`w-4 h-4 scale-75`}
+                      />
+                    ) : (
+                      <Text style={tw`font-mont-semibold text-black text-xs`}>
+                        Sign out
+                      </Text>
+                    )}
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => setDeleteModalVisible(true)}
