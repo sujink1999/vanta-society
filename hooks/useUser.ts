@@ -109,14 +109,11 @@ export function useUser(): UseUserReturn {
     await fetchUser();
   }, [fetchUser]);
 
-  const logout = useCallback(async (clearData: boolean = false) => {
+  const logout = useCallback(async () => {
     await apiClient.clearToken();
 
-    // Only clear local data if explicitly requested (user logout/account deletion)
-    // Preserve data on auth errors to prevent data loss
-    if (clearData) {
-      await dataSyncManager.clearAllLocalData();
-    }
+    // Don't clear local data here - validateStorage will handle it on next login
+    // Account deletion clears data explicitly before calling logout
 
     setUser(null);
     setRoutine([]);

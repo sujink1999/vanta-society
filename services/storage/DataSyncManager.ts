@@ -77,21 +77,9 @@ class DataSyncManager {
         );
         console.log("Clearing all local data for new account...");
 
-        // Clear all storage managers
-        await scoreStorageManager.clearData();
-        await taskStorageManager.clearData();
-        await checkInStorageManager.clearData();
+        // Reuse clearAllLocalData to avoid duplication
+        await this.clearAllLocalData();
 
-        // Clear sync metadata
-        await AsyncStorage.removeItem(LAST_SYNC_KEY);
-        await AsyncStorage.removeItem(LAST_DATA_UPDATE_KEY);
-        await AsyncStorage.removeItem(LOGGED_IN_EMAIL_KEY);
-
-        this.lastSyncTime = null;
-        this.lastDataUpdate = null;
-        this.loggedInEmail = null;
-
-        console.log("All local data cleared successfully");
         return true;
       }
 
@@ -118,7 +106,7 @@ class DataSyncManager {
 
   /**
    * Clear all local data (scores, tasks, check-ins, sync info)
-   * Call this when logging out
+   * Only used for account deletion - normal logout preserves data
    */
   async clearAllLocalData(): Promise<void> {
     try {

@@ -21,7 +21,7 @@ interface GlobalContextType {
   isTablet: boolean;
   refetchUser: (checkBackup?: boolean) => Promise<void>;
   refetchUserSilently: () => Promise<void>;
-  logout: (clearData?: boolean) => Promise<void>;
+  logout: () => Promise<void>;
   winterArcStats: {
     currentScores: {
       discipline: number;

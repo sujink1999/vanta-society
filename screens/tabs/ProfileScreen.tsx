@@ -63,19 +63,24 @@ export default function ProfileScreen() {
       // Continue with logout even if sync fails
     }
 
-    logout(true); // Clear all local data on user-initiated sign out
+    // Don't clear local data - validateStorage will handle it on next login
+    logout();
     setIsSigningOut(false);
   };
 
-  const handleDeleteSuccess = () => {
+  const handleDeleteSuccess = async () => {
     setDeleteModalVisible(false);
+
+    // Clear all local data since account is deleted
+    await dataSyncManager.clearAllLocalData();
+
     Alert.alert(
       "Account Deleted",
       "Your account has been successfully deleted.",
       [
         {
           text: "OK",
-          onPress: () => logout(true), // Clear all local data after account deletion
+          onPress: () => logout(), // Just clear token and state
         },
       ]
     );
