@@ -63,7 +63,7 @@ export default function ProfileScreen() {
       // Continue with logout even if sync fails
     }
 
-    logout();
+    logout(true); // Clear all local data on user-initiated sign out
     setIsSigningOut(false);
   };
 
@@ -75,7 +75,7 @@ export default function ProfileScreen() {
       [
         {
           text: "OK",
-          onPress: () => logout(),
+          onPress: () => logout(true), // Clear all local data after account deletion
         },
       ]
     );

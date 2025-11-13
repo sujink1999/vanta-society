@@ -109,9 +109,15 @@ export function useUser(): UseUserReturn {
     await fetchUser();
   }, [fetchUser]);
 
-  const logout = useCallback(async () => {
+  const logout = useCallback(async (clearData: boolean = false) => {
     await apiClient.clearToken();
-    await dataSyncManager.clearAllLocalData();
+
+    // Only clear local data if explicitly requested (user logout/account deletion)
+    // Preserve data on auth errors to prevent data loss
+    if (clearData) {
+      await dataSyncManager.clearAllLocalData();
+    }
+
     setUser(null);
     setRoutine([]);
     setHasCompletedQuestionnaire(false);
