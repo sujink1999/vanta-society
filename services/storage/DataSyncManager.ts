@@ -5,12 +5,14 @@ import { scoreStorageManager } from "./ScoreStorageManager";
 import { taskStorageManager } from "./TaskStorageManager";
 
 const LAST_SYNC_KEY = "last_sync_timestamp";
+const LAST_DATA_UPDATE_KEY = "last_data_update";
 const LOGGED_IN_EMAIL_KEY = "logged_in_email";
 
 class DataSyncManager {
   private static instance: DataSyncManager;
   private isSyncing = false;
   private lastSyncTime: string | null = null;
+  private lastDataUpdate: string | null = null;
   private loggedInEmail: string | null = null;
 
   private constructor() {}
@@ -26,9 +28,10 @@ class DataSyncManager {
    * Initialize data sync manager
    */
   async initialize(): Promise<void> {
-    // Load last sync time and logged in email from storage
+    // Load last sync time, last data update, and logged in email from storage
     try {
       this.lastSyncTime = await AsyncStorage.getItem(LAST_SYNC_KEY);
+      this.lastDataUpdate = await AsyncStorage.getItem(LAST_DATA_UPDATE_KEY);
       this.loggedInEmail = await AsyncStorage.getItem(LOGGED_IN_EMAIL_KEY);
     } catch (error) {
       console.error("Failed to load sync data:", error);
@@ -81,9 +84,11 @@ class DataSyncManager {
 
         // Clear sync metadata
         await AsyncStorage.removeItem(LAST_SYNC_KEY);
+        await AsyncStorage.removeItem(LAST_DATA_UPDATE_KEY);
         await AsyncStorage.removeItem(LOGGED_IN_EMAIL_KEY);
 
         this.lastSyncTime = null;
+        this.lastDataUpdate = null;
         this.loggedInEmail = null;
 
         console.log("All local data cleared successfully");
@@ -96,6 +101,19 @@ class DataSyncManager {
       console.error("Failed to validate storage:", error);
       return false;
     }
+  }
+
+  /**
+   * Check if two ISO date strings are on the same calendar day
+   */
+  private isSameCalendarDay(date1: string, date2: string): boolean {
+    const d1 = new Date(date1);
+    const d2 = new Date(date2);
+    return (
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate()
+    );
   }
 
   /**
@@ -113,9 +131,11 @@ class DataSyncManager {
 
       // Clear sync metadata
       await AsyncStorage.removeItem(LAST_SYNC_KEY);
+      await AsyncStorage.removeItem(LAST_DATA_UPDATE_KEY);
       await AsyncStorage.removeItem(LOGGED_IN_EMAIL_KEY);
 
       this.lastSyncTime = null;
+      this.lastDataUpdate = null;
       this.loggedInEmail = null;
 
       console.log("All local data cleared successfully");
@@ -127,10 +147,27 @@ class DataSyncManager {
   /**
    * Sync all local data to backend
    */
-  async syncToBackend(): Promise<boolean> {
+  async syncToBackend(force: boolean = false): Promise<boolean> {
     if (this.isSyncing) {
       console.log("Sync already in progress, skipping");
       return false;
+    }
+
+    // Update last data update timestamp immediately when sync is called
+    const currentTimestamp = new Date().toISOString();
+    this.lastDataUpdate = currentTimestamp;
+    await AsyncStorage.setItem(LAST_DATA_UPDATE_KEY, currentTimestamp);
+
+    // Check if already synced today (skip unless forced)
+    if (!force) {
+      // Check if we already synced today based on lastSyncTime
+      if (this.lastSyncTime) {
+        const now = new Date().toISOString();
+        if (this.isSameCalendarDay(this.lastSyncTime, now)) {
+          console.log("Data already synced today, skipping");
+          return false;
+        }
+      }
     }
 
     this.isSyncing = true;
@@ -148,7 +185,6 @@ class DataSyncManager {
       }
 
       // Prepare backup data with current timestamp
-      const currentTimestamp = new Date().toISOString();
       const backupData = {
         scores: {
           discipline: scores.discipline,
@@ -186,10 +222,10 @@ class DataSyncManager {
   }
 
   /**
-   * Force immediate sync
+   * Force immediate sync (bypasses daily check)
    */
   async forceSyncNow(): Promise<boolean> {
-    return await this.syncToBackend();
+    return await this.syncToBackend(true);
   }
 
   /**
@@ -197,6 +233,13 @@ class DataSyncManager {
    */
   getLastSyncTime(): string | null {
     return this.lastSyncTime;
+  }
+
+  /**
+   * Get last data update timestamp
+   */
+  getLastDataUpdate(): string | null {
+    return this.lastDataUpdate;
   }
 
   /**
@@ -216,15 +259,19 @@ class DataSyncManager {
       const { backupData, lastSyncDate } = response.data;
 
       // Check if we should restore based on timestamps
-      const localLastSync = this.lastSyncTime;
+      const localLastDataUpdate = this.lastDataUpdate;
 
-      if (localLastSync && lastSyncDate) {
-        const localTime = new Date(localLastSync).getTime();
+      // Check both lastSyncTime and lastDataUpdate against cloud
+      if (lastSyncDate) {
         const cloudTime = new Date(lastSyncDate).getTime();
 
-        if (localTime >= cloudTime) {
-          console.log("Local data is newer or same as cloud, skipping restore");
-          return false;
+        // Check lastDataUpdate
+        if (localLastDataUpdate) {
+          const localUpdateTime = new Date(localLastDataUpdate).getTime();
+
+          if (localUpdateTime >= cloudTime) {
+            return false;
+          }
         }
       }
 
@@ -255,9 +302,12 @@ class DataSyncManager {
         console.log("Check-in data restored from backup");
       }
 
-      // Update last sync time
+      // Update last sync time and last data update
       this.lastSyncTime = lastSyncDate;
       await AsyncStorage.setItem(LAST_SYNC_KEY, lastSyncDate);
+
+      this.lastDataUpdate = lastSyncDate;
+      await AsyncStorage.setItem(LAST_DATA_UPDATE_KEY, lastSyncDate);
 
       console.log("Data restored successfully from backup at", lastSyncDate);
       return true;
