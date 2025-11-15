@@ -37,8 +37,8 @@ export function convertStravaToWorkoutSession(
   if (type === "cardio") {
     session.cardioType = cardioType;
     if (workout.distance) {
-      session.distance = workout.distance; // Keep in meters
-      session.distanceUnit = "meters";
+      session.distance = workout.distance / 1000; // Convert meters to km
+      session.distanceUnit = "km";
     }
     if (pace) {
       session.pace = pace;
