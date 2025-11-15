@@ -34,7 +34,7 @@ export default function ToolsScreen() {
         </View>
       </View>
 
-      <ScrollView style={tw`flex-1 px-3 py-3`}>
+      <ScrollView style={tw`flex-1 px-3 py-3`} showsVerticalScrollIndicator={false}>
         <View style={tw`flex-row flex-wrap gap-3 items-start pb-30`}>
           <ToolCard
             icon={<DeepWorkIcon size={28} color="white" />}

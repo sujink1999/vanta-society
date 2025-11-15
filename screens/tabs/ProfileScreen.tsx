@@ -103,6 +103,7 @@ export default function ProfileScreen() {
       <ScrollView
         style={tw`flex-1`}
         contentContainerStyle={tw`px-3 pb-[100px] `}
+        showsVerticalScrollIndicator={false}
       >
         <View style={tw` relative flex-col gap-8 items-center`}>
           <View style={tw`flex-col items-center justify-center gap-2  `}>

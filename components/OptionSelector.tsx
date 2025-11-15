@@ -208,7 +208,7 @@ export function OptionSelector({
                 style={tw`border border-white/10 rounded-lg max-h-60 w-full overflow-hidden`}
                 tint="dark"
               >
-                <ScrollView>
+                <ScrollView showsVerticalScrollIndicator={false}>
                   {options.map((optionValue) => (
                     <TouchableOpacity
                       key={optionValue}

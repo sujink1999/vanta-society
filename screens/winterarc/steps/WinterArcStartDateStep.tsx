@@ -53,7 +53,7 @@ export function WinterArcStartDateStep({
 
   return (
     <View style={tw`flex-1 px-3 pt-8 pb-6`}>
-      <ScrollView style={tw`flex-1`}>
+      <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
         <View style={tw` flex-col items-center gap-3`}>
           <GradientText
             style={tw`text-textPrimary text-center font-tussi-bold text-3xl`}

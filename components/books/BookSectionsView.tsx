@@ -111,6 +111,7 @@ export function BookSectionsView({ book, onBack }: BookSectionsViewProps) {
               contentContainerStyle={tw`pb-6`}
               onScroll={handleScroll}
               scrollEventThrottle={16}
+              showsVerticalScrollIndicator={false}
             >
               {/* Section Title */}
               <Text style={tw`text-white font-tussi text-base mb-4`}>

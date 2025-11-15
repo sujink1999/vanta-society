@@ -117,7 +117,7 @@ export function Countdown() {
       </View>
 
       {/* Visible UI */}
-      <ScrollView style={tw`flex-1 `}>
+      <ScrollView style={tw`flex-1 `} showsVerticalScrollIndicator={false}>
         <View
           style={tw`flex-col items-center flex-1 justify-around  gap-8 pb-8 pt-6`}
         >

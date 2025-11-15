@@ -108,7 +108,7 @@ export function WinterArcPaymentStep({ onNext }: WinterArcPaymentStepProps) {
 
   return (
     <View style={tw`flex-1 flex-col px-3 pt-3 pb-6`}>
-      <ScrollView style={tw`flex-1`}>
+      <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
         <View
           style={tw`flex-col items-center gap-6 bg-white/5 border border-white/5 rounded-md p-1 pt-4 `}
         >

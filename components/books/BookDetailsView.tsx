@@ -20,7 +20,7 @@ export function BookDetailsView({
 }: BookDetailsViewProps) {
   return (
     <SafeAreaView style={tw`flex-1 bg-black`}>
-      <ScrollView style={tw`flex-1`}>
+      <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
         {/* Header with Back Button */}
         <View style={tw`px-3 pt-3 pb-4 flex-row items-center gap-3`}>
           <TouchableOpacity

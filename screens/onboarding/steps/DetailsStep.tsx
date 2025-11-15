@@ -58,7 +58,7 @@ export function DetailsStep({ onNext }: DetailsStepProps) {
   };
 
   return (
-    <ScrollView style={tw`flex-1`} contentContainerStyle={tw`px-6 pt-8 pb-6`}>
+    <ScrollView style={tw`flex-1`} contentContainerStyle={tw`px-6 pt-8 pb-6`} showsVerticalScrollIndicator={false}>
       <View style={tw` flex flex-col items-center`}>
         {/* <Text  */}
         <GradientText

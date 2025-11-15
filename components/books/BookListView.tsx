@@ -80,7 +80,7 @@ export function BookListView({
           )}
         </View>
       ) : (
-        <ScrollView style={tw`flex-1`} contentContainerStyle={tw`px-3 pb-6`}>
+        <ScrollView style={tw`flex-1`} contentContainerStyle={tw`px-3 pb-6`} showsVerticalScrollIndicator={false}>
           <View style={tw`flex-row flex-wrap gap-3 mt-4`}>
             {filteredBooks.map((book) => (
               <BookCard

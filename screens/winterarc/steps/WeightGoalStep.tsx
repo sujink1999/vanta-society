@@ -100,7 +100,7 @@ export function WeightGoalStep({ onNext }: GoalsStepProps) {
       keyboardVerticalOffset={Platform.OS === "ios" ? 10 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <ScrollView style={tw`flex-1`}>
+        <ScrollView style={tw`flex-1`} showsVerticalScrollIndicator={false}>
           <View style={tw` flex flex-col items-center gap-8`}>
             <GradientText
               style={tw`text-2xl font-tussi-bold text-white text-center `}

@@ -182,6 +182,7 @@ export function DailyRoutine() {
       <ScrollView
         style={tw`flex-1`}
         contentContainerStyle={tw`gap-2 pb-[90px] pt-2`}
+        showsVerticalScrollIndicator={false}
       >
         {tasksWithoutSleep.length === 0 ? (
           <View style={tw`flex-1 justify-center items-center py-20`}>
