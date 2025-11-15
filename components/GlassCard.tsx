@@ -180,24 +180,54 @@ export default function GlassCard({
               style={[
                 tw`absolute`,
                 {
-                  width: lightSize,
+                  width: lightSize * 1.8, // Make wider for ellipse
                   height: lightSize,
-                  left: touchPosition.x - lightSize / 2,
+                  left: touchPosition.x - (lightSize * 1.8) / 2,
                   top: touchPosition.y - lightSize / 2,
                   transform: [{ scale: lightScale }],
                 },
               ]}
             >
+              {/* Create a gradient-like ellipse effect with multiple overlapping shapes */}
               <View
                 style={[
-                  tw`w-full h-full rounded-full`,
+                  tw`absolute inset-0`,
                   {
+                    borderRadius: lightSize,
                     backgroundColor: lightColor,
+                    opacity: 0.3,
+                    transform: [{ scaleX: 1.5 }, { scaleY: 0.7 }],
+                  },
+                ]}
+              />
+              <View
+                style={[
+                  tw`absolute inset-0`,
+                  {
+                    borderRadius: lightSize,
+                    backgroundColor: lightColor,
+                    opacity: 0.5,
+                    transform: [{ scaleX: 1.2 }, { scaleY: 0.8 }],
+                    shadowColor: lightColor,
+                    shadowOffset: { width: 0, height: 0 },
+                    shadowOpacity: 0.8,
+                    shadowRadius: 60,
+                    elevation: 15,
+                  },
+                ]}
+              />
+              <View
+                style={[
+                  tw`absolute inset-0`,
+                  {
+                    borderRadius: lightSize,
+                    backgroundColor: lightColor,
+                    opacity: 0.7,
                     shadowColor: lightColor,
                     shadowOffset: { width: 0, height: 0 },
                     shadowOpacity: 1,
-                    shadowRadius: 80,
-                    elevation: 20,
+                    shadowRadius: 40,
+                    elevation: 10,
                   },
                 ]}
               />
