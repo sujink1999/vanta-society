@@ -3,6 +3,7 @@ import { Animated, View, useWindowDimensions } from "react-native";
 import Svg, { Line, Polygon, Text as SvgText } from "react-native-svg";
 import { MAX_PHONE_WIDTH } from "@/constants/layout";
 import { useGlobalContext } from "@/contexts/GlobalContext";
+import * as Haptics from "expo-haptics";
 
 const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
 
@@ -16,11 +17,13 @@ interface VitalsRadarChartProps {
     society: number;
   };
   size?: number;
+  enableHaptics?: boolean;
 }
 
 export function VitalsRadarChart({
   scores,
   size,
+  enableHaptics = true,
 }: VitalsRadarChartProps) {
   const { isTablet } = useGlobalContext();
   const { width: windowWidth } = useWindowDimensions();
@@ -40,8 +43,20 @@ export function VitalsRadarChart({
   useEffect(() => {
     let timeoutId: ReturnType<typeof setTimeout>;
     let animationRef: Animated.CompositeAnimation;
+    let hapticTimeouts: ReturnType<typeof setTimeout>[] = [];
 
     const heartbeat = () => {
+      if (enableHaptics) {
+        // Trigger haptics for first beat (lub) - stronger
+        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+
+        // Schedule haptic for second beat (dub) - lighter
+        const dubTimeout = setTimeout(() => {
+          Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        }, 200); // 120ms first animation + 80ms settle
+        hapticTimeouts.push(dubTimeout);
+      }
+
       animationRef = Animated.sequence([
         // First beat (lub) - quick and strong
         Animated.timing(pulseAnim, {
@@ -84,11 +99,13 @@ export function VitalsRadarChart({
       if (timeoutId) {
         clearTimeout(timeoutId);
       }
+      // Clear all haptic timeouts
+      hapticTimeouts.forEach((timeout) => clearTimeout(timeout));
       if (animationRef) {
         animationRef.stop();
       }
     };
-  }, [pulseAnim]);
+  }, [pulseAnim, enableHaptics]);
 
   // Vitals data - reordered to put Overall (society) at top
   const vitals = [

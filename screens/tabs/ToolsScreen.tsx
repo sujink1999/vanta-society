@@ -35,7 +35,7 @@ export default function ToolsScreen() {
       </View>
 
       <ScrollView style={tw`flex-1 px-3 py-3`}>
-        <View style={tw`flex-row flex-wrap gap-3`}>
+        <View style={tw`flex-row flex-wrap gap-3 items-start pb-30`}>
           <ToolCard
             icon={<DeepWorkIcon size={28} color="white" />}
             title="Deep Focus"
@@ -57,6 +57,22 @@ export default function ToolsScreen() {
             title="Read Books"
             description="Learn key insights from curated books in bite-sized summaries"
             onPress={() => router.push("/(tools)/book-summaries")}
+            width={CARD_WIDTH}
+          />
+
+          <ToolCard
+            icon={<Ionicons name="barbell" size={28} color="white" />}
+            title="Workout Log"
+            description="Track your workouts and progress"
+            onPress={() => router.push("/(tools)/workout")}
+            width={CARD_WIDTH}
+          />
+
+          <ToolCard
+            icon={<Ionicons name="nutrition" size={28} color="white" />}
+            title="Calorie Calculator"
+            description="Calculate your daily caloric needs for weight goals"
+            onPress={() => router.push("/(tools)/calorie-calculator")}
             width={CARD_WIDTH}
           />
         </View>

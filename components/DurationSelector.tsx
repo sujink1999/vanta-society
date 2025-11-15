@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { PlatformBlurView } from "./PlatformBlurView";
 
 interface DurationOption {
   label: string;
@@ -87,14 +88,16 @@ export function DurationSelector({
   return (
     <View
       style={[
-        tw`justify-center items-center relative `,
+        tw`justify-center items-center relative px-3 `,
         { height: CONTAINER_HEIGHT },
       ]}
     >
       {/* Center highlight indicator */}
-      <View
+      <PlatformBlurView
+        intensity={40}
+        tint="dark"
         style={[
-          tw`absolute w-full bg-white/5 border-t border-b border-white/10 z-0 `,
+          tw`absolute w-full border bg- rounded-md overflow-hidden border-white/10 z-0 `,
           { height: ITEM_HEIGHT },
         ]}
       />
@@ -192,7 +195,7 @@ export function DurationSelector({
                 <Text
                   style={[
                     tw`font-tussi text-2xl`,
-                    isSelected ? tw`text-primary` : tw`text-white/80`,
+                    isSelected ? tw`text-white` : tw`text-white/80`,
                   ]}
                 >
                   {option.label}

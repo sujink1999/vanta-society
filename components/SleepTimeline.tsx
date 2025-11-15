@@ -6,6 +6,7 @@ import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import React, { useMemo } from "react";
 import { Text, View } from "react-native";
+import { AnimatedIcon } from "./AnimatedIcon";
 import { CheckIcon } from "./icons/Icons";
 import { BedtimeIcon } from "./icons/TaskIcons";
 
@@ -84,7 +85,9 @@ export function SleepTimeline({ date }: SleepTimelineProps) {
         <View
           style={tw`w-8 h-8 bg-white rounded-full -ml-4 flex justify-center items-center relative `}
         >
-          <Ionicons name="sunny" size={24} color="black" />
+          <AnimatedIcon>
+            <Ionicons name="sunny" size={24} color="black" />
+          </AnimatedIcon>
 
           <View
             style={tw`absolute -bottom-6 left-1/2 -translate-x-1/2 flex-row items-center justify-center w-[80px] gap-1`}
@@ -101,7 +104,7 @@ export function SleepTimeline({ date }: SleepTimelineProps) {
         <View
           style={tw`w-8 h-8 bg-white rounded-full flex justify-center items-center relative `}
         >
-          <BedtimeIcon size={24} color="black" />
+          <BedtimeIcon size={22} color="black" />
           <View style={tw`absolute -bottom-9 right-0`}>
             <Text style={tw`text-white text-[10px] w-full font-tussi`}>
               {sleepData.bedtime}

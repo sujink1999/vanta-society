@@ -121,6 +121,7 @@ export async function syncData(request: {
     };
     completions: any;
     checkIns: any;
+    workouts?: any;
     lastSync: string;
   };
 }): Promise<ApiResponse<{
@@ -160,6 +161,7 @@ export async function getBackupData(): Promise<ApiResponse<{
     };
     completions: any;
     checkIns: any;
+    workouts?: any;
     lastSync: string;
   };
   lastSyncDate: string;
@@ -176,6 +178,7 @@ export async function getBackupData(): Promise<ApiResponse<{
       };
       completions: any;
       checkIns: any;
+      workouts?: any;
       lastSync: string;
     };
     lastSyncDate: string;

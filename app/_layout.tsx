@@ -1,3 +1,4 @@
+import 'react-native-get-random-values';
 import { AuthErrorHandler } from "@/components/AuthErrorHandler";
 import AuthNavigator from "@/components/AuthNavigator";
 import { CenteredContainer } from "@/components/CenteredContainer";

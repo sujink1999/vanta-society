@@ -2,10 +2,12 @@ import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { useTaskActions } from "@/hooks/useTaskActions";
 import { useTasks } from "@/hooks/useTasks";
+import { useWorkouts } from "@/hooks/useWorkouts";
 import { cadenceToFrequency, constructTaskCommand } from "@/utils/taskHelpers";
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { ActivitySection } from "./ActivitySection";
 import { GradientText } from "./GradientText";
 import { Header } from "./Header";
 import { ChevronLeftIcon, ChevronRightIcon } from "./icons/Icons";
@@ -24,6 +26,7 @@ const CATEGORY_COLORS: Record<string, string> = {
 
 export function DailyRoutine() {
   const { user } = useGlobalContext();
+  const { workouts } = useWorkouts();
   const [currentDay, setCurrentDay] = useState(1);
   const [activeTab, setActiveTab] = useState<"todos" | "done" | "skipped">(
     "todos"
@@ -90,6 +93,11 @@ export function DailyRoutine() {
     (task) => task.taskName !== "Consistent wake time"
   );
 
+  // Filter workouts for selected date
+  const dayWorkouts = workouts.filter((w) =>
+    moment(w.date).isSame(selectedDate, "day")
+  );
+
   return (
     <View style={tw`flex-1 px-3 pt-3 flex-col gap-3 relative`}>
       <Header />
@@ -138,6 +146,9 @@ export function DailyRoutine() {
 
       {/* Sleep Timeline */}
       <SleepTimeline date={selectedDate} />
+
+      {/* Activity Section */}
+      <ActivitySection workouts={dayWorkouts} />
 
       {/* Tabs */}
       <View style={tw`rounded-md flex-row  p-1 gap-2 mt-3 `}>

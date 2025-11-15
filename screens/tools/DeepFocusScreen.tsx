@@ -1,6 +1,8 @@
 import { Button } from "@/components/Button";
 import { CircularProgressTimer } from "@/components/CircularProgressTimer";
 import { DurationSelector } from "@/components/DurationSelector";
+import GlassCard from "@/components/GlassCard";
+import { SafeAreaBackground } from "@/components/SafeAreaBackground";
 import { ChevronLeftIcon } from "@/components/icons/Icons";
 import { DeepWorkIcon } from "@/components/icons/TaskIcons";
 import { Colors } from "@/constants/theme";
@@ -10,7 +12,6 @@ import { useKeepAwake } from "expo-keep-awake";
 import { useFocusEffect, useRouter } from "expo-router";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const DURATION_PRESETS = [
   { label: "30 minutes", value: 30 },
@@ -68,7 +69,9 @@ export default function DeepFocusScreen() {
 
   if (isActive) {
     return (
-      <SafeAreaView style={tw`flex-1 bg-black`}>
+      <SafeAreaBackground
+        imageSource={require("@/assets/images/backgrounds/tools-bg.png")}
+      >
         <View style={tw`flex-1 px-3 py-4`}>
           {/* Timer */}
           <View style={tw`items-center justify-center flex-1`}>
@@ -101,19 +104,29 @@ export default function DeepFocusScreen() {
             </TouchableOpacity>
           </View>
         </View>
-      </SafeAreaView>
+      </SafeAreaBackground>
     );
   }
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaBackground
+      imageSource={require("@/assets/images/backgrounds/tools-bg.png")}
+    >
       {/* Back Button */}
-      <TouchableOpacity
+      <GlassCard
         onPress={() => router.back()}
-        style={tw`p-2 ml-3 mt-3 bg-white/5 self-start border border-white/5 rounded-md`}
+        outerCardStyle={tw` ml-3 mt-3 self-start`}
+        style={tw`p-2`}
+        intensity={30}
+        tint="dark"
+        lightColor={"white"}
+        hapticStyle="light"
+        enableHaptics={true}
+        enableSound={true}
+        lightSize={40}
       >
         <ChevronLeftIcon size={20} color="white" />
-      </TouchableOpacity>
+      </GlassCard>
 
       <View style={tw`flex-1 px-3`}>
         {/* Header */}
@@ -141,6 +154,6 @@ export default function DeepFocusScreen() {
       <View style={tw`px-3 pb-6`}>
         <Button title={`Start Session`} onPress={handleStart} />
       </View>
-    </SafeAreaView>
+    </SafeAreaBackground>
   );
 }

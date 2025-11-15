@@ -401,3 +401,64 @@ export interface StoreQueryParams {
   order?: "asc" | "desc";
   search?: string;
 }
+
+// Workout Logger types
+export type WorkoutType = 'strength' | 'cardio' | 'flexibility' | 'sports';
+export type CardioType = 'running' | 'cycling' | 'swimming' | 'rowing' | 'other';
+export type FlexibilityType = 'yoga' | 'stretching' | 'mobility';
+export type SportsType = 'basketball' | 'soccer' | 'tennis' | 'swimming' | 'other';
+export type WeightUnit = 'lbs' | 'kg';
+export type DistanceUnit = 'miles' | 'km';
+
+export interface Set {
+  reps: number;
+  weight: number;
+  unit: WeightUnit;
+}
+
+export interface Exercise {
+  id: string;
+  name: string;
+  sets: Set[];
+}
+
+export interface WorkoutSession {
+  id: string;
+  date: string; // ISO date string
+  type: WorkoutType;
+  name?: string; // workout name
+  duration: number; // minutes
+  notes?: string;
+
+  // Strength-specific
+  exercises?: Exercise[];
+
+  // Cardio-specific
+  cardioType?: CardioType;
+  distance?: number;
+  distanceUnit?: DistanceUnit;
+  pace?: string; // e.g., "8:00" min/mile
+
+  // Flexibility-specific
+  flexibilityType?: FlexibilityType;
+
+  // Sports-specific
+  sportsType?: SportsType;
+  customSportsName?: string;
+
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface WorkoutStats {
+  totalSessions: number;
+  totalDuration: number; // minutes
+  currentStreak: number;
+  longestStreak: number;
+  breakdownByType: {
+    strength: number;
+    cardio: number;
+    flexibility: number;
+    sports: number;
+  };
+}

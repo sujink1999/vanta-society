@@ -1,8 +1,9 @@
+import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { MarketplaceItem } from "@/services/api/types";
 import React from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
-import { ChevronLeftIcon } from "./icons/Icons";
+import { Image, Text, View } from "react-native";
+import GlassCard from "./GlassCard";
 
 interface BrandCardProps {
   brand: MarketplaceItem;
@@ -13,17 +14,17 @@ export function BrandCard({ brand, onPress }: BrandCardProps) {
   const hasDiscountCode = !!brand.discountCode;
 
   return (
-    <TouchableOpacity
+    <GlassCard
       onPress={onPress}
-      style={tw` overflow-hidden w-44 relative border border-white/5 bg-white/5 rounded-sm `}
-      activeOpacity={0.7}
+      outerCardStyle={tw`border-white/20 border   w-44`}
+      intensity={60}
+      tint="dark"
+      lightColor={Colors.white}
+      hapticStyle="light"
+      enableHaptics={true}
+      enableSound={true}
+      roundedClassName="rounded-lg"
     >
-      <View
-        style={tw`absolute -left-[10px] -bottom-[10px] rotate-[315deg] opacity-50`}
-      >
-        <ChevronLeftIcon size={25} color="white" />
-      </View>
-
       {/* <View style={tw`absolute -left-[10px] -bottom-[10px] rotate-[315deg]`}>
         <ChevronLeftIcon size={25} color="white" />
       </View> */}
@@ -62,6 +63,6 @@ export function BrandCard({ brand, onPress }: BrandCardProps) {
           {brand.discountPercentage}% OFF
         </Text>
       </View>
-    </TouchableOpacity>
+    </GlassCard>
   );
 }

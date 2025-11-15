@@ -3,6 +3,7 @@ import { getBackupData, syncData } from "../api";
 import { checkInStorageManager } from "./CheckInStorageManager";
 import { scoreStorageManager } from "./ScoreStorageManager";
 import { taskStorageManager } from "./TaskStorageManager";
+import { workoutStorageManager } from "./WorkoutStorageManager";
 
 const LAST_SYNC_KEY = "last_sync_timestamp";
 const LAST_DATA_UPDATE_KEY = "last_data_update";
@@ -116,6 +117,7 @@ class DataSyncManager {
       await scoreStorageManager.clearData();
       await taskStorageManager.clearData();
       await checkInStorageManager.clearData();
+      await workoutStorageManager.clearData();
 
       // Clear sync metadata
       await AsyncStorage.removeItem(LAST_SYNC_KEY);
@@ -165,6 +167,7 @@ class DataSyncManager {
       const scores = await scoreStorageManager.getScores();
       const completions = await taskStorageManager.getAllCompletions();
       const checkIns = await checkInStorageManager.getCache();
+      const workouts = await workoutStorageManager.getCache();
 
       // Don't sync if no scores yet (user hasn't completed onboarding)
       if (!scores) {
@@ -184,6 +187,7 @@ class DataSyncManager {
         },
         completions,
         checkIns,
+        workouts,
         lastSync: currentTimestamp,
       };
 
@@ -288,6 +292,12 @@ class DataSyncManager {
       if (backupData?.checkIns) {
         await checkInStorageManager.restoreCache(backupData.checkIns);
         console.log("Check-in data restored from backup");
+      }
+
+      // Restore workout data to local storage
+      if (backupData?.workouts) {
+        await workoutStorageManager.restoreCache(backupData.workouts);
+        console.log("Workout data restored from backup");
       }
 
       // Update last sync time and last data update

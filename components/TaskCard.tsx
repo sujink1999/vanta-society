@@ -2,16 +2,15 @@ import { PlatformBlurView } from "@/components/PlatformBlurView";
 import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { UserRoutine } from "@/services/api/types";
-import { LinearGradient } from "expo-linear-gradient";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
   Animated,
   Text,
-  TouchableHighlight,
   TouchableOpacity,
   View,
 } from "react-native";
+import GlassCard from "./GlassCard";
 import { CycleIcon } from "./icons/Icons";
 import { getTaskIcon } from "./icons/TaskIcons";
 
@@ -162,66 +161,64 @@ export function TaskCard({
 
   return (
     <View>
-      <LinearGradient
-        colors={[`#ffffff05`, "#FFFFFF10"]}
-        start={{ x: 1, y: 0 }}
-        end={{ x: 0, y: 1 }}
-        style={tw`rounded-md border border-white/5`}
+      <GlassCard
+        lightColor={categoryColor}
+        intensity={20}
+        tint="light"
+        onPress={() => canUpdate && setShowOverlay(true)}
       >
-        <TouchableHighlight onPress={() => canUpdate && setShowOverlay(true)}>
-          <View style={tw`flex-row p-3 items-center`}>
-            {IconComponent && (
-              <View style={tw`mr-4`}>
-                <IconComponent size={20} color={categoryColor} />
-              </View>
-            )}
+        <View style={tw`flex-row p-3 items-center`}>
+          {IconComponent && (
+            <View style={tw`mr-4`}>
+              <IconComponent size={20} color={categoryColor} />
+            </View>
+          )}
 
-            <View style={tw`flex-1 flex-col gap-2`}>
+          <View style={tw`flex-1 flex-col gap-2`}>
+            <Text
+              style={tw`text-white font-mont-medium text-sm`}
+              numberOfLines={2}
+              ellipsizeMode="tail"
+            >
+              {taskCommand}
+            </Text>
+
+            <View style={tw`flex-row items-center`}>
+              <CycleIcon size={12} color={Colors.textSecondary} />
               <Text
-                style={tw`text-white font-mont-medium text-sm`}
-                numberOfLines={2}
-                ellipsizeMode="tail"
+                style={tw`text-textSecondary font-mont-medium text-xs ml-2`}
+                numberOfLines={1}
               >
-                {taskCommand}
+                {frequency}
               </Text>
-
-              <View style={tw`flex-row items-center`}>
-                <CycleIcon size={12} color={Colors.textSecondary} />
-                <Text
-                  style={tw`text-textSecondary font-mont-medium text-xs ml-2`}
-                  numberOfLines={1}
-                >
-                  {frequency}
-                </Text>
-              </View>
             </View>
           </View>
-        </TouchableHighlight>
+        </View>
+      </GlassCard>
 
-        {/* Overlay with BlurView */}
-        {overlayVisible && (
-          <Animated.View
-            style={[
-              tw`absolute inset-0 rounded-md overflow-hidden`,
-              { opacity: fadeAnim },
-            ]}
+      {/* Overlay with BlurView */}
+      {overlayVisible && (
+        <Animated.View
+          style={[
+            tw`absolute inset-0 rounded-md overflow-hidden`,
+            { opacity: fadeAnim },
+          ]}
+        >
+          <PlatformBlurView
+            intensity={60}
+            opacity={0.9}
+            tint="dark"
+            style={tw`flex-1 justify-center items-center`}
+            onTouchEnd={() => setShowOverlay(false)}
           >
-            <PlatformBlurView
-              intensity={60}
-              opacity={0.9}
-              tint="dark"
-              style={tw`flex-1 justify-center items-center`}
-              onTouchEnd={() => setShowOverlay(false)}
-            >
-              {isProcessing ? (
-                <ActivityIndicator size="small" color="#FFFFFF" />
-              ) : (
-                showOverlay && getOverlayButtons()
-              )}
-            </PlatformBlurView>
-          </Animated.View>
-        )}
-      </LinearGradient>
+            {isProcessing ? (
+              <ActivityIndicator size="small" color="#FFFFFF" />
+            ) : (
+              showOverlay && getOverlayButtons()
+            )}
+          </PlatformBlurView>
+        </Animated.View>
+      )}
     </View>
   );
 }

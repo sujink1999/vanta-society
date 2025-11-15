@@ -1,5 +1,7 @@
 import { Button } from "@/components/Button";
 import { DurationSelector } from "@/components/DurationSelector";
+import { PlatformBlurView } from "@/components/PlatformBlurView";
+import { SafeAreaBackground } from "@/components/SafeAreaBackground";
 import { ChevronLeftIcon } from "@/components/icons/Icons";
 import { MeditationIcon } from "@/components/icons/TaskIcons";
 import { Colors } from "@/constants/theme";
@@ -10,7 +12,6 @@ import { Audio } from "expo-av";
 import { useRouter } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import Svg, { Circle } from "react-native-svg";
 
 const DURATION_PRESETS = [
@@ -235,11 +236,17 @@ export default function MeditationScreen() {
     const strokeDashoffset = circumference - progress * circumference;
 
     return (
-      <SafeAreaView style={tw`flex-1 bg-black`}>
+      <SafeAreaBackground
+        imageSource={require("@/assets/images/backgrounds/tools-bg.png")}
+      >
         <View style={tw`flex-1 px-6 py-4`}>
           {/* Circular Progress */}
           <View style={tw`items-center justify-center flex-1`}>
-            <View style={tw`items-center justify-center`}>
+            <PlatformBlurView
+              intensity={30}
+              tint="dark"
+              style={tw`items-center justify-center rounded-full overflow-hidden`}
+            >
               <Svg
                 width={size}
                 height={size}
@@ -277,7 +284,7 @@ export default function MeditationScreen() {
                   {hasCompleted ? "Completed" : isPaused ? "Paused" : "Playing"}
                 </Text>
               </View>
-            </View>
+            </PlatformBlurView>
           </View>
 
           {/* Seek Controls */}
@@ -348,12 +355,14 @@ export default function MeditationScreen() {
             </TouchableOpacity>
           </View>
         </View>
-      </SafeAreaView>
+      </SafeAreaBackground>
     );
   }
 
   return (
-    <SafeAreaView style={tw`flex-1 bg-black`}>
+    <SafeAreaBackground
+      imageSource={require("@/assets/images/backgrounds/tools-bg.png")}
+    >
       {/* Back Button */}
       <TouchableOpacity
         onPress={() => router.back()}
@@ -362,7 +371,7 @@ export default function MeditationScreen() {
         <ChevronLeftIcon size={20} color="white" />
       </TouchableOpacity>
 
-      <View style={tw`flex-1 px-3`}>
+      <View style={tw`flex-1 `}>
         {/* Header */}
         <View style={tw`pb-6 flex-col items-center justify-center gap-2`}>
           <MeditationIcon size={40} color={Colors.textSecondary} />
@@ -388,6 +397,6 @@ export default function MeditationScreen() {
       <View style={tw`px-3 pb-6`}>
         <Button title={`Start Session`} onPress={handleStart} />
       </View>
-    </SafeAreaView>
+    </SafeAreaBackground>
   );
 }
