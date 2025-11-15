@@ -119,8 +119,7 @@ export default function WorkoutLogScreen() {
         onLogWorkout={() => setShowTypeModal(true)}
         onDateSelect={setSelectedDate}
         onWorkoutPress={(workout) => {
-          // TODO: Navigate to workout detail view
-          console.log("Navigate to workout detail:", workout.id);
+          // Workout detail modal is handled internally by WorkoutHomeView
         }}
       />
 

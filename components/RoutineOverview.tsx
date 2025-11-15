@@ -82,7 +82,7 @@ export function RoutineOverview({
         <Text
           style={tw`text-white font-tussi-bold text-base text-center flex-1 `}
         >
-          Your <Text style={tw` text-primary`}>PROJECT66</Text> routine
+          Your <Text style={tw` text-primary`}>Routine</Text>
         </Text>
         {showBackButton && <View style={tw`w-7 h-7`} />}
       </View>

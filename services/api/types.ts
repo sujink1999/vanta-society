@@ -446,6 +446,10 @@ export interface WorkoutSession {
   sportsType?: SportsType;
   customSportsName?: string;
 
+  // Source tracking
+  source?: "manual" | "strava";
+  stravaId?: number; // Original Strava activity ID
+
   createdAt: string;
   updatedAt: string;
 }

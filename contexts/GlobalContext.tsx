@@ -1,9 +1,11 @@
 import { useInAppPurchase } from "@/hooks/useInAppPurchase";
 import { useNotifications } from "@/hooks/useNotifications";
+import { useStrava } from "@/hooks/useStrava";
 import { useTablet } from "@/hooks/useTablet";
 import { useUser } from "@/hooks/useUser";
 import { useWinterArcStats } from "@/hooks/useWinterArcStats";
 import { User, UserRoutine } from "@/services/api/types";
+import { StravaAthlete, WorkoutData } from "@/services/strava";
 import {
   Notification,
   NotificationType,
@@ -80,6 +82,14 @@ interface GlobalContextType {
   restorePurchases: () => Promise<{ success: boolean; error?: any }>;
   checkPurchaseAccess: () => Promise<void>;
   setSelectedPackage: (pkg: PurchasesPackage | null) => void;
+  // Strava
+  stravaConnected: boolean;
+  stravaAthlete: StravaAthlete | null;
+  stravaWorkouts: WorkoutData[];
+  stravaLoading: boolean;
+  refreshStrava: () => Promise<void>;
+  disconnectStrava: () => Promise<void>;
+  syncStravaWorkouts: () => Promise<void>;
 }
 
 const GlobalContext = createContext<GlobalContextType | undefined>(undefined);
@@ -93,6 +103,7 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
   const winterArcStats = useWinterArcStats(userState.user, userState.routine);
   const notificationState = useNotifications();
   const purchaseState = useInAppPurchase();
+  const stravaState = useStrava();
   const isTablet = useTablet();
 
   const contextValue = {
@@ -110,6 +121,14 @@ export function GlobalProvider({ children }: GlobalProviderProps) {
     restorePurchases: purchaseState.restorePurchases,
     checkPurchaseAccess: purchaseState.checkAccess,
     setSelectedPackage: purchaseState.setSelectedPackage,
+    // Strava
+    stravaConnected: stravaState.isConnected,
+    stravaAthlete: stravaState.athlete,
+    stravaWorkouts: stravaState.workouts,
+    stravaLoading: stravaState.loading,
+    refreshStrava: stravaState.refresh,
+    disconnectStrava: stravaState.disconnect,
+    syncStravaWorkouts: stravaState.syncWorkouts,
   };
 
   return (

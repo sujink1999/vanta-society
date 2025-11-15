@@ -5,6 +5,7 @@ import { VitalsComparison } from "@/components/VitalsComparison";
 import { ChevronLeftIcon, ChevronRightIcon } from "@/components/icons/Icons";
 import { BackupTile } from "@/components/profile-tiles/BackupTile";
 import { MyRoutineTile } from "@/components/profile-tiles/MyRoutineTile";
+import { StravaTile } from "@/components/profile-tiles/StravaTile";
 import { Colors } from "@/constants/theme";
 import tw from "@/constants/tw";
 import { useGlobalContext } from "@/contexts/GlobalContext";
@@ -141,6 +142,7 @@ export default function ProfileScreen() {
 
           <View style={tw`w-full gap-2 mt-10`}>
             <MyRoutineTile />
+            <StravaTile />
             <BackupTile
               lastSyncTime={lastSyncTime}
               onSyncComplete={handleSyncComplete}
